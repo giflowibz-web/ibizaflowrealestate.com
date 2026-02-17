@@ -27,7 +27,6 @@ const HeroSection = () => {
           className="h-full w-full object-cover"
           style={{ opacity: videoLoaded ? 1 : 0, transition: 'opacity 1.5s ease' }}
         >
-          {/* Ibiza coastline / Mediterranean aerial */}
           {/* Mediterranean coast aerial */}
           <source
             src="https://videos.pexels.com/video-files/1739010/1739010-hd_1920_1080_30fps.mp4"

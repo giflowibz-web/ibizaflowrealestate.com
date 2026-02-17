@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Aaron Kirman | Luxury Real Estate",
-  description: "The leader in global luxury real estate, with over $23B sold.",
+  title: "Ibiza Flow Real Estate | Propiedades de Lujo en Ibiza",
+  description: "Propiedades exclusivas en Ibiza. Villas de lujo, apartamentos premium y fincas en la isla mas deseada del Mediterraneo.",
 };
 
 export default function RootLayout({

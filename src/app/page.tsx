@@ -4,6 +4,7 @@ import StatsOverview from "@/components/sections/stats-overview";
 import ListingsGrid from "@/components/sections/listings-grid";
 import PressCarousel from "@/components/sections/press-carousel";
 import ChristiesBlocks from "@/components/sections/christies-blocks";
+import NewsletterSection from "@/components/sections/newsletter-modal";
 import InquiryCTA from "@/components/sections/inquiry-cta";
 import Footer from "@/components/sections/footer";
 
@@ -16,6 +17,7 @@ export default function Home() {
       <ListingsGrid />
       <PressCarousel />
       <ChristiesBlocks />
+      <NewsletterSection />
       <InquiryCTA />
       <Footer />
     </>

@@ -28,10 +28,14 @@ const HeroSection = () => {
           style={{ opacity: videoLoaded ? 1 : 0, transition: 'opacity 1.5s ease' }}
         >
           {/* Mediterranean coast aerial */}
-          <source
-            src="https://videos.pexels.com/video-files/1739010/1739010-hd_1920_1080_30fps.mp4"
-            type="video/mp4"
-          />
+            <source
+              src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_30fps.mp4"
+              type="video/mp4"
+            />
+            <source
+              src="https://videos.pexels.com/video-files/1739010/1739010-hd_1920_1080_30fps.mp4"
+              type="video/mp4"
+            />
         </video>
         {/* Dark cinematic overlay */}
         <div

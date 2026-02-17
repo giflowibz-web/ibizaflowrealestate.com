@@ -1,102 +1,58 @@
+"use client";
+
 import React from 'react';
-import Image from 'next/image';
+import { useLang } from '@/lib/i18n';
 
-interface ServiceBlockProps {
-  label: string;
-  title: string;
-  description: string;
-  imageSrc: string;
-  reverse?: boolean;
-}
+const ChristiesBlocks: React.FC = () => {
+  const { t } = useLang();
 
-const ServiceBlock: React.FC<ServiceBlockProps> = ({
-  label,
-  title,
-  description,
-  imageSrc,
-  reverse = false,
-}) => {
+  const services = [
+    { title: t.christies.buy_title, desc: t.christies.buy_desc },
+    { title: t.christies.sell_title, desc: t.christies.sell_desc },
+    { title: t.christies.invest_title, desc: t.christies.invest_desc },
+    { title: t.christies.manage_title, desc: t.christies.manage_desc },
+  ];
+
   return (
-    <section className="relative w-full h-[600px] md:h-[800px] overflow-hidden group">
-      <div className="absolute inset-0">
-        <Image
-          src={imageSrc}
-          alt={title}
-          fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
-          priority
-        />
-        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors duration-500" />
-      </div>
+    <section id="servicios" className="bg-[#F7F5F2] section-spacing">
+      <div className="container">
+        <div className="mb-16 md:mb-24">
+          <span className="text-accent-caps block mb-4">{t.christies.tag}</span>
+          <h2 className="text-section-title text-foreground">{t.christies.title}</h2>
+        </div>
 
-      <div className="container relative h-full flex items-center">
-        <div 
-          className={`max-w-[600px] text-white p-8 md:p-12 transition-all duration-700 delay-100 ${
-            reverse ? 'ml-auto text-right md:text-right' : 'mr-auto text-left'
-          }`}
-        >
-          <span className="block font-body text-[14px] font-bold uppercase tracking-[0.2em] text-[#002FA7] mb-4">
-            {label}
-          </span>
-          <h2 className="font-display text-[40px] md:text-[56px] leading-[1.1] mb-6">
-            {title}
-          </h2>
-          <p className="font-body text-[16px] md:text-[18px] leading-[1.6] opacity-90 mb-8 max-w-[500px] group-hover:opacity-100 transition-opacity">
-            {description}
-          </p>
-          <a 
-            href="#" 
-            className="inline-flex items-center group/btn"
-          >
-            <span className="bg-[#002FA7] text-white px-8 py-3.5 text-[14px] font-bold uppercase tracking-[0.1em] transition-all duration-300 group-hover/btn:bg-white group-hover/btn:text-black">
-              Descubrir
-            </span>
-          </a>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-0 border-t border-border">
+          {services.map((service, index) => (
+            <div
+              key={index}
+              className="border-b md:border-b-0 md:border-r border-border last:border-r-0 p-8 lg:p-10 flex flex-col group hover:bg-white transition-colors duration-300"
+            >
+              <div className="mb-auto">
+                <span className="text-[10px] uppercase tracking-[0.25em] text-accent font-bold mb-6 block">
+                  0{index + 1}
+                </span>
+                <h3 className="font-display text-2xl md:text-3xl text-foreground mb-5 group-hover:text-accent transition-colors">
+                  {service.title}
+                </h3>
+                <p className="font-body text-muted-foreground text-sm leading-relaxed">
+                  {service.desc}
+                </p>
+              </div>
+              <div className="mt-8 pt-6 border-t border-border/50">
+                <a
+                  href="#contacto"
+                  className="text-[11px] uppercase tracking-[0.18em] font-bold text-foreground group-hover:text-accent transition-colors inline-flex items-center gap-2"
+                >
+                  {t.christies.cta}
+                  <span className="transition-transform group-hover:translate-x-1">→</span>
+                </a>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
 
-const ServicesBlocks = () => {
-  const blocks = [
-    {
-      label: "Compra & Venta",
-      title: "Villas de Lujo",
-      description: "Descubre las propiedades mas exclusivas de Ibiza. Desde villas modernas con vistas al mar hasta fincas tradicionales rodeadas de naturaleza. Nuestro equipo te acompana en cada paso del proceso.",
-      imageSrc: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80",
-      reverse: false,
-    },
-    {
-      label: "Lifestyle",
-      title: "Estilo de Vida Ibicenco",
-      description: "Ibiza es mucho mas que una isla. Es un estilo de vida unico que combina la tranquilidad del Mediterraneo con la energia de una de las capitales mundiales del entretenimiento y la cultura.",
-      imageSrc: "https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200&q=80",
-      reverse: true,
-    },
-    {
-      label: "Inversion",
-      title: "Oportunidades de Inversion",
-      description: "El mercado inmobiliario de Ibiza ofrece excelentes rentabilidades. Te asesoramos sobre las mejores oportunidades de inversion, desde alquiler vacacional hasta proyectos de desarrollo inmobiliario.",
-      imageSrc: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80",
-      reverse: false,
-    }
-  ];
-
-  return (
-    <div className="flex flex-col w-full bg-white">
-      {blocks.map((block, index) => (
-        <ServiceBlock 
-          key={index}
-          label={block.label}
-          title={block.title}
-          description={block.description}
-          imageSrc={block.imageSrc}
-          reverse={block.reverse}
-        />
-      ))}
-    </div>
-  );
-};
-
-export default ServicesBlocks;
+export default ChristiesBlocks;

@@ -1,41 +1,23 @@
-import React from 'react';
+"use client";
 
-const pressData = [
-  {
-    publication: "Luxury Living",
-    date: "Enero 2025",
-    headline: "Ibiza Flow Real Estate: redefine el lujo inmobiliario en la isla blanca",
-  },
-  {
-    publication: "Architectural Digest",
-    date: "Marzo 2024",
-    headline: "Las villas mas espectaculares de Ibiza con vistas al Mediterraneo",
-  },
-  {
-    publication: "Forbes",
-    date: "Julio 2024",
-    headline: "El mercado inmobiliario de lujo en Ibiza alcanza cifras record en 2024",
-  },
-  {
-    publication: "El Pais",
-    date: "Noviembre 2024",
-    headline: "Ibiza se consolida como destino premium para inversores internacionales",
-  },
-];
+import React from 'react';
+import { useLang } from '@/lib/i18n';
 
 const PressCarousel: React.FC = () => {
+  const { t } = useLang();
+
   return (
     <section className="bg-white section-spacing">
       <div className="container">
         <div className="mb-16 md:mb-24">
-          <span className="text-accent-caps block mb-4">En los Medios</span>
-          <h2 className="text-section-title text-foreground">Prensa y Noticias</h2>
+          <span className="text-accent-caps block mb-4">{t.press.tag}</span>
+          <h2 className="text-section-title text-foreground">{t.press.title}</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-x-12 md:gap-y-16">
-          {pressData.map((item, index) => (
-            <div 
-              key={index} 
+          {t.press.items.map((item, index) => (
+            <div
+              key={index}
               className="flex flex-col border-t border-border pt-10 group cursor-pointer transition-all duration-400"
             >
               <div className="flex flex-col mb-6">
@@ -46,14 +28,12 @@ const PressCarousel: React.FC = () => {
                   {item.date}
                 </time>
               </div>
-
               <h3 className="font-display text-xl md:text-2xl leading-snug text-foreground group-hover:opacity-80 transition-opacity">
                 {item.headline}
               </h3>
-
               <div className="mt-auto pt-8">
                 <span className="inline-block text-xs uppercase tracking-widest font-bold text-accent border-b border-transparent group-hover:border-accent transition-all">
-                  Leer Articulo
+                  {t.press.read}
                 </span>
               </div>
             </div>
@@ -61,11 +41,8 @@ const PressCarousel: React.FC = () => {
         </div>
 
         <div className="mt-20 flex justify-center">
-          <a 
-            href="/prensa" 
-            className="btn-luxury px-12 py-5 text-sm transition-transform hover:-translate-y-1"
-          >
-            Ver Toda la Prensa
+          <a href="/prensa" className="btn-luxury px-12 py-5 text-sm transition-transform hover:-translate-y-1">
+            {t.press.view_all}
           </a>
         </div>
       </div>

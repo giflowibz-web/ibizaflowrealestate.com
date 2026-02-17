@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { properties } from "@/data/properties";
-import { getPropertyBySlugFromSanity } from "@/sanity/queries";
+import { supabaseAdmin } from "@/lib/supabase";
 import { PropertyDetail } from "@/components/sections/property-detail";
+import { properties as fallbackProperties } from "@/data/properties";
 
 export default async function PropertyPage({
   params,
@@ -10,14 +10,20 @@ export default async function PropertyPage({
 }) {
   const { slug } = await params;
 
-  // Try Sanity first, fallback to local data
-  const sanityProperty = await getPropertyBySlugFromSanity(slug);
-  const property =
-    sanityProperty || properties.find((p) => p.slug === slug);
+  // Try Supabase first
+  const { data } = await supabaseAdmin
+    .from("properties")
+    .select("*")
+    .or(`slug.eq.${slug},id.eq.${slug}`)
+    .single();
 
-  if (!property) {
-    notFound();
+  if (data) {
+    return <PropertyDetail property={data} />;
   }
 
-  return <PropertyDetail property={property} />;
+  // Fallback to local data
+  const local = fallbackProperties.find((p) => p.slug === slug);
+  if (!local) notFound();
+
+  return <PropertyDetail property={local as any} />;
 }

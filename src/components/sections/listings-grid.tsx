@@ -1,14 +1,41 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { properties } from "@/data/properties";
-import { getPropertiesFromSanity } from "@/sanity/queries";
+import { properties as fallbackProperties } from "@/data/properties";
+import { supabaseAdmin } from "@/lib/supabase";
 import { Bed, Bath, Maximize, MapPin } from "lucide-react";
 
 const ListingsGrid = async () => {
-  const sanityProperties = await getPropertiesFromSanity();
-  const displayProperties =
-    sanityProperties.length > 0 ? sanityProperties : properties;
+  let displayProperties: any[] = []
+
+  try {
+    const { data } = await supabaseAdmin
+      .from('properties')
+      .select('*')
+      .eq('status', 'available')
+      .order('featured', { ascending: false })
+      .order('created_at', { ascending: false })
+      .limit(6)
+
+    if (data && data.length > 0) {
+      displayProperties = data.map(p => ({
+        id: p.id,
+        slug: p.slug || p.id,
+        title: p.title_en || p.title_es,
+        address: `${p.area || ''}${p.area && p.municipality ? ', ' : ''}${p.municipality || 'Ibiza'}`,
+        price: p.price_on_request ? 'Price on request' : p.price ? `€${p.price.toLocaleString()}` : '',
+        status: p.status,
+        beds: p.bedrooms,
+        baths: p.bathrooms,
+        sqm: p.size_built,
+        images: p.images?.length ? p.images : ['/hero-small.mp4'],
+      }))
+    }
+  } catch (_) {}
+
+  if (displayProperties.length === 0) {
+    displayProperties = fallbackProperties
+  }
 
   return (
     <section className="bg-white py-24 md:py-32">
@@ -19,10 +46,10 @@ const ListingsGrid = async () => {
             Portfolio
           </span>
           <h2 className="text-4xl md:text-5xl font-serif mt-4 text-black">
-            Propiedades Destacadas
+            Featured Properties
           </h2>
           <p className="text-[#666] text-lg font-body mt-4 max-w-2xl mx-auto">
-            Una seleccion exclusiva de las mejores propiedades de Ibiza
+            An exclusive selection of the finest properties in Ibiza
           </p>
         </div>
 
@@ -36,13 +63,18 @@ const ListingsGrid = async () => {
             >
               {/* Image */}
               <div className="relative aspect-[4/3] overflow-hidden bg-[#F0F0F0]">
-                <Image
-                  src={property.images[0]}
-                  alt={property.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                />
+                {property.images?.[0] ? (
+                  <Image
+                    src={property.images[0]}
+                    alt={property.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    unoptimized
+                  />
+                ) : (
+                  <div className="w-full h-full bg-[#E8E4DC]" />
+                )}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
 
                 {/* Status Badge */}
@@ -72,18 +104,24 @@ const ListingsGrid = async () => {
 
                 {/* Stats Row */}
                 <div className="flex items-center gap-5 mt-4 pt-4 border-t border-[#E5E5E5]">
-                  <div className="flex items-center gap-1.5 text-[#666] text-[13px] font-body">
-                    <Bed className="w-4 h-4 text-[#002FA7]" />
-                    {property.beds} hab.
-                  </div>
-                  <div className="flex items-center gap-1.5 text-[#666] text-[13px] font-body">
-                    <Bath className="w-4 h-4 text-[#002FA7]" />
-                    {property.baths} banos
-                  </div>
-                  <div className="flex items-center gap-1.5 text-[#666] text-[13px] font-body">
-                    <Maximize className="w-4 h-4 text-[#002FA7]" />
-                    {property.sqm} m&sup2;
-                  </div>
+                  {property.beds && (
+                    <div className="flex items-center gap-1.5 text-[#666] text-[13px] font-body">
+                      <Bed className="w-4 h-4 text-[#002FA7]" />
+                      {property.beds} bed
+                    </div>
+                  )}
+                  {property.baths && (
+                    <div className="flex items-center gap-1.5 text-[#666] text-[13px] font-body">
+                      <Bath className="w-4 h-4 text-[#002FA7]" />
+                      {property.baths} bath
+                    </div>
+                  )}
+                  {property.sqm && (
+                    <div className="flex items-center gap-1.5 text-[#666] text-[13px] font-body">
+                      <Maximize className="w-4 h-4 text-[#002FA7]" />
+                      {property.sqm} m&sup2;
+                    </div>
+                  )}
                 </div>
               </div>
             </Link>
@@ -96,7 +134,7 @@ const ListingsGrid = async () => {
             href="/propiedades"
             className="inline-flex items-center justify-center px-12 py-4 border-2 border-black text-black text-[13px] uppercase tracking-[0.2em] font-bold hover:bg-black hover:text-white transition-all duration-300"
           >
-            Ver Todas las Propiedades
+            View All Properties
           </a>
         </div>
       </div>

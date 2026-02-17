@@ -19,7 +19,7 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const s = sizeMap[size];
 
   return (
-    <div className={`flex flex-col items-center select-none ${className}`}>
+    <div className={`flex flex-col items-center select-none ${className}`} translate="no">
       <span className={`${colors.main} ${s.main} font-serif tracking-[0.08em] leading-none font-normal`}>
         IBIZA <span style={{ color: colors.accent }}>FLOW</span>
       </span>

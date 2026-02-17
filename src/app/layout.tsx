@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Ibiza Flow Real Estate | Propiedades de Lujo en Ibiza",
   description: "Propiedades exclusivas en Ibiza. Villas de lujo, apartamentos premium y fincas en la isla mas deseada del Mediterraneo.",
+  other: {
+    "google": "notranslate",
+  },
 };
 
 export default function RootLayout({

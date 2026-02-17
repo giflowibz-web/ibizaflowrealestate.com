@@ -6,53 +6,49 @@ import { MoveRight } from "lucide-react";
 const NewsletterSection = () => {
   return (
     <section className="relative w-full overflow-hidden">
-      {/* Blurred Architectural Background */}
       <div
         className="absolute inset-0 bg-cover bg-center blur-sm scale-105"
         style={{
-          backgroundImage: `url('https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/a6bda00f-9d85-4858-8c8d-a58f8ab1c935-aaronkirman-com/assets/images/images_1.png')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1534008897995-27a23e859048?w=1200&q=80')`,
           backgroundColor: 'rgba(0,0,0,0.4)',
           backgroundBlendMode: 'overlay'
         }}
       />
-
-      {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/60" />
 
-      {/* Content */}
       <div className="relative z-10 flex items-center justify-center py-24 md:py-32 px-[6%]">
-        <div className="w-full max-w-[680px] bg-[#141414] p-10 md:p-16 text-center">
+        <div className="w-full max-w-[680px] bg-[#0A0A0A] p-10 md:p-16 text-center">
           <div className="flex flex-col items-center space-y-6">
-            <span className="text-accent-caps text-[10px] tracking-[0.3em]">JOIN</span>
+            <span className="text-accent-caps text-[10px] tracking-[0.3em]">Unete</span>
 
-            <h2 className="font-display text-white text-3xl md:text-[42px] leading-tight tracking-wide">
-              MY EXCLUSIVE LIST
+            <h2 className="font-display text-white text-3xl md:text-[42px] leading-tight tracking-wide uppercase">
+              Lista Exclusiva
             </h2>
 
             <p className="text-[#A3A3A3] font-body text-sm leading-relaxed max-w-[500px]">
-              Get Exclusive Access about Featured Listings, Insider Real Estate Market Updates, Behind-the-scenes Interviews, and much more!
+              Recibe acceso anticipado a propiedades exclusivas, actualizaciones del mercado inmobiliario de Ibiza y contenido VIP directamente en tu correo.
             </p>
 
             <form className="w-full mt-8 space-y-8 text-left">
               <div className="relative group">
                 <label className="block text-white text-[11px] font-body uppercase tracking-[0.1em] mb-1">
-                  Full Name *
+                  Nombre Completo *
                 </label>
                 <input
                   type="text"
                   required
-                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-accent transition-colors duration-300"
+                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#002FA7] transition-colors duration-300"
                 />
               </div>
 
               <div className="relative group">
                 <label className="block text-white text-[11px] font-body uppercase tracking-[0.1em] mb-1">
-                  Phone *
+                  Telefono *
                 </label>
                 <input
                   type="tel"
                   required
-                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-accent transition-colors duration-300"
+                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#002FA7] transition-colors duration-300"
                 />
               </div>
 
@@ -63,7 +59,7 @@ const NewsletterSection = () => {
                 <input
                   type="email"
                   required
-                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-accent transition-colors duration-300"
+                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#002FA7] transition-colors duration-300"
                 />
               </div>
 
@@ -76,17 +72,17 @@ const NewsletterSection = () => {
                   />
                 </div>
                 <label htmlFor="consent" className="text-[10px] text-[#737373] leading-relaxed font-body">
-                  I agree to be contacted by Aaron Kirman via call, email, and text for real estate services. To opt out, you can reply &quot;stop&quot; at any time or reply &quot;help&quot; for assistance. You can also click the unsubscribe link in the emails. Message and data rates may apply. Message frequency may vary.{" "}
-                  <a href="#" className="underline hover:text-white transition-colors">Privacy Policy</a>.
+                  Acepto ser contactado por Ibiza Flow Real Estate por telefono, email y mensaje para servicios inmobiliarios. Puedes darte de baja en cualquier momento.{" "}
+                  <a href="#" className="underline hover:text-white transition-colors">Politica de Privacidad</a>.
                 </label>
               </div>
 
               <div className="flex justify-center pt-4">
                 <button
                   type="submit"
-                  className="group relative flex items-center justify-center gap-4 bg-accent text-white px-10 py-4 text-[12px] font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:bg-[#A38B61]"
+                  className="group relative flex items-center justify-center gap-4 bg-[#002FA7] text-white px-10 py-4 text-[12px] font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:brightness-125"
                 >
-                  SUBMIT
+                  ENVIAR
                   <MoveRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>

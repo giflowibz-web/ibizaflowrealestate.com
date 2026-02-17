@@ -93,12 +93,13 @@ const Navbar = () => {
 
             {/* Centered Logo */}
             <div className="flex-shrink-0 px-8">
-              <a href="/" className="block">
-                <img
-                  src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/project-uploads/a6bda00f-9d85-4858-8c8d-a58f8ab1c935/IBIZA-FLOW-REAL-ESTATE-1-1771350716248.png?width=8000&height=8000&resize=contain"
-                  alt="Ibiza Flow Real Estate"
-                  className="h-14 md:h-16 w-auto object-contain"
-                />
+              <a href="/" className="block text-center">
+                <span className="text-white text-2xl md:text-3xl font-serif tracking-[0.05em] leading-none">
+                  IBIZA FLOW
+                </span>
+                <span className="block text-white/60 text-[9px] md:text-[10px] uppercase tracking-[0.4em] font-body mt-1">
+                  Real Estate
+                </span>
               </a>
             </div>
 

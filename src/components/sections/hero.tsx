@@ -3,43 +3,42 @@
 import React, { useState } from 'react';
 
 const HeroSection = () => {
-  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [iframeLoaded, setIframeLoaded] = useState(false);
+
+  // YouTube video ID de Ibiza - vista aérea espectacular
+  const youtubeId = 'ZNlElSZoMY8';
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Background Video */}
+      {/* Background Video via YouTube embed */}
       <div className="absolute inset-0 z-0">
-        {/* Poster image while video loads */}
+        {/* Poster mientras carga el iframe */}
         <div
           className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
           style={{
             backgroundImage:
-              'url(https://images.unsplash.com/photo-1539635278303-d4002c07eae3?w=1920&q=80)',
-            opacity: videoLoaded ? 0 : 1,
+              'url(https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80)',
+            opacity: iframeLoaded ? 0 : 1,
           }}
         />
-          <video
-            autoPlay
-            muted
-            loop
-            playsInline
-            onCanPlay={() => setVideoLoaded(true)}
-            className="h-full w-full object-cover"
-            style={{ opacity: videoLoaded ? 1 : 0, transition: 'opacity 1.5s ease' }}
-          >
-            <source
-              src="https://mazwai.com/videvo_files/video/free/2019-02/small_watermarked/190111_04_B_Ibiza_preview.mp4"
-              type="video/mp4"
-            />
-            <source
-              src="https://mazwai.com/videvo_files/video/free/2019-02/small_watermarked/190111_01_B_Ibiza_preview.mp4"
-              type="video/mp4"
-            />
-            <source
-              src="https://mazwai.com/videvo_files/video/free/2019-02/small_watermarked/190111_06_B_Ibiza_preview.mp4"
-              type="video/mp4"
-            />
-          </video>
+        <iframe
+          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1`}
+          allow="autoplay; encrypted-media"
+          allowFullScreen
+          onLoad={() => setIframeLoaded(true)}
+          className="absolute"
+          style={{
+            top: '50%',
+            left: '50%',
+            width: '177.78vh',
+            height: '56.25vw',
+            minWidth: '100%',
+            minHeight: '100%',
+            transform: 'translate(-50%, -50%)',
+            border: 'none',
+            pointerEvents: 'none',
+          }}
+        />
         {/* Dark cinematic overlay */}
         <div
           className="absolute inset-0"

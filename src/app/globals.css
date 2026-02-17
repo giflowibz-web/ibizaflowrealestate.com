@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.cdnfonts.com/css/gilroy-bold');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #F1F1F1;
+  --color-foreground: #000000;
+
+  --color-card: #FFFFFF;
+  --color-card-foreground: #000000;
+
+  --color-popover: #000000;
+  --color-popover-foreground: #FFFFFF;
+
+  --color-primary: #000000;
+  --color-primary-foreground: #FFFFFF;
+
+  --color-secondary: #F1F1F1;
+  --color-secondary-foreground: #000000;
+
+  --color-muted: #E0E0E0;
+  --color-muted-foreground: #737373;
+
+  --color-accent: #B69E76;
+  --color-accent-foreground: #FFFFFF;
+
+  --color-destructive: #7f1d1d;
+  --color-destructive-foreground: #fafafa;
+
+  --color-border: #E0E0E0;
+  --color-input: #E0E0E0;
+  --color-ring: #B69E76;
+
+  --color-chart-1: #B69E76;
+  --color-chart-2: #000000;
+  --color-chart-3: #737373;
+  --color-chart-4: #E0E0E0;
+  --color-chart-5: #F1F1F1;
+
+  --color-sidebar: #000000;
+  --color-sidebar-foreground: #FFFFFF;
+  --color-sidebar-primary: #B69E76;
+  --color-sidebar-primary-foreground: #FFFFFF;
+  --color-sidebar-accent: #1A1A1A;
+  --color-sidebar-accent-foreground: #FFFFFF;
+  --color-sidebar-border: #333333;
+  --color-sidebar-ring: #B69E76;
+
+  --font-display: "Playfair Display", serif;
+  --font-body: "Gilroy", sans-serif;
+
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border);
+  }
+
+  :root {
+    --background: #F1F1F1;
+    --foreground: #000000;
+    --card: #FFFFFF;
+    --card-foreground: #000000;
+    --popover: #000000;
+    --popover-foreground: #FFFFFF;
+    --primary: #000000;
+    --primary-foreground: #FFFFFF;
+    --secondary: #F1F1F1;
+    --secondary-foreground: #000000;
+    --muted: #E0E0E0;
+    --muted-foreground: #737373;
+    --accent: #B69E76;
+    --accent-foreground: #FFFFFF;
+    --destructive: #7f1d1d;
+    --destructive-foreground: #fafafa;
+    --border: #E0E0E0;
+    --input: #E0E0E0;
+    --ring: #B69E76;
+    --radius: 0px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, .font-serif {
+    font-family: var(--font-display);
+    font-weight: 400;
+  }
+
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 6%;
+    padding-right: 6%;
+    max-width: 1600px;
+  }
+
+  .section-spacing {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  @media (min-width: 1024px) {
+    .section-spacing {
+      padding-top: 160px;
+      padding-bottom: 160px;
+    }
+  }
+
+  .btn-luxury {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-accent);
+    color: var(--color-accent-foreground);
+    padding: 1rem 2.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    font-size: 0.875rem;
+    transition: all 0.4s ease-in-out;
+    border: none;
+  }
+
+  .btn-luxury:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+  }
+
+  .input-minimal {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.75rem 0;
+    width: 100%;
+    color: inherit;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+
+  .input-minimal:focus {
+    border-bottom-color: var(--color-accent);
+  }
+
+  .luxury-overlay {
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.8) 100%);
+  }
+}
+
+@layer utilities {
+  .text-hero {
+    font-size: clamp(3rem, 8vw, 6.25rem);
+    line-height: 1.1;
+  }
+  
+  .text-section-title {
+    font-size: clamp(2rem, 5vw, 4rem);
+    line-height: 1.2;
+  }
+
+  .text-accent-caps {
+    color: var(--color-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+}

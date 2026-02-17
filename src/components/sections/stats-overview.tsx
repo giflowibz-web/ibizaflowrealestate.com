@@ -8,7 +8,7 @@ const StatsOverview: React.FC = () => {
     >
       <div className="container">
         <div className="max-w-[900px] mx-auto text-center mb-16 lg:mb-24">
-          <span className="text-accent-caps mb-6 block">Ibiza Flow</span>
+            <span className="text-accent-caps mb-6 block">Ibiza Flow Real Estate</span>
           <h2 
             id="stats-heading"
             className="text-section-title font-serif italic mb-8"

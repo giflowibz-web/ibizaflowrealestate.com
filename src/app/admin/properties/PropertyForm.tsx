@@ -243,33 +243,67 @@ export default function PropertyForm({ initial = {}, onSave, saving }: Props) {
       )}
 
       {/* MEDIA TAB */}
-      {tab === 'media' && (
-        <div>
-          <label style={LABEL}>Image URLs</label>
-          <div style={{ display: 'flex', gap: 8, marginBottom: 16 }}>
-            <input style={{ ...INPUT, flex: 1 }} value={imgInput} onChange={e => setImgInput(e.target.value)}
-              onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addImage())}
-              placeholder="https://images.unsplash.com/..." />
-            <button type="button" onClick={addImage} style={{
-              padding: '10px 20px', background: '#c9a96e', color: '#000',
-              border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600, flexShrink: 0,
-            }}>Add</button>
+        {tab === 'media' && (
+          <div>
+            {/* Drag & Drop Upload Zone */}
+            <div
+              onDrop={handleDrop}
+              onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+              onDragLeave={() => setDragOver(false)}
+              onClick={() => fileRef.current?.click()}
+              style={{
+                border: `2px dashed ${dragOver ? '#c9a96e' : '#333'}`,
+                borderRadius: 12, padding: 40, textAlign: 'center',
+                cursor: 'pointer', marginBottom: 20,
+                background: dragOver ? '#c9a96e11' : '#0a0a0a',
+                transition: 'all 0.2s',
+              }}
+            >
+              <input
+                ref={fileRef} type="file" multiple accept="image/*"
+                style={{ display: 'none' }}
+                onChange={e => e.target.files && uploadFiles(e.target.files)}
+              />
+              {uploading ? (
+                <div style={{ color: '#c9a96e', fontSize: 15 }}>Uploading...</div>
+              ) : (
+                <>
+                  <div style={{ fontSize: 32, marginBottom: 8 }}>📸</div>
+                  <div style={{ color: '#fff', fontSize: 15, fontWeight: 600, marginBottom: 4 }}>
+                    Drag & drop photos here or click to select
+                  </div>
+                  <div style={{ color: '#555', fontSize: 13 }}>JPG, PNG, WEBP — multiple files allowed</div>
+                </>
+              )}
+            </div>
+
+            {/* URL input as alternative */}
+            <div style={{ display: 'flex', gap: 8, marginBottom: 20 }}>
+              <input style={{ ...INPUT, flex: 1 }} value={imgInput} onChange={e => setImgInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addImage())}
+                placeholder="Or paste image URL..." />
+              <button type="button" onClick={addImage} style={{
+                padding: '10px 20px', background: '#222', color: '#fff',
+                border: '1px solid #333', borderRadius: 8, cursor: 'pointer', fontWeight: 600, flexShrink: 0, fontSize: 13,
+              }}>Add URL</button>
+            </div>
+
+            {/* Image grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+              {((form.images as string[]) || []).map((img, i) => (
+                <div key={i} style={{ position: 'relative', borderRadius: 8, overflow: 'hidden', aspectRatio: '4/3', background: '#111' }}>
+                  <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <button type="button" onClick={() => removeImage(i)} style={{
+                    position: 'absolute', top: 6, right: 6, background: '#000000cc',
+                    border: 'none', color: '#fff', borderRadius: 4, cursor: 'pointer',
+                    width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12,
+                  }}>✕</button>
+                  {i === 0 && <span style={{ position: 'absolute', bottom: 6, left: 6, background: '#c9a96e', color: '#000', fontSize: 10, padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>COVER</span>}
+                </div>
+              ))}
+            </div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
-            {((form.images as string[]) || []).map((img, i) => (
-              <div key={i} style={{ position: 'relative', borderRadius: 8, overflow: 'hidden', aspectRatio: '4/3', background: '#111' }}>
-                <img src={img} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <button type="button" onClick={() => removeImage(i)} style={{
-                  position: 'absolute', top: 6, right: 6, background: '#000000aa',
-                  border: 'none', color: '#fff', borderRadius: 4, cursor: 'pointer',
-                  width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12,
-                }}>✕</button>
-                {i === 0 && <span style={{ position: 'absolute', bottom: 6, left: 6, background: '#c9a96e', color: '#000', fontSize: 10, padding: '2px 6px', borderRadius: 4, fontWeight: 700 }}>COVER</span>}
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+        )}
 
       {/* PORTALS TAB */}
       {tab === 'portals' && (

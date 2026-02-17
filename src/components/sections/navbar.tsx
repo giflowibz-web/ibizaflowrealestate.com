@@ -91,14 +91,16 @@ const Navbar = () => {
             ))}
           </ul>
 
-          {/* Centered Logo */}
-          <div className="flex-shrink-0 px-8">
-            <a href="/" className="block">
-              <span className="text-white font-display text-xl md:text-2xl tracking-[0.15em] uppercase">
-                Ibiza Flow
-              </span>
-            </a>
-          </div>
+            {/* Centered Logo */}
+            <div className="flex-shrink-0 px-8">
+              <a href="/" className="block">
+                <img
+                  src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/project-uploads/a6bda00f-9d85-4858-8c8d-a58f8ab1c935/IBIZA-FLOW-REAL-ESTATE-1-1771350716248.png?width=8000&height=8000&resize=contain"
+                  alt="Ibiza Flow Real Estate"
+                  className="h-14 md:h-16 w-auto object-contain"
+                />
+              </a>
+            </div>
 
           {/* Right Navigation (Desktop) */}
           <div className="hidden lg:flex items-center justify-end gap-10 flex-1">

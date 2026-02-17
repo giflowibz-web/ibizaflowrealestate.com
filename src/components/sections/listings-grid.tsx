@@ -32,7 +32,7 @@ const ListingsGrid = () => {
     fetch("/api/properties?limit=6&status=available")
       .then((r) => r.json())
       .then((d) => {
-        setProperties(d.properties || []);
+        setProperties(d.data || d.properties || []);
         setLoading(false);
       })
       .catch(() => setLoading(false));

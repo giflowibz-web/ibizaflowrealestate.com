@@ -2,8 +2,11 @@
 
 import React from "react";
 import { MoveRight } from "lucide-react";
+import { useLang } from "@/lib/i18n";
 
 const NewsletterSection = () => {
+  const { t } = useLang();
+
   return (
     <section className="relative w-full overflow-hidden">
       <div
@@ -19,20 +22,20 @@ const NewsletterSection = () => {
       <div className="relative z-10 flex items-center justify-center py-24 md:py-32 px-[6%]">
         <div className="w-full max-w-[680px] bg-[#0A0A0A] p-10 md:p-16 text-center">
           <div className="flex flex-col items-center space-y-6">
-            <span className="text-accent-caps text-[10px] tracking-[0.3em]">Unete</span>
+            <span className="text-accent-caps text-[10px] tracking-[0.3em]">{t.newsletter.tag}</span>
 
             <h2 className="font-display text-white text-3xl md:text-[42px] leading-tight tracking-wide uppercase">
-              Lista Exclusiva
+              {t.newsletter.title}
             </h2>
 
             <p className="text-[#A3A3A3] font-body text-sm leading-relaxed max-w-[500px]">
-              Recibe acceso anticipado a propiedades exclusivas, actualizaciones del mercado inmobiliario de Ibiza y contenido VIP directamente en tu correo.
+              {t.newsletter.subtitle}
             </p>
 
             <form className="w-full mt-8 space-y-8 text-left">
               <div className="relative group">
                 <label className="block text-white text-[11px] font-body uppercase tracking-[0.1em] mb-1">
-                  Nombre Completo *
+                  {t.newsletter.name} *
                 </label>
                 <input
                   type="text"
@@ -43,7 +46,7 @@ const NewsletterSection = () => {
 
               <div className="relative group">
                 <label className="block text-white text-[11px] font-body uppercase tracking-[0.1em] mb-1">
-                  Telefono *
+                  {t.newsletter.phone} *
                 </label>
                 <input
                   type="tel"
@@ -54,7 +57,7 @@ const NewsletterSection = () => {
 
               <div className="relative group">
                 <label className="block text-white text-[11px] font-body uppercase tracking-[0.1em] mb-1">
-                  Email *
+                  {t.newsletter.email} *
                 </label>
                 <input
                   type="email"
@@ -72,8 +75,8 @@ const NewsletterSection = () => {
                   />
                 </div>
                 <label htmlFor="consent" className="text-[10px] text-[#737373] leading-relaxed font-body">
-                  Acepto ser contactado por Ibiza Flow Real Estate por telefono, email y mensaje para servicios inmobiliarios. Puedes darte de baja en cualquier momento.{" "}
-                  <a href="#" className="underline hover:text-white transition-colors">Politica de Privacidad</a>.
+                  {t.newsletter.consent}{" "}
+                  <a href="#" className="underline hover:text-white transition-colors">{t.newsletter.privacy}</a>.
                 </label>
               </div>
 
@@ -82,7 +85,7 @@ const NewsletterSection = () => {
                   type="submit"
                   className="group relative flex items-center justify-center gap-4 bg-[#002FA7] text-white px-10 py-4 text-[12px] font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:brightness-125"
                 >
-                  ENVIAR
+                  {t.newsletter.submit}
                   <MoveRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
                 </button>
               </div>

@@ -15,8 +15,7 @@ const HeroSection = () => {
           className="absolute inset-0 h-full w-full object-cover"
           poster="https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80"
         >
-          <source src="/hero.mp4" type="video/mp4" />
-          <source src="/hero2.mp4" type="video/mp4" />
+          <source src="/hero-small.mp4" type="video/mp4" />
         </video>
         {/* Dark cinematic overlay */}
         <div

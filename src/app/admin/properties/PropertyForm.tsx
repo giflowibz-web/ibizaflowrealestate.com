@@ -40,6 +40,9 @@ export default function PropertyForm({ initial = {}, onSave, saving }: Props) {
   })
   const [tab, setTab] = useState<'details' | 'description' | 'media' | 'portals'>('details')
   const [imgInput, setImgInput] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const [dragOver, setDragOver] = useState(false)
+  const fileRef = useRef<HTMLInputElement>(null)
 
   const set = (key: keyof Property, val: any) => setForm(f => ({ ...f, [key]: val }))
 
@@ -58,6 +61,26 @@ export default function PropertyForm({ initial = {}, onSave, saving }: Props) {
     const imgs = [...((form.images as string[]) || [])]
     imgs.splice(i, 1)
     set('images', imgs)
+  }
+
+  const uploadFiles = async (files: FileList | File[]) => {
+    setUploading(true)
+    const urls: string[] = []
+    for (const file of Array.from(files)) {
+      const fd = new FormData()
+      fd.append('file', file)
+      const res = await fetch('/api/upload', { method: 'POST', body: fd })
+      const data = await res.json()
+      if (data.url) urls.push(data.url)
+    }
+    set('images', [...((form.images as string[]) || []), ...urls])
+    setUploading(false)
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    setDragOver(false)
+    if (e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files)
   }
 
   const tabs = [

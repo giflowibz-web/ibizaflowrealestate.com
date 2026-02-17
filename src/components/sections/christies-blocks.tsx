@@ -64,7 +64,7 @@ const ServicesBlocks = () => {
       label: "Compra & Venta",
       title: "Villas de Lujo",
       description: "Descubre las propiedades mas exclusivas de Ibiza. Desde villas modernas con vistas al mar hasta fincas tradicionales rodeadas de naturaleza. Nuestro equipo te acompana en cada paso del proceso.",
-      imageSrc: "https://images.unsplash.com/photo-1602343168117-bb8bbe693f0a?w=1200&q=80",
+      imageSrc: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80",
       reverse: false,
     },
     {

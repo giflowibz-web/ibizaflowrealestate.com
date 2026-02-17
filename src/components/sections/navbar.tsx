@@ -94,13 +94,8 @@ const Navbar = () => {
 
             {/* Centered Logo */}
             <div className="flex-shrink-0 px-8">
-              <a href="/" className="block text-center">
-                <span className="text-white text-2xl md:text-3xl font-serif tracking-[0.05em] leading-none">
-                  IBIZA FLOW
-                </span>
-                <span className="block text-white/60 text-[9px] md:text-[10px] uppercase tracking-[0.4em] font-body mt-1">
-                  Real Estate
-                </span>
+              <a href="/" className="block">
+                <Logo variant="light" size="md" />
               </a>
             </div>
 

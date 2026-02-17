@@ -19,7 +19,7 @@ interface Props {
 
 export default function ContactForm({ initial = {}, onSave, saving, isNew }: Props) {
   const [form, setForm] = useState<Partial<Contact>>({
-    status: 'new', type: 'buyer', language: 'en', currency: 'EUR' as any,
+    status: 'new', type: 'buyer', language: 'en',
     ...initial,
   })
 

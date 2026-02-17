@@ -1,6 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, useRef } from 'react'
 import { Property } from '@/lib/supabase'
 
 const FEATURES_OPTIONS = [

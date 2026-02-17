@@ -75,12 +75,12 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-6">
-            <span className="font-display text-lg tracking-[0.15em] uppercase">Ibiza Flow</span>
-            <span className="text-[0.75rem] text-muted-foreground">
-              &copy; {new Date().getFullYear()} Ibiza Flow Real Estate. Todos los derechos reservados.
-            </span>
-          </div>
+            <div className="flex items-center gap-6">
+              <Logo variant="dark" size="sm" />
+              <span className="text-[0.75rem] text-muted-foreground">
+                &copy; {new Date().getFullYear()} Ibiza Flow Real Estate. Todos los derechos reservados.
+              </span>
+            </div>
           
           <div className="flex gap-6 text-[0.75rem] text-muted-foreground">
             <a href="#" className="hover:text-foreground transition-colors">Politica de Privacidad</a>

@@ -66,20 +66,7 @@ const HeroSection = () => {
         </div>
       </div>
 
-      <style jsx global>{`
-        @keyframes scroll-hint {
-          0% { transform: translateY(-100%); }
-          50% { transform: translateY(0%); }
-          100% { transform: translateY(100%); }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 1.5s ease-out forwards;
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-      `}</style>
+
     </section>
   );
 };

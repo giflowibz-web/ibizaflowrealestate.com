@@ -1,12 +1,15 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { properties } from "@/data/properties";
+import { getPropertiesFromSanity } from "@/sanity/queries";
 import { Bed, Bath, Maximize, MapPin } from "lucide-react";
 
-const ListingsGrid = () => {
+const ListingsGrid = async () => {
+  const sanityProperties = await getPropertiesFromSanity();
+  const displayProperties =
+    sanityProperties.length > 0 ? sanityProperties : properties;
+
   return (
     <section className="bg-white py-24 md:py-32">
       <div className="max-w-[1400px] mx-auto px-[6%]">
@@ -25,7 +28,7 @@ const ListingsGrid = () => {
 
         {/* Listings Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {properties.map((property) => (
+          {displayProperties.map((property) => (
             <Link
               key={property.id}
               href={`/propiedades/${property.slug}`}
@@ -41,7 +44,7 @@ const ListingsGrid = () => {
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-                
+
                 {/* Status Badge */}
                 <div className="absolute top-4 left-4">
                   <span className="inline-block px-3 py-1 bg-[#002FA7] text-white text-[10px] uppercase tracking-[0.15em] font-bold">

@@ -28,12 +28,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-        <html lang="es" translate="no" className="notranslate">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-        <VisualEditsMessenger />
+    <html lang="es" translate="no" className="notranslate">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <LangProvider>
+          {children}
+          <VisualEditsMessenger />
+        </LangProvider>
       </body>
     </html>
   );

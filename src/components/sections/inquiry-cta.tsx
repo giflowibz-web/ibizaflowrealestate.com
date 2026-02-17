@@ -63,12 +63,7 @@ const InquiryCTA = () => {
         </div>
       </div>
 
-      {/* Minimal spacing adjustment to match site's large gaps */}
-      <style jsx global>{`
-        .luxury-overlay {
-          background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.6) 100%);
-        }
-      `}</style>
+
     </section>
   );
 };

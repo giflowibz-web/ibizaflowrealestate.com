@@ -60,30 +60,7 @@ const StatsOverview: React.FC = () => {
         </div>
       </div>
 
-      <style jsx global>{`
-        /* Ensuring the specific spacing and typography rules from the design system are applied */
-        .text-section-title {
-          font-size: clamp(2rem, 5vw, 4rem);
-          line-height: 1.2;
-        }
-        .text-accent-caps {
-          color: #B69E76;
-          text-transform: uppercase;
-          letter-spacing: 0.2em;
-          font-weight: 700;
-          font-size: 0.875rem;
-        }
-        .section-spacing {
-          padding-top: 120px;
-          padding-bottom: 120px;
-        }
-        @media (min-width: 1024px) {
-          .section-spacing {
-            padding-top: 160px;
-            padding-bottom: 160px;
-          }
-        }
-      `}</style>
+
     </section>
   );
 };

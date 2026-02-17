@@ -1,44 +1,23 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 
 const HeroSection = () => {
-  const [iframeLoaded, setIframeLoaded] = useState(false);
-
-  // YouTube video ID de Ibiza - vista aérea espectacular
-  const youtubeId = 'ZNlElSZoMY8';
-
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Background Video via YouTube embed */}
+      {/* Background Video local */}
       <div className="absolute inset-0 z-0">
-        {/* Poster mientras carga el iframe */}
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000"
-          style={{
-            backgroundImage:
-              'url(https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80)',
-            opacity: iframeLoaded ? 0 : 1,
-          }}
-        />
-        <iframe
-          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1&mute=1&loop=1&playlist=${youtubeId}&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&disablekb=1&playsinline=1`}
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-          onLoad={() => setIframeLoaded(true)}
-          className="absolute"
-          style={{
-            top: '50%',
-            left: '50%',
-            width: '177.78vh',
-            height: '56.25vw',
-            minWidth: '100%',
-            minHeight: '100%',
-            transform: 'translate(-50%, -50%)',
-            border: 'none',
-            pointerEvents: 'none',
-          }}
-        />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+          poster="https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80"
+        >
+          <source src="/hero.mp4" type="video/mp4" />
+          <source src="/hero2.mp4" type="video/mp4" />
+        </video>
         {/* Dark cinematic overlay */}
         <div
           className="absolute inset-0"

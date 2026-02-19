@@ -9,7 +9,8 @@ interface LogoProps {
 export default function Logo({ variant = "light", size = "md", className = "" }: LogoProps) {
   const isLight = variant === "light";
   const textColor = isLight ? "#FFFFFF" : "#0A0A0A";
-  const subColor = isLight ? "rgba(255,255,255,0.5)" : "rgba(10,10,10,0.45)";
+  const subColor = isLight ? "rgba(255,255,255,0.45)" : "rgba(10,10,10,0.4)";
+  const blueO = "#002FA7";
 
   const sizes = {
     sm:   { main: "1.05rem", sub: "0.34rem", tracking: "0.38em", subTracking: "0.50em" },
@@ -32,7 +33,7 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
         textAlign: "center",
       }}
     >
-      {/* IBIZA FLOW — single line, Didot-style serif */}
+      {/* IBIZA FL[O]W — O en azul Klein */}
       <span
         style={{
           fontSize: s.main,
@@ -45,10 +46,10 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
           whiteSpace: "nowrap",
         }}
       >
-        IBIZA FLOW
+        IBIZA FL<span style={{ color: blueO }}>O</span>W
       </span>
 
-      {/* REAL ESTATE — small, spaced */}
+      {/* REAL ESTATE */}
       <span
         style={{
           fontSize: s.sub,

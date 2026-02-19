@@ -352,11 +352,13 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               </div>
             )}
 
-            {p.description_es && (
-              <p style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 2, color: "#4a4a4a", margin: 0 }}>
-                {p.description_es}
-              </p>
-            )}
+              {p.description_es && (
+                <div style={{ borderTop: "1px solid #f0f0f0", paddingTop: 40, marginTop: 8 }}>
+                  <p style={{ fontSize: "1.15rem", fontWeight: 300, lineHeight: 2.1, color: "#3a3a3a", margin: 0, letterSpacing: "0.01em" }}>
+                    {p.description_es}
+                  </p>
+                </div>
+              )}
           </section>
 
             {/* ── INFORMACIÓN BÁSICA ── */}

@@ -7,10 +7,9 @@ const StatsOverview: React.FC = () => {
   const { t } = useLang();
 
   const stats = [
-    { value: '250+', label: t.stats.properties },
-    { value: '15+', label: t.stats.years },
-    { value: '98%', label: t.stats.clients },
-  ];
+      { value: '20+', label: t.stats.years },
+      { value: '98%', label: t.stats.clients },
+    ];
 
   return (
     <section className="bg-white py-24 md:py-32 border-t border-[#E5E0D8]">

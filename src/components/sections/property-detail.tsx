@@ -423,9 +423,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               </p>
 
               {price && (
-                <div style={{ border: "1px solid rgba(255,255,255,0.07)", padding: "9px 13px", marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ border: "1px solid rgba(255,255,255,0.07)", padding: "7px 12px", marginBottom: 14, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>Precio</span>
-                  <span style={{ fontSize: "0.78rem", fontWeight: 300, color: "#fff" }}>{price}</span>
+                  <span style={{ fontSize: "0.75rem", fontWeight: 300, color: "#fff" }}>{price}</span>
                 </div>
               )}
 

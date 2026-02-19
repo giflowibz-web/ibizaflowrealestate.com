@@ -404,21 +404,21 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
         {/* ── COLUMNA DERECHA — formulario sticky negro ──────────────────── */}
           {/* wrapper con padding-top para el gap visual */}
-          <div style={{ paddingTop: 40, paddingRight: 28, paddingBottom: 40, alignSelf: "start", position: "sticky", top: 117 }}>
+          <div style={{ paddingTop: 48, paddingRight: 32, paddingLeft: 8, paddingBottom: 40, alignSelf: "start", position: "sticky", top: 117 }}>
             <div
               id="contacto"
               style={{
                 background: "#0A0A0A",
-                padding: "32px 26px 28px",
+                padding: "24px 22px 22px",
               }}
             >
-              <p style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 6px" }}>
+              <p style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 5px" }}>
                 Póngase en contacto
               </p>
-              <h3 style={{ fontSize: "1.1rem", fontWeight: 200, color: "#fff", margin: "0 0 5px", letterSpacing: "-0.02em", lineHeight: 1.2 }}>
+              <h3 style={{ fontSize: "0.95rem", fontWeight: 200, color: "#fff", margin: "0 0 4px", letterSpacing: "-0.02em", lineHeight: 1.2 }}>
                 Solicitar información
               </h3>
-              <p style={{ fontSize: 9.5, fontWeight: 300, color: "rgba(255,255,255,0.32)", margin: "0 0 20px", lineHeight: 1.65 }}>
+              <p style={{ fontSize: 9, fontWeight: 300, color: "rgba(255,255,255,0.32)", margin: "0 0 16px", lineHeight: 1.6 }}>
                 Un agente exclusivo le atenderá en menos de 24h.
               </p>
 

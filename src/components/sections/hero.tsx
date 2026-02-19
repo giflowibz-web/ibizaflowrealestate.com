@@ -13,7 +13,8 @@ const FALLBACK_IMAGE = 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/rend
 
 const HeroSection = () => {
   const { lang } = useLang();
-  const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const PEXELS_VIDEO = 'https://videos.pexels.com/video-files/2169880/2169880-hd_1920_1080_25fps.mp4';
+  const [videoUrl, setVideoUrl] = useState<string>(PEXELS_VIDEO);
   const [videoLoaded, setVideoLoaded] = useState(false);
 
   useEffect(() => {

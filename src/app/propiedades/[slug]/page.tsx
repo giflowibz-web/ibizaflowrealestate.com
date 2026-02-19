@@ -25,7 +25,7 @@ export default async function PropertyPage({
   return (
     <>
       <Navbar />
-      <PropertyDetailClient property={data} />
+        <PropertyDetail property={data} />
       <Footer />
     </>
   );

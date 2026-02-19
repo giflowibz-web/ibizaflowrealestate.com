@@ -55,8 +55,8 @@ export default function Navbar() {
             onClick={() => setLang(lang === "es" ? "en" : "es")}
             className={`flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-bold border px-3 py-1.5 transition-all duration-300 ${
               scrolled
-                ? "border-foreground/30 text-foreground hover:border-accent hover:text-accent"
-                : "border-white/40 text-white hover:border-white hover:text-white"
+              ? "border-white/30 text-white hover:border-accent hover:text-accent"
+                  : "border-white/40 text-white hover:border-white hover:text-white"
             }`}
           >
             <span className={lang === "es" ? "opacity-100" : "opacity-40"}>ES</span>

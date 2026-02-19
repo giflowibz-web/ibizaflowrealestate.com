@@ -432,7 +432,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             )}
 
             {/* Formulario */}
-            <form onSubmit={(e) => e.preventDefault()} style={{ padding: "0 22px 22px", display: "flex", flexDirection: "column", gap: 10 }}>
+              <form onSubmit={(e) => e.preventDefault()} style={{ padding: "0 24px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
               {[
                 { label: "Nombre completo", type: "text", id: "f-name" },
                 { label: "Correo electrónico", type: "email", id: "f-email" },

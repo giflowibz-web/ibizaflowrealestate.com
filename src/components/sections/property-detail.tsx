@@ -1,132 +1,148 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, X, Bed, Bath, Maximize, MapPin } from "lucide-react";
-import Link from "next/link";
-import { type Property } from "@/lib/supabase";
+
+type Property = {
+  id: string;
+  slug: string;
+  title_es?: string;
+  title_en?: string;
+  description_es?: string;
+  description_en?: string;
+  area?: string;
+  municipality?: string;
+  island?: string;
+  price?: string | number;
+  price_on_request?: boolean;
+  status?: string;
+  listing_type?: string;
+  property_type?: string;
+  bedrooms?: number;
+  bathrooms?: number;
+  size_built?: string | number;
+  size_plot?: string | number;
+  year_built?: number;
+  features?: string[];
+  images?: string[];
+  latitude?: number | null;
+  longitude?: number | null;
+};
 
 export function PropertyDetail({ property }: { property: Property }) {
   const [currentImage, setCurrentImage] = useState(0);
-  const [showGallery, setShowGallery] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const heroRef = useRef<HTMLDivElement>(null);
 
   const images: string[] = property.images || [];
   const title = property.title_es || property.title_en || "";
   const description = property.description_es || property.description_en || "";
   const location = [property.area, property.municipality].filter(Boolean).join(", ");
+  const priceNum = typeof property.price === "string" ? parseFloat(property.price) : property.price;
   const price = property.price_on_request
     ? "Precio a consultar"
-    : property.price
-    ? `€${property.price.toLocaleString("es-ES")}`
+    : priceNum
+    ? `€${priceNum.toLocaleString("es-ES")}`
     : "";
-  const beds = property.bedrooms;
-  const baths = property.bathrooms;
-  const sqm = property.size_built;
-  const plot = property.size_plot;
   const features: string[] = property.features || [];
 
   const next = () => setCurrentImage((p) => (p + 1) % images.length);
   const prev = () => setCurrentImage((p) => (p - 1 + images.length) % images.length);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.6);
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.7);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!showModal) return;
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "Escape") setShowModal(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showModal, images.length]);
+
   return (
-    <div className="bg-white min-h-screen">
-      {/* ── STICKY HEADER ── */}
-      <div
-        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-neutral-200 transition-all duration-500 ${
-          scrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"
-        }`}
-      >
-        <div className="max-w-screen-xl mx-auto px-8 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-6">
-            <Link href="/propiedades" className="text-neutral-400 text-xs tracking-widest uppercase hover:text-black transition-colors">
-              ← Propiedades
-            </Link>
-            <span className="w-px h-4 bg-neutral-200" />
-            <span className="text-black font-light text-sm tracking-wide">{title}</span>
+    <div style={{ background: "#fff", minHeight: "100vh", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
+
+      {/* ── STICKY BAR ── */}
+      <div style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        background: "#fff",
+        borderBottom: "1px solid #e5e5e5",
+        transition: "opacity 0.4s, transform 0.4s",
+        opacity: scrolled ? 1 : 0,
+        transform: scrolled ? "translateY(0)" : "translateY(-100%)",
+        pointerEvents: scrolled ? "auto" : "none",
+      }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
+            <a href="/" style={{ color: "#999", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}>← Inicio</a>
+            <span style={{ width: 1, height: 16, background: "#e5e5e5", display: "inline-block" }} />
+            <span style={{ color: "#000", fontWeight: 300, fontSize: 13, letterSpacing: "0.05em" }}>{title}</span>
           </div>
-          <span className="text-black text-sm font-light tracking-wide">{price}</span>
+          <span style={{ color: "#000", fontWeight: 300, fontSize: 14, letterSpacing: "0.05em" }}>{price}</span>
         </div>
       </div>
 
-      {/* ── HERO ── */}
-      <div ref={heroRef} className="relative h-screen w-full overflow-hidden bg-neutral-900">
-        {images[currentImage] ? (
+      {/* ── HERO FULLSCREEN ── */}
+      <div style={{ position: "relative", height: "100vh", width: "100%", overflow: "hidden", background: "#111" }}>
+        {images[currentImage] && (
           <Image
             src={images[currentImage]}
             alt={title}
             fill
             priority
             unoptimized
-            className="object-cover"
+            style={{ objectFit: "cover", opacity: 0.9 }}
             sizes="100vw"
           />
-        ) : (
-          <div className="w-full h-full bg-neutral-900" />
         )}
+        {/* gradient overlay */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.25) 100%)" }} />
 
-        {/* gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/20" />
-
-        {/* top-left: back + status */}
-        <div className="absolute top-8 left-8 flex items-center gap-4">
-          <Link
-            href="/propiedades"
-            className="text-white/70 text-xs tracking-[0.2em] uppercase hover:text-white transition-colors"
-          >
-            ← Volver
-          </Link>
-          {property.status && (
-            <span className="px-3 py-1 border border-white/40 text-white text-[10px] tracking-[0.3em] uppercase">
-              {property.status === "available" ? "Disponible" : property.status}
+        {/* top nav */}
+        <div style={{ position: "absolute", top: 32, left: 40, display: "flex", alignItems: "center", gap: 20 }}>
+          <a href="/" style={{ color: "rgba(255,255,255,0.7)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}>← Volver</a>
+          {property.status === "available" && (
+            <span style={{ padding: "4px 12px", border: "1px solid rgba(255,255,255,0.4)", color: "#fff", fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase" }}>
+              Disponible
             </span>
           )}
         </div>
 
         {/* bottom: title + price */}
-        <div className="absolute bottom-0 left-0 right-0 px-10 pb-14 flex items-end justify-between">
-          <div className="max-w-2xl">
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 40px 56px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+          <div style={{ maxWidth: 700 }}>
             {location && (
-              <p className="text-white/50 text-xs tracking-[0.25em] uppercase mb-3 flex items-center gap-2">
-                <MapPin className="w-3 h-3" />
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 12 }}>
                 {location}
               </p>
             )}
-            <h1 className="text-white text-4xl md:text-6xl font-extralight leading-[1.1] tracking-tight">
+            <h1 style={{ color: "#fff", fontSize: "clamp(2.2rem, 5vw, 4rem)", fontWeight: 200, lineHeight: 1.1, letterSpacing: "-0.01em", margin: 0 }}>
               {title}
             </h1>
           </div>
-          <div className="text-right hidden md:block">
-            <p className="text-white/40 text-[10px] tracking-[0.3em] uppercase mb-1">Precio</p>
-            <p className="text-white text-3xl font-extralight">{price}</p>
-          </div>
+          {price && (
+            <div style={{ textAlign: "right" }}>
+              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 4 }}>Precio</p>
+              <p style={{ color: "#fff", fontSize: "clamp(1.4rem, 2.5vw, 2rem)", fontWeight: 200, letterSpacing: "0.02em" }}>{price}</p>
+            </div>
+          )}
         </div>
 
-        {/* image nav */}
+        {/* image counter */}
         {images.length > 1 && (
           <>
+            <button onClick={prev} style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, border: "1px solid rgba(255,255,255,0.3)", background: "transparent", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>‹</button>
+            <button onClick={next} style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, border: "1px solid rgba(255,255,255,0.3)", background: "transparent", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>›</button>
             <button
-              onClick={prev}
-              className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
-            <button
-              onClick={next}
-              className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </button>
-            <button
-              onClick={() => setShowGallery(true)}
-              className="absolute bottom-14 right-10 text-white/60 text-[10px] tracking-[0.25em] uppercase hover:text-white transition-colors hidden md:block"
+              onClick={() => setShowModal(true)}
+              style={{ position: "absolute", bottom: 56, right: 40, color: "rgba(255,255,255,0.6)", fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", background: "transparent", border: "none", cursor: "pointer" }}
             >
               Ver todas las fotos ({images.length})
             </button>
@@ -135,90 +151,91 @@ export function PropertyDetail({ property }: { property: Property }) {
       </div>
 
       {/* ── STATS BAR ── */}
-      <div className="border-b border-neutral-100 bg-neutral-50">
-        <div className="max-w-screen-xl mx-auto px-10 py-8 flex flex-wrap gap-12">
-          {!!beds && (
-            <div className="flex items-center gap-3">
-              <Bed className="w-4 h-4 text-neutral-400" />
-              <div>
-                <p className="text-black text-xl font-extralight">{beds}</p>
-                <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Habitaciones</p>
-              </div>
-            </div>
-          )}
-          {!!baths && (
-            <div className="flex items-center gap-3">
-              <Bath className="w-4 h-4 text-neutral-400" />
-              <div>
-                <p className="text-black text-xl font-extralight">{baths}</p>
-                <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Baños</p>
-              </div>
-            </div>
-          )}
-          {!!sqm && (
-            <div className="flex items-center gap-3">
-              <Maximize className="w-4 h-4 text-neutral-400" />
-              <div>
-                <p className="text-black text-xl font-extralight">{sqm} m²</p>
-                <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Construido</p>
-              </div>
-            </div>
-          )}
-          {!!plot && plot > 0 && (
+      <div style={{ borderBottom: "1px solid #f0f0f0", background: "#fafafa" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 40px", display: "flex", flexWrap: "wrap", gap: 48 }}>
+          {!!property.bedrooms && (
             <div>
-              <p className="text-black text-xl font-extralight">{plot.toLocaleString("es-ES")} m²</p>
-              <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Parcela</p>
+              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0, letterSpacing: "-0.01em" }}>{property.bedrooms}</p>
+              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Habitaciones</p>
+            </div>
+          )}
+          {!!property.bathrooms && (
+            <div>
+              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0, letterSpacing: "-0.01em" }}>{property.bathrooms}</p>
+              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Baños</p>
+            </div>
+          )}
+          {!!property.size_built && (
+            <div>
+              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0, letterSpacing: "-0.01em" }}>{property.size_built} m²</p>
+              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Construido</p>
+            </div>
+          )}
+          {!!property.size_plot && Number(property.size_plot) > 0 && (
+            <div>
+              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0, letterSpacing: "-0.01em" }}>{Number(property.size_plot).toLocaleString("es-ES")} m²</p>
+              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Parcela</p>
             </div>
           )}
           {!!property.year_built && (
             <div>
-              <p className="text-black text-xl font-extralight">{property.year_built}</p>
-              <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Año</p>
+              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0 }}>{property.year_built}</p>
+              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Año</p>
+            </div>
+          )}
+          {property.listing_type && (
+            <div>
+              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0 }}>{property.listing_type === "sale" ? "Venta" : "Alquiler"}</p>
+              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Tipo</p>
             </div>
           )}
         </div>
       </div>
 
-      {/* ── BODY: description + contact ── */}
-      <div className="max-w-screen-xl mx-auto px-10 py-20 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-20">
-        {/* left */}
-        <div>
-          <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-6">Sobre la propiedad</p>
-          <p className="text-neutral-700 text-lg font-light leading-[1.9]">{description}</p>
+      {/* ── BODY ── */}
+      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "80px 40px", display: "grid", gridTemplateColumns: "1fr 360px", gap: 80 }}>
 
+        {/* LEFT */}
+        <div>
+          {/* Description */}
+          <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", marginBottom: 24 }}>Sobre la propiedad</p>
+          <p style={{ fontSize: 17, fontWeight: 300, lineHeight: 1.9, color: "#444", margin: 0 }}>{description}</p>
+
+          {/* Features */}
           {features.length > 0 && (
-            <div className="mt-16">
-              <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-8">Características</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
+            <div style={{ marginTop: 64 }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", marginBottom: 32 }}>Características</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
                 {features.map((f, i) => (
-                  <div key={i} className="py-3 border-b border-neutral-100 flex items-center gap-3">
-                    <span className="w-1 h-1 rounded-full bg-neutral-400 shrink-0" />
-                    <span className="text-neutral-600 text-sm font-light">{f}</span>
+                  <div key={i} style={{ padding: "12px 0", borderBottom: "1px solid #f0f0f0", display: "flex", alignItems: "center", gap: 12 }}>
+                    <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#ccc", flexShrink: 0 }} />
+                    <span style={{ fontSize: 13, fontWeight: 300, color: "#555" }}>{f}</span>
                   </div>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Map placeholder */}
+          {/* Map */}
           {location && (
-            <div className="mt-16">
-              <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-6">Ubicación</p>
-              <div className="w-full h-72 bg-neutral-100 flex items-center justify-center border border-neutral-200">
-                <div className="text-center">
-                  <MapPin className="w-6 h-6 text-neutral-300 mx-auto mb-2" />
-                  <p className="text-neutral-400 text-sm font-light">{location}</p>
+            <div style={{ marginTop: 64 }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", marginBottom: 24 }}>Ubicación</p>
+              <div style={{ width: "100%", height: 320, background: "#f5f5f5", border: "1px solid #e8e8e8", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div style={{ textAlign: "center" }}>
+                  <p style={{ fontSize: 20, margin: "0 0 8px", color: "#ccc" }}>◎</p>
+                  <p style={{ fontSize: 13, fontWeight: 300, color: "#999", margin: 0 }}>{location}</p>
+                  {property.island && <p style={{ fontSize: 11, color: "#bbb", margin: "4px 0 0", letterSpacing: "0.1em" }}>{property.island}</p>}
                 </div>
               </div>
             </div>
           )}
         </div>
 
-        {/* right: contact */}
-        <div className="lg:sticky lg:top-24 self-start">
-          <div className="border border-neutral-200 p-8">
-            <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-2">Contacto</p>
-            <h3 className="text-black text-2xl font-extralight mb-8">Solicitar visita privada</h3>
+        {/* RIGHT: contact */}
+        <div style={{ position: "sticky", top: 90, alignSelf: "start" }}>
+          <div style={{ border: "1px solid #e5e5e5", padding: 36 }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", margin: "0 0 8px" }}>Contacto</p>
+            <h3 style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: "0 0 32px", letterSpacing: "-0.01em" }}>Solicitar visita privada</h3>
             <ContactForm propertyTitle={title} />
           </div>
         </div>
@@ -226,27 +243,31 @@ export function PropertyDetail({ property }: { property: Property }) {
 
       {/* ── GALLERY GRID ── */}
       {images.length > 1 && (
-        <div className="bg-neutral-50 py-20">
-          <div className="max-w-screen-xl mx-auto px-10">
-            <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-10">Galería</p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+        <div style={{ background: "#fafafa", padding: "80px 0" }}>
+          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px" }}>
+            <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", marginBottom: 32 }}>Galería</p>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 4 }}>
               {images.map((src, i) => (
                 <div
                   key={i}
-                  className={`relative overflow-hidden cursor-pointer group ${
-                    i === 0 ? "col-span-2 aspect-[16/9]" : "aspect-[4/3]"
-                  }`}
-                  onClick={() => { setCurrentImage(i); setShowGallery(true); }}
+                  onClick={() => { setCurrentImage(i); setShowModal(true); }}
+                  style={{
+                    position: "relative",
+                    aspectRatio: i === 0 ? "16/9" : "4/3",
+                    gridColumn: i === 0 ? "span 2" : "span 1",
+                    overflow: "hidden",
+                    cursor: "pointer",
+                    background: "#eee",
+                  }}
                 >
                   <Image
                     src={src}
                     alt={`${title} ${i + 1}`}
                     fill
                     unoptimized
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    sizes="(max-width: 768px) 50vw, 33vw"
+                    style={{ objectFit: "cover", transition: "transform 0.6s ease" }}
+                    sizes="(max-width: 768px) 100vw, 33vw"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                 </div>
               ))}
             </div>
@@ -254,38 +275,23 @@ export function PropertyDetail({ property }: { property: Property }) {
         </div>
       )}
 
-      {/* ── GALLERY MODAL ── */}
-      {showGallery && (
-        <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center">
-          <button
-            onClick={() => setShowGallery(false)}
-            className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-colors"
-          >
-            <X className="w-6 h-6" />
-          </button>
-          <button
-            onClick={prev}
-            className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <div className="relative w-[85vw] h-[80vh]">
+      {/* ── MODAL ── */}
+      {showModal && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.95)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <button onClick={() => setShowModal(false)} style={{ position: "absolute", top: 24, right: 24, background: "transparent", border: "none", color: "rgba(255,255,255,0.6)", fontSize: 28, cursor: "pointer", lineHeight: 1 }}>×</button>
+          <button onClick={prev} style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, border: "1px solid rgba(255,255,255,0.2)", background: "transparent", color: "#fff", cursor: "pointer", fontSize: 20 }}>‹</button>
+          <div style={{ position: "relative", width: "85vw", height: "80vh" }}>
             <Image
               src={images[currentImage]}
               alt={`${title} ${currentImage + 1}`}
               fill
               unoptimized
-              className="object-contain"
+              style={{ objectFit: "contain" }}
               sizes="85vw"
             />
           </div>
-          <button
-            onClick={next}
-            className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/30 text-xs tracking-[0.3em]">
+          <button onClick={next} style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, border: "1px solid rgba(255,255,255,0.2)", background: "transparent", color: "#fff", cursor: "pointer", fontSize: 20 }}>›</button>
+          <p style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "0.3em" }}>
             {currentImage + 1} / {images.length}
           </p>
         </div>
@@ -316,47 +322,50 @@ function ContactForm({ propertyTitle }: { propertyTitle: string }) {
 
   if (sent) {
     return (
-      <div className="py-8 text-center">
-        <p className="text-black text-lg font-extralight">Mensaje enviado</p>
-        <p className="text-neutral-400 text-sm mt-1">Nos pondremos en contacto pronto.</p>
+      <div style={{ padding: "32px 0", textAlign: "center" }}>
+        <p style={{ fontSize: 18, fontWeight: 200, color: "#000", margin: "0 0 8px" }}>Mensaje enviado</p>
+        <p style={{ fontSize: 13, fontWeight: 300, color: "#999", margin: 0 }}>Nos pondremos en contacto pronto.</p>
       </div>
     );
   }
 
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    borderBottom: "1px solid #e0e0e0",
+    borderTop: "none",
+    borderLeft: "none",
+    borderRight: "none",
+    background: "transparent",
+    padding: "12px 0",
+    fontSize: 13,
+    fontWeight: 300,
+    color: "#000",
+    outline: "none",
+    boxSizing: "border-box",
+  };
+
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      {[
-        { key: "name", label: "Nombre completo", type: "text", required: true },
-        { key: "email", label: "Correo electrónico", type: "email", required: true },
-        { key: "phone", label: "Teléfono", type: "tel", required: false },
-      ].map(({ key, label, type, required }) => (
-        <input
-          key={key}
-          type={type}
-          placeholder={label}
-          required={required}
-          value={form[key as keyof typeof form]}
-          onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
-          className="w-full border-b border-neutral-200 bg-transparent py-3 text-sm font-light text-black placeholder-neutral-400 focus:outline-none focus:border-black transition-colors"
-        />
-      ))}
+    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <input type="text" placeholder="Nombre completo" required value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} style={inputStyle} />
+      <input type="email" placeholder="Correo electrónico" required value={form.email} onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))} style={inputStyle} />
+      <input type="tel" placeholder="Teléfono" value={form.phone} onChange={(e) => setForm(f => ({ ...f, phone: e.target.value }))} style={inputStyle} />
       <textarea
         placeholder="Mensaje (opcional)"
         rows={3}
         value={form.message}
-        onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
-        className="w-full border-b border-neutral-200 bg-transparent py-3 text-sm font-light text-black placeholder-neutral-400 focus:outline-none focus:border-black transition-colors resize-none"
+        onChange={(e) => setForm(f => ({ ...f, message: e.target.value }))}
+        style={{ ...inputStyle, resize: "none" }}
       />
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-4 bg-black text-white text-[11px] tracking-[0.3em] uppercase hover:bg-neutral-800 transition-colors disabled:opacity-50 mt-2"
+        style={{ marginTop: 8, padding: "14px", background: "#000", color: "#fff", border: "none", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.5 : 1 }}
       >
         {loading ? "Enviando..." : "Enviar consulta"}
       </button>
       <a
         href="tel:+34600000000"
-        className="block w-full py-4 border border-neutral-200 text-black text-[11px] tracking-[0.3em] uppercase text-center hover:border-black transition-colors"
+        style={{ display: "block", padding: "14px", border: "1px solid #e5e5e5", color: "#000", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", textAlign: "center", textDecoration: "none" }}
       >
         Llamar
       </a>

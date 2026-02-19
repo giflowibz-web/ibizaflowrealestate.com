@@ -10,38 +10,42 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const light = variant === "light";
 
   const sizes = {
-    sm: { ibiza: 18, flow: 20, sub: 6.5, lineW: 18, gap: 4 },
-    md: { ibiza: 22, flow: 25, sub: 7.5, lineW: 24, gap: 5 },
-    lg: { ibiza: 28, flow: 32, sub: 9,   lineW: 30, gap: 6 },
+    sm: { ibiza: 17, flow: 19, sub: 6, lineW: 16, gap: 4 },
+    md: { ibiza: 21, flow: 24, sub: 7, lineW: 22, gap: 5 },
+    lg: { ibiza: 27, flow: 31, sub: 8.5, lineW: 28, gap: 6 },
   };
   const s = sizes[size];
+
+  const ibizaColor = light ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.85)";
+  const flowColor  = "#002FA7";
+  const subColor   = light ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.35)";
+  const lineColor  = light ? "rgba(255,255,255,0.25)" : "rgba(0,47,167,0.2)";
 
   return (
     <div
       className={`flex flex-col items-center select-none leading-none ${className}`}
       translate="no"
     >
-      {/* IBIZA · FLOW en una línea */}
-      <div className="flex items-baseline gap-[0.35em]">
+      {/* IBIZA · FLOW */}
+      <div className="flex items-baseline" style={{ gap: "0.3em" }}>
         <span
           style={{
             fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
             fontSize: s.ibiza,
             fontWeight: 300,
-            letterSpacing: "0.35em",
-            color: light ? "rgba(255,255,255,0.92)" : "rgba(0,0,0,0.85)",
+            letterSpacing: "0.38em",
+            color: ibizaColor,
           }}
         >
           IBIZA
         </span>
 
-        {/* separador punto dorado */}
         <span
           style={{
-            fontSize: s.ibiza * 0.5,
-            color: "#C9A96E",
+            fontSize: s.ibiza * 0.45,
+            color: flowColor,
+            opacity: 0.6,
             letterSpacing: 0,
-            lineHeight: 1,
             alignSelf: "center",
             marginBottom: 1,
           }}
@@ -49,33 +53,27 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
           ·
         </span>
 
-          <span
-            style={{
-              fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-              fontSize: s.flow,
-              fontWeight: 700,
-              letterSpacing: "0.3em",
-              background: "linear-gradient(135deg, #C9A96E 0%, #F0D080 45%, #C9A96E 75%, #A07840 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            FLOW
-          </span>
+        <span
+          style={{
+            fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
+            fontSize: s.flow,
+            fontWeight: 700,
+            letterSpacing: "0.32em",
+            color: flowColor,
+          }}
+        >
+          FLOW
+        </span>
       </div>
 
-      {/* línea dorada + subtítulo */}
-      <div
-        className="flex items-center"
-        style={{ gap: s.gap, marginTop: 5 }}
-      >
+      {/* línea + REAL ESTATE */}
+      <div className="flex items-center" style={{ gap: s.gap, marginTop: 4 }}>
         <span
           style={{
             display: "block",
-            height: 1,
+            height: "0.5px",
             width: s.lineW,
-            background: "linear-gradient(90deg, transparent, #C9A96E)",
+            background: lineColor,
           }}
         />
         <span
@@ -83,9 +81,9 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
             fontFamily: "sans-serif",
             fontWeight: 300,
             fontSize: s.sub,
-            letterSpacing: "0.55em",
+            letterSpacing: "0.5em",
             textTransform: "uppercase",
-            color: light ? "rgba(255,255,255,0.45)" : "rgba(0,0,0,0.35)",
+            color: subColor,
           }}
         >
           REAL ESTATE
@@ -93,9 +91,9 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
         <span
           style={{
             display: "block",
-            height: 1,
+            height: "0.5px",
             width: s.lineW,
-            background: "linear-gradient(90deg, #C9A96E, transparent)",
+            background: lineColor,
           }}
         />
       </div>

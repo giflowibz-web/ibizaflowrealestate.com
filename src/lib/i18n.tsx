@@ -315,10 +315,12 @@ const LangContext = createContext<LangContextType>({
 
 export function LangProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLangState] = useState<Lang>("es");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem("ibizaflow-lang") as Lang | null;
     if (saved === "es" || saved === "en") setLangState(saved);
+    setMounted(true);
   }, []);
 
   const setLang = (l: Lang) => {
@@ -326,8 +328,11 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("ibizaflow-lang", l);
   };
 
+  // Suppress hydration mismatch: always render with "es" on first paint
+  const effectiveLang = mounted ? lang : "es";
+
   return (
-    <LangContext.Provider value={{ lang, setLang, t: translations[lang] }}>
+    <LangContext.Provider value={{ lang: effectiveLang, setLang, t: translations[effectiveLang] }}>
       {children}
     </LangContext.Provider>
   );

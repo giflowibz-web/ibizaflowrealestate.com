@@ -57,10 +57,66 @@ function formatPrice(p: number | string | null | undefined, currency = "EUR") {
   }).format(n);
 }
 
+// SVG icons minimalistas
+const IconBed = () => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="13" width="22" height="10" rx="1" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
+    <rect x="3" y="9" width="9" height="6" rx="1" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
+    <rect x="16" y="9" width="9" height="6" rx="1" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
+    <line x1="3" y1="23" x2="3" y2="26" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="25" y1="23" x2="25" y2="26" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="3" y1="13" x2="3" y2="9" stroke="#0A0A0A" strokeWidth="1.2"/>
+    <line x1="25" y1="13" x2="25" y2="9" stroke="#0A0A0A" strokeWidth="1.2"/>
+  </svg>
+);
+
+const IconBath = () => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 14h18v4a6 6 0 01-6 6H11a6 6 0 01-6-6v-4z" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
+    <path d="M8 14V8a3 3 0 016 0v1" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
+    <line x1="12" y1="24" x2="10" y2="27" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="16" y1="24" x2="18" y2="27" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
+  </svg>
+);
+
+const IconArea = () => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="4" width="20" height="20" rx="1" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
+    <path d="M4 10h4M4 16h4M10 4v4M16 4v4" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
+    <text x="10" y="21" fontSize="7" fill="#0A0A0A" fontWeight="400" fontFamily="sans-serif">m²</text>
+  </svg>
+);
+
+const IconPlot = () => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="14,3 25,10 25,22 3,22 3,10" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
+    <line x1="3" y1="22" x2="25" y2="22" stroke="#0A0A0A" strokeWidth="1.2"/>
+    <line x1="3" y1="10" x2="3" y2="22" stroke="#0A0A0A" strokeWidth="1.2"/>
+    <line x1="25" y1="10" x2="25" y2="22" stroke="#0A0A0A" strokeWidth="1.2"/>
+  </svg>
+);
+
+const IconYear = () => (
+  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="6" width="20" height="18" rx="1.5" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
+    <line x1="4" y1="11" x2="24" y2="11" stroke="#0A0A0A" strokeWidth="1.2"/>
+    <line x1="9" y1="4" x2="9" y2="9" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
+    <line x1="19" y1="4" x2="19" y2="9" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
+    <circle cx="14" cy="17" r="1.5" fill="#002FA7"/>
+  </svg>
+);
+
+const statIcons: Record<string, React.ReactNode> = {
+  Habitaciones: <IconBed />,
+  Baños: <IconBath />,
+  Superficie: <IconArea />,
+  Parcela: <IconPlot />,
+  Año: <IconYear />,
+};
+
 export default function PropertyDetail({ property: p }: { property: Property }) {
   const images = p.images?.filter(Boolean) ?? [];
   const mainImage = images[0] ?? "";
-  const galleryImages = images.slice(1);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
 
   const price = p.price_on_request
@@ -142,9 +198,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       )}
 
       {/* ─── HERO BANNER fullscreen ─── */}
-      <section
-        style={{ position: "relative", width: "100%", height: "100vh", minHeight: 640, background: "#0A0A0A", overflow: "hidden" }}
-      >
+      <section style={{ position: "relative", width: "100%", height: "100vh", minHeight: 640, background: "#0A0A0A", overflow: "hidden" }}>
         {mainImage && (
           <img
             src={mainImage}
@@ -152,7 +206,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
           />
         )}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 38%, rgba(0,0,0,0.78) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.82) 100%)" }} />
 
         {/* Badge + botón galería */}
         <div style={{ position: "absolute", top: 96, left: 52, right: 52, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -173,7 +227,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 52px 72px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
           <div style={{ flex: 1 }}>
             {location && (
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 18px" }}>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 16px" }}>
                 {location}
               </p>
             )}
@@ -196,15 +250,24 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
       </section>
 
-      {/* ─── STATS BAR ─── */}
+      {/* ─── STATS BAR con iconos SVG ─── */}
       {stats.length > 0 && (
-        <section style={{ background: "#fff", borderTop: "1px solid #e8e8e8", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+        <section style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
           {stats.map((d, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px 52px", borderRight: i < stats.length - 1 ? "1px solid #e8e8e8" : "none" }}>
-              <span style={{ color: "#0A0A0A", fontSize: "clamp(1.4rem, 2.2vw, 2rem)", fontWeight: 200, letterSpacing: "-0.03em", lineHeight: 1 }}>
+            <div
+              key={i}
+              style={{
+                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                padding: "22px 56px",
+                borderRight: i < stats.length - 1 ? "1px solid #e8e8e8" : "none",
+                gap: 8,
+              }}
+            >
+              <div style={{ opacity: 0.85 }}>{statIcons[d.label]}</div>
+              <span style={{ color: "#0A0A0A", fontSize: "clamp(1.3rem, 2vw, 1.8rem)", fontWeight: 200, letterSpacing: "-0.03em", lineHeight: 1 }}>
                 {d.value}
               </span>
-              <span style={{ color: "#002FA7", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginTop: 7 }}>
+              <span style={{ color: "#002FA7", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase" }}>
                 {d.label}
               </span>
             </div>
@@ -212,8 +275,8 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </section>
       )}
 
-      {/* ─── LAYOUT 2 COLUMNAS: contenido izquierda + formulario sticky derecha ─── */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 420px", alignItems: "start", background: "#fff" }}>
+      {/* ─── LAYOUT 2 COLUMNAS ─── */}
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 400px", alignItems: "start", background: "#fff" }}>
 
         {/* COLUMNA IZQUIERDA */}
         <div>
@@ -314,20 +377,20 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           )}
         </div>
 
-        {/* COLUMNA DERECHA — formulario STICKY */}
-        <div style={{ position: "sticky", top: 0, height: "100vh", background: "#0A0A0A", display: "flex", flexDirection: "column", justifyContent: "center", padding: "64px 48px", overflowY: "auto" }}>
+        {/* COLUMNA DERECHA — formulario STICKY negro */}
+        <div style={{ position: "sticky", top: 0, height: "100vh", background: "#0A0A0A", display: "flex", flexDirection: "column", justifyContent: "center", padding: "56px 44px", overflowY: "auto" }}>
           <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 10px" }}>Contacte con nosotros</p>
-          <h3 style={{ fontSize: "1.6rem", fontWeight: 200, color: "#fff", margin: "0 0 8px", letterSpacing: "-0.025em", lineHeight: 1.15 }}>
+          <h3 style={{ fontSize: "1.5rem", fontWeight: 200, color: "#fff", margin: "0 0 8px", letterSpacing: "-0.025em", lineHeight: 1.15 }}>
             Solicitar información
           </h3>
-          <p style={{ fontSize: 12, fontWeight: 300, color: "rgba(255,255,255,0.4)", margin: "0 0 36px", lineHeight: 1.7 }}>
+          <p style={{ fontSize: 11, fontWeight: 300, color: "rgba(255,255,255,0.38)", margin: "0 0 32px", lineHeight: 1.7 }}>
             Un agente exclusivo se pondrá en contacto con usted en menos de 24 horas.
           </p>
 
           {price && (
-            <div style={{ border: "1px solid rgba(255,255,255,0.08)", padding: "14px 20px", marginBottom: 32, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>Precio</span>
-              <span style={{ fontSize: "0.95rem", fontWeight: 300, color: "#fff" }}>{price}</span>
+            <div style={{ border: "1px solid rgba(255,255,255,0.08)", padding: "13px 18px", marginBottom: 28, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)" }}>Precio</span>
+              <span style={{ fontSize: "0.9rem", fontWeight: 300, color: "#fff" }}>{price}</span>
             </div>
           )}
 
@@ -337,29 +400,29 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               { label: "Correo electrónico", type: "email", id: "em" },
               { label: "Teléfono", type: "tel", id: "ph" },
             ].map((field) => (
-              <div key={field.id} style={{ marginBottom: 24 }}>
-                <label htmlFor={field.id} style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>
+              <div key={field.id} style={{ marginBottom: 22 }}>
+                <label htmlFor={field.id} style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", marginBottom: 9 }}>
                   {field.label}
                 </label>
                 <input
                   id={field.id}
                   type={field.type}
-                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.15)", padding: "10px 0", fontSize: 14, fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
+                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.13)", padding: "10px 0", fontSize: 14, fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
                 />
               </div>
             ))}
-            <div style={{ marginBottom: 32 }}>
-              <label htmlFor="msgc" style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 10 }}>Mensaje</label>
+            <div style={{ marginBottom: 28 }}>
+              <label htmlFor="msgc" style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.28)", marginBottom: 9 }}>Mensaje</label>
               <textarea
                 id="msgc"
                 rows={3}
                 defaultValue={`Me interesa: ${p.title_es}`}
-                style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.15)", padding: "10px 0", fontSize: 14, fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
+                style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.13)", padding: "10px 0", fontSize: 14, fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
               />
             </div>
             <button
               type="submit"
-              style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "16px 32px", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer" }}
+              style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "15px 32px", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer" }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0037c4"; }}
               onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#002FA7"; }}
             >
@@ -375,23 +438,21 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
             <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>Galería</p>
 
-            {/* Primera foto grande */}
             {images[0] && (
               <div
                 onClick={() => setActiveIdx(0)}
-                style={{ width: "100%", height: 620, overflow: "hidden", cursor: "pointer", marginBottom: 4 }}
+                style={{ width: "100%", height: 640, overflow: "hidden", cursor: "pointer", marginBottom: 4 }}
               >
                 <img
                   src={images[0]}
                   alt={p.title_es}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.8s ease" }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.9s ease" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.04)"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
                 />
               </div>
             )}
 
-            {/* Resto en grid */}
             {images.length > 1 && (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 4 }}>
                 {images.slice(1).map((img, i) => (
@@ -403,7 +464,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                     <img
                       src={img}
                       alt={`${p.title_es} ${i + 2}`}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.8s ease" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.9s ease" }}
                       onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)"; }}
                       onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
                     />
@@ -414,13 +475,6 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           </div>
         </section>
       )}
-
-      <style>{`
-        @media (max-width: 960px) {
-          .prop-grid { grid-template-columns: 1fr !important; }
-          .prop-sticky { position: relative !important; height: auto !important; top: auto !important; }
-        }
-      `}</style>
     </>
   );
 }

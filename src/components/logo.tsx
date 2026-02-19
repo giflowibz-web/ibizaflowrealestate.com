@@ -27,17 +27,18 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
         IBIZA
       </span>
 
-      {/* FLOW grande */}
-      <span
-        className={`font-serif font-normal ${light ? "text-white" : "text-[#0a0a0a]"}`}
-        style={{
-          fontSize: s.flow === "text-[22px]" ? "22px" : s.flow === "text-[30px]" ? "30px" : "40px",
-          letterSpacing: "0.25em",
-          marginTop: "-2px",
-        }}
-      >
-        FLOW
-      </span>
+        {/* FLOW grande */}
+        <span
+          className="font-serif font-normal"
+          style={{
+            fontSize: s.flow === "text-[22px]" ? "22px" : s.flow === "text-[30px]" ? "30px" : "40px",
+            letterSpacing: "0.25em",
+            marginTop: "-2px",
+            color: "#002FA7",
+          }}
+        >
+          FLOW
+        </span>
 
       {/* línea + Real Estate */}
       <div className={`flex items-center ${s.gap}`} style={{ marginTop: "5px" }}>

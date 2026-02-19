@@ -16,7 +16,7 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const colors = variant === "light"
     ? { main: "text-white", sub: "text-white/60", accent: "#002FA7" }
     : { main: "text-black", sub: "text-black/50", accent: "#002FA7" };
-  const s = sizeMap[size];
+  const s = sizeMap[size ?? "sm"];
 
   return (
     <div className={`flex flex-col items-center select-none ${className}`} translate="no">

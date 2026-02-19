@@ -6,26 +6,108 @@ interface LogoProps {
   className?: string;
 }
 
-const sizeMap = {
-  sm: { main: "text-xl", sub: "text-[7px] tracking-[0.35em]", gap: "mt-0.5" },
-  md: { main: "text-3xl md:text-4xl", sub: "text-[9px] md:text-[10px] tracking-[0.4em]", gap: "mt-1" },
-  lg: { main: "text-4xl md:text-5xl", sub: "text-[11px] md:text-[13px] tracking-[0.45em]", gap: "mt-2" },
-};
-
 export default function Logo({ variant = "light", size = "md", className = "" }: LogoProps) {
-  const colors = variant === "light"
-    ? { main: "text-white", sub: "text-white/60", accent: "#002FA7" }
-    : { main: "text-black", sub: "text-black/50", accent: "#002FA7" };
-  const s = sizeMap[size];
+  const isLight = variant === "light";
+
+  const subColor = isLight ? "rgba(255,255,255,0.45)" : "rgba(10,10,10,0.45)";
+  const accentColor = "#002FA7";
+
+  const sizes = {
+    sm: {
+      ibiza: "0.55rem",
+      flow: "1.6rem",
+      sub: "0.48rem",
+      tracking: "0.42em",
+      gap: "2px",
+      lineW: "28px",
+    },
+    md: {
+      ibiza: "0.65rem",
+      flow: "2.4rem",
+      sub: "0.55rem",
+      tracking: "0.42em",
+      gap: "3px",
+      lineW: "36px",
+    },
+    lg: {
+      ibiza: "0.75rem",
+      flow: "3.2rem",
+      sub: "0.62rem",
+      tracking: "0.44em",
+      gap: "4px",
+      lineW: "44px",
+    },
+  };
+
+  const s = sizes[size];
 
   return (
-    <div className={`flex flex-col items-center select-none ${className}`}>
-      <span className={`${colors.main} ${s.main} font-serif tracking-[0.08em] leading-none font-normal`}>
-        IBIZA <span style={{ color: colors.accent }}>FLOW</span>
+    <div
+      className={className}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        userSelect: "none",
+      }}
+    >
+      {/* IBIZA — pequeño, muy espaciado */}
+      <span
+        style={{
+          fontSize: s.ibiza,
+          fontWeight: 400,
+          letterSpacing: "0.55em",
+          textTransform: "uppercase",
+          color: subColor,
+          fontFamily: "var(--font-body, 'Gilroy', sans-serif)",
+          marginBottom: s.gap,
+          paddingLeft: "0.55em",
+        }}
+      >
+        IBIZA
       </span>
-      <span className={`block ${colors.sub} ${s.sub} uppercase font-body ${s.gap}`}>
-        Real Estate
+
+      {/* FLOW — serif bold, azul Klein, protagonista */}
+      <span
+        style={{
+          fontSize: s.flow,
+          fontWeight: 700,
+          letterSpacing: "0.18em",
+          textTransform: "uppercase",
+          color: accentColor,
+          fontFamily: "'Playfair Display', serif",
+          lineHeight: 1,
+          paddingLeft: "0.18em",
+        }}
+      >
+        FLOW
       </span>
+
+      {/* líneas + REAL ESTATE */}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          marginTop: s.gap,
+        }}
+      >
+        <span style={{ display: "block", width: s.lineW, height: "0.5px", background: subColor }} />
+        <span
+          style={{
+            fontSize: s.sub,
+            fontWeight: 400,
+            letterSpacing: s.tracking,
+            textTransform: "uppercase",
+            color: subColor,
+            fontFamily: "var(--font-body, 'Gilroy', sans-serif)",
+            paddingLeft: s.tracking,
+          }}
+        >
+          Real Estate
+        </span>
+        <span style={{ display: "block", width: s.lineW, height: "0.5px", background: subColor }} />
+      </div>
     </div>
   );
 }

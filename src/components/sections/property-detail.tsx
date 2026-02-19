@@ -403,74 +403,69 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
 
         {/* ── COLUMNA DERECHA — formulario sticky negro ──────────────────── */}
-        <div
-          id="contacto"
-            style={{
-              position: "sticky",
-              top: 137, /* navbar 68px + subnav 49px + 20px gap */
-              height: "calc(100vh - 157px)",
-              background: "#0A0A0A",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              padding: "28px 28px",
-              overflowY: "auto",
-              marginTop: 20,
-            }}
-        >
-          <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>
-            Póngase en contacto
-          </p>
-          <h3 style={{ fontSize: "1.25rem", fontWeight: 200, color: "#fff", margin: "0 0 6px", letterSpacing: "-0.02em", lineHeight: 1.15 }}>
-            Solicitar información
-          </h3>
-          <p style={{ fontSize: 10, fontWeight: 300, color: "rgba(255,255,255,0.35)", margin: "0 0 24px", lineHeight: 1.7 }}>
-            Un agente exclusivo se pondrá en contacto con usted en menos de 24 horas.
-          </p>
-
-          {price && (
-            <div style={{ border: "1px solid rgba(255,255,255,0.07)", padding: "11px 15px", marginBottom: 22, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <span style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>Precio</span>
-              <span style={{ fontSize: "0.82rem", fontWeight: 300, color: "#fff" }}>{price}</span>
-            </div>
-          )}
-
-          <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column" }}>
-            {[
-              { label: "Nombre completo", type: "text", id: "nm" },
-              { label: "Correo electrónico", type: "email", id: "em" },
-              { label: "Teléfono", type: "tel", id: "ph" },
-            ].map((field) => (
-              <div key={field.id} style={{ marginBottom: 18 }}>
-                <label htmlFor={field.id} style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 7 }}>
-                  {field.label}
-                </label>
-                <input
-                  id={field.id}
-                  type={field.type}
-                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.11)", padding: "8px 0", fontSize: 13, fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
-                />
-              </div>
-            ))}
-            <div style={{ marginBottom: 22 }}>
-              <label htmlFor="msgc" style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)", marginBottom: 7 }}>Mensaje</label>
-              <textarea
-                id="msgc"
-                rows={3}
-                defaultValue={`Me interesa: ${p.title_es}`}
-                style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.11)", padding: "8px 0", fontSize: 13, fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
-              />
-            </div>
-            <button
-              type="submit"
-              style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "13px 0", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", transition: "background 0.2s" }}
-              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0037c4"; }}
-              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#002FA7"; }}
+          {/* wrapper con padding-top para el gap visual */}
+          <div style={{ paddingTop: 40, paddingRight: 28, paddingBottom: 40, alignSelf: "start", position: "sticky", top: 117 }}>
+            <div
+              id="contacto"
+              style={{
+                background: "#0A0A0A",
+                padding: "32px 26px 28px",
+              }}
             >
-              Enviar solicitud
-            </button>
-          </form>
-        </div>
+              <p style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 6px" }}>
+                Póngase en contacto
+              </p>
+              <h3 style={{ fontSize: "1.1rem", fontWeight: 200, color: "#fff", margin: "0 0 5px", letterSpacing: "-0.02em", lineHeight: 1.2 }}>
+                Solicitar información
+              </h3>
+              <p style={{ fontSize: 9.5, fontWeight: 300, color: "rgba(255,255,255,0.32)", margin: "0 0 20px", lineHeight: 1.65 }}>
+                Un agente exclusivo le atenderá en menos de 24h.
+              </p>
+
+              {price && (
+                <div style={{ border: "1px solid rgba(255,255,255,0.07)", padding: "9px 13px", marginBottom: 18, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: 8, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>Precio</span>
+                  <span style={{ fontSize: "0.78rem", fontWeight: 300, color: "#fff" }}>{price}</span>
+                </div>
+              )}
+
+              <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column" }}>
+                {[
+                  { label: "Nombre completo", type: "text", id: "nm" },
+                  { label: "Correo electrónico", type: "email", id: "em" },
+                  { label: "Teléfono", type: "tel", id: "ph" },
+                ].map((field) => (
+                  <div key={field.id} style={{ marginBottom: 14 }}>
+                    <label htmlFor={field.id} style={{ display: "block", fontSize: 8, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 5 }}>
+                      {field.label}
+                    </label>
+                    <input
+                      id={field.id}
+                      type={field.type}
+                      style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "6px 0", fontSize: 12, fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
+                    />
+                  </div>
+                ))}
+                <div style={{ marginBottom: 18 }}>
+                  <label htmlFor="msgc" style={{ display: "block", fontSize: 8, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 5 }}>Mensaje</label>
+                  <textarea
+                    id="msgc"
+                    rows={3}
+                    defaultValue={`Me interesa: ${p.title_es}`}
+                    style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "6px 0", fontSize: 12, fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "11px 0", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", transition: "background 0.2s" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0037c4"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#002FA7"; }}
+                >
+                  Enviar solicitud
+                </button>
+              </form>
+            </div>
+          </div>
       </div>
 
       {/* ── GALERÍA FULLWIDTH negra ──────────────────────────────────────── */}

@@ -10,7 +10,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1920&q=85';
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1920&q=85';
 
 const HeroSection = () => {
   const { lang } = useLang();

@@ -1,136 +1,99 @@
 "use client";
 
-import React, { useState } from 'react';
-import { Search } from 'lucide-react';
 import { useLang } from '@/lib/i18n';
 import { useRouter } from 'next/navigation';
 
 const HeroSection = () => {
   const { t, lang } = useLang();
   const router = useRouter();
-  const [search, setSearch] = useState('');
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (search.trim()) {
-      router.push(`/propiedades?q=${encodeURIComponent(search.trim())}`);
-    } else {
-      router.push('/propiedades');
-    }
-  };
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 h-full w-full object-cover opacity-70"
-          poster="https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80"
-        >
-          <source src="/hero-small.mp4" type="video/mp4" />
-        </video>
-        {/* Gradient overlay */}
-        <div className="absolute inset-0" style={{
-          background: 'linear-gradient(160deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.65) 100%)'
-        }} />
+        <img
+          src="https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80"
+          alt="Ibiza"
+          className="h-full w-full object-cover opacity-60"
+        />
+        <div className="absolute inset-0 bg-black/30" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">
-        <div className="max-w-5xl w-full">
+        <div className="max-w-4xl w-full">
 
-          {/* Tag */}
-          <div className="flex items-center justify-center gap-3 mb-8">
-            <div className="h-px w-8 bg-[#002FA7]" />
-            <p className="font-body text-[11px] uppercase tracking-[0.4em] text-white/60">
-              {t.hero.tag}
+          {/* Tag line */}
+          <div className="flex items-center justify-center gap-3 mb-10">
+            <div className="h-px w-10 bg-white/40" />
+            <p className="font-body text-[10px] uppercase tracking-[0.5em] text-white/50">
+              {lang === 'es' ? 'Propiedades Exclusivas · Ibiza' : 'Exclusive Properties · Ibiza'}
             </p>
-            <div className="h-px w-8 bg-[#002FA7]" />
+            <div className="h-px w-10 bg-white/40" />
           </div>
 
           {/* Title */}
           <h1
-            className="font-display text-white mb-8 uppercase"
+            className="font-display text-white mb-8 uppercase tracking-tight"
             style={{
-              fontSize: 'clamp(3.5rem, 9vw, 8rem)',
+              fontSize: 'clamp(3rem, 8vw, 7.5rem)',
               lineHeight: '0.95',
-              fontWeight: '400',
+              fontWeight: '300',
               letterSpacing: '-0.01em',
             }}
           >
-            {t.hero.title1}
+            {lang === 'es' ? 'Tu Vida' : 'Your Life'}
             <br />
-            <span className="italic font-normal" style={{ fontStyle: 'italic' }}>
-              {t.hero.title2}
+            <span className="italic font-light">
+              {lang === 'es' ? 'en Ibiza' : 'in Ibiza'}
             </span>
           </h1>
 
           {/* Subtitle */}
           <p
-            className="font-body text-white/70 mb-12 mx-auto"
+            className="font-body text-white/60 mb-14 mx-auto"
             style={{
-              fontSize: 'clamp(0.9rem, 1.6vw, 1.1rem)',
-              lineHeight: '1.7',
+              fontSize: 'clamp(0.85rem, 1.4vw, 1rem)',
+              lineHeight: '1.8',
               fontWeight: '300',
-              letterSpacing: '0.04em',
-              maxWidth: '520px',
+              letterSpacing: '0.06em',
+              maxWidth: '460px',
             }}
           >
-            {t.hero.subtitle}
+            {lang === 'es'
+              ? 'Selección de villas, fincas y apartamentos de lujo en la isla más especial del Mediterráneo.'
+              : 'A curated selection of luxury villas, fincas and apartments on the most special island in the Mediterranean.'}
           </p>
 
-          {/* Search bar */}
-          <form onSubmit={handleSearch} className="mx-auto mb-10 max-w-2xl">
-            <div className="flex items-stretch bg-white/10 backdrop-blur-md border border-white/20 hover:border-white/40 transition-colors duration-300">
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                placeholder={lang === 'es' ? 'Buscar por zona, tipo, precio...' : 'Search by area, type, price...'}
-                className="flex-1 bg-transparent px-6 py-4 text-white placeholder-white/40 text-[13px] tracking-wide outline-none font-body"
-              />
-              <button
-                type="submit"
-                className="flex items-center gap-2 bg-[#002FA7] px-7 py-4 text-white text-[11px] uppercase tracking-[0.2em] font-bold hover:bg-[#0038c8] transition-colors duration-300 font-body"
-              >
-                <Search size={14} strokeWidth={2} />
-                {lang === 'es' ? 'Buscar' : 'Search'}
-              </button>
-            </div>
-          </form>
-
-          {/* CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            {[
-              lang === 'es' ? 'Villas' : 'Villas',
-              lang === 'es' ? 'Fincas' : 'Fincas',
-              lang === 'es' ? 'Apartamentos' : 'Apartments',
-              lang === 'es' ? 'Frente al Mar' : 'Sea Front',
-            ].map((tag) => (
-              <button
-                key={tag}
-                onClick={() => router.push(`/propiedades?q=${encodeURIComponent(tag)}`)}
-                className="px-4 py-2 border border-white/20 text-white/60 text-[11px] uppercase tracking-[0.18em] font-body hover:border-white/60 hover:text-white transition-all duration-300"
-              >
-                {tag}
-              </button>
-            ))}
+          {/* CTA */}
+          <div className="flex items-center justify-center gap-4">
+            <button
+              onClick={() => router.push('/propiedades')}
+              className="font-body text-[11px] uppercase tracking-[0.25em] text-white border border-white/40 px-10 py-4 hover:bg-white hover:text-black transition-all duration-400"
+            >
+              {lang === 'es' ? 'Ver Propiedades' : 'View Properties'}
+            </button>
+            <button
+              onClick={() => {
+                const el = document.getElementById('contacto');
+                el?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="font-body text-[11px] uppercase tracking-[0.25em] text-white/50 hover:text-white transition-colors duration-300"
+            >
+              {lang === 'es' ? 'Contactar' : 'Contact'}
+            </button>
           </div>
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 md:block">
+      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
         <div className="flex flex-col items-center gap-3">
           <div className="relative h-12 w-[1px] overflow-hidden bg-white/15">
-            <div className="absolute left-0 top-0 h-full w-full -translate-y-full animate-[scroll-hint_2.5s_infinite] bg-[#002FA7]" />
+            <div className="absolute left-0 top-0 h-full w-full -translate-y-full animate-[scroll-hint_2.5s_infinite] bg-white/60" />
           </div>
-          <span className="font-body text-[9px] uppercase tracking-[0.4em] text-white/35">
-            {t.hero.scroll}
+          <span className="font-body text-[9px] uppercase tracking-[0.4em] text-white/30">
+            {lang === 'es' ? 'Desplazar' : 'Scroll'}
           </span>
         </div>
       </div>

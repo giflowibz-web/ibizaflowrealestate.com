@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { VisualEditsMessenger } from "orchids-visual-edits";
 import { LangProvider } from "@/lib/i18n";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,6 +31,12 @@ export default function RootLayout({
   return (
     <html lang="es" translate="no" className="notranslate">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <Script
+          id="orchids-browser-logs"
+          src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts/orchids-browser-logs.js"
+          strategy="afterInteractive"
+          data-orchids-project-id="a6bda00f-9d85-4858-8c8d-a58f8ab1c935"
+        />
         <LangProvider>
           {children}
           <VisualEditsMessenger />

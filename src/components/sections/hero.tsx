@@ -4,19 +4,29 @@ import { useLang } from '@/lib/i18n';
 import { useRouter } from 'next/navigation';
 
 const HeroSection = () => {
-  const { t, lang } = useLang();
+  const { lang } = useLang();
   const router = useRouter();
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Background */}
+      {/* Video de fondo */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80"
-          alt="Ibiza"
-          className="h-full w-full object-cover opacity-60"
-        />
-        <div className="absolute inset-0 bg-black/30" />
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="h-full w-full object-cover opacity-70"
+        >
+          <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-ibiza-coastline-4047/1080p.mp4" type="video/mp4" />
+          {/* Fallback imagen */}
+          <img
+            src="https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80"
+            alt="Ibiza"
+            className="h-full w-full object-cover"
+          />
+        </video>
+        <div className="absolute inset-0 bg-black/40" />
       </div>
 
       {/* Content */}

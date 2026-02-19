@@ -39,9 +39,9 @@ export default function Navbar() {
             <a
               key={item.href}
               href={item.href}
-              className={`text-[11px] uppercase tracking-[0.18em] font-bold transition-colors duration-300 hover:text-accent ${
-                scrolled ? "text-foreground" : "text-white/90"
-              }`}
+            className={`text-[11px] uppercase tracking-[0.18em] font-bold transition-colors duration-300 hover:text-accent ${
+                  scrolled ? "text-white/90" : "text-white/90"
+                }`}
             >
               {item.label}
             </a>

@@ -1,374 +1,325 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-type Property = {
+interface Property {
   id: string;
   slug: string;
-  title_es?: string;
-  title_en?: string;
-  description_es?: string;
-  description_en?: string;
-  area?: string;
-  municipality?: string;
-  island?: string;
-  price?: string | number;
-  price_on_request?: boolean;
-  status?: string;
-  listing_type?: string;
-  property_type?: string;
-  bedrooms?: number;
-  bathrooms?: number;
-  size_built?: string | number;
-  size_plot?: string | number;
-  year_built?: number;
-  features?: string[];
-  images?: string[];
-  latitude?: number | null;
-  longitude?: number | null;
-};
+  title_es: string;
+  title_en: string;
+  description_es: string;
+  description_en: string;
+  price: string;
+  price_rent: string | null;
+  currency: string;
+  price_on_request: boolean;
+  area: string;
+  municipality: string;
+  island: string;
+  country: string;
+  address: string;
+  latitude: number | null;
+  longitude: number | null;
+  bedrooms: number;
+  bathrooms: number;
+  size_built: string;
+  size_plot: string;
+  year_built: number | null;
+  property_type: string;
+  listing_type: string;
+  status: string;
+  features: string[];
+  images: string[];
+  ref: string | null;
+  virtual_tour_url: string;
+}
 
-export function PropertyDetail({ property }: { property: Property }) {
-  const [currentImage, setCurrentImage] = useState(0);
-  const [showModal, setShowModal] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+function formatPrice(price: string, currency: string) {
+  const num = parseFloat(price);
+  if (isNaN(num)) return price;
+  return new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency: currency || "EUR",
+    maximumFractionDigits: 0,
+  }).format(num);
+}
 
-  const images: string[] = property.images || [];
-  const title = property.title_es || property.title_en || "";
-  const description = property.description_es || property.description_en || "";
-  const location = [property.area, property.municipality].filter(Boolean).join(", ");
-  const priceNum = typeof property.price === "string" ? parseFloat(property.price) : property.price;
-  const price = property.price_on_request
+export function PropertyDetail({ property: p }: { property: Property }) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
+
+  const images = p.images?.length ? p.images : ["/placeholder.jpg"];
+  const location = [p.area, p.municipality, p.island].filter(Boolean).join(", ");
+  const priceLabel = p.price_on_request
     ? "Precio a consultar"
-    : priceNum
-    ? `€${priceNum.toLocaleString("es-ES")}`
-    : "";
-  const features: string[] = property.features || [];
+    : formatPrice(p.price, p.currency);
 
-  const next = () => setCurrentImage((p) => (p + 1) % images.length);
-  const prev = () => setCurrentImage((p) => (p - 1 + images.length) % images.length);
+  const stats = [
+    p.bedrooms ? { label: "Dormitorios", value: String(p.bedrooms) } : null,
+    p.bathrooms ? { label: "Baños", value: String(p.bathrooms) } : null,
+    p.size_built && p.size_built !== "0" ? { label: "Superficie", value: `${p.size_built} m²` } : null,
+    p.size_plot && p.size_plot !== "0" ? { label: "Parcela", value: `${p.size_plot} m²` } : null,
+    p.year_built ? { label: "Año", value: String(p.year_built) } : null,
+    p.property_type ? { label: "Tipo", value: p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1) } : null,
+  ].filter(Boolean) as { label: string; value: string }[];
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.7);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (!showModal) return;
-      if (e.key === "ArrowRight") next();
-      if (e.key === "ArrowLeft") prev();
-      if (e.key === "Escape") setShowModal(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [showModal, images.length]);
+  function prevLightbox() {
+    setLightboxIndex((i) => (i === null ? 0 : (i - 1 + images.length) % images.length));
+  }
+  function nextLightbox() {
+    setLightboxIndex((i) => (i === null ? 0 : (i + 1) % images.length));
+  }
 
   return (
-    <div style={{ background: "#fff", minHeight: "100vh", fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif" }}>
-
-      {/* ── STICKY BAR ── */}
-      <div style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
-        background: "#fff",
-        borderBottom: "1px solid #e5e5e5",
-        transition: "opacity 0.4s, transform 0.4s",
-        opacity: scrolled ? 1 : 0,
-        transform: scrolled ? "translateY(0)" : "translateY(-100%)",
-        pointerEvents: scrolled ? "auto" : "none",
-      }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-            <a href="/" style={{ color: "#999", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}>← Inicio</a>
-            <span style={{ width: 1, height: 16, background: "#e5e5e5", display: "inline-block" }} />
-            <span style={{ color: "#000", fontWeight: 300, fontSize: 13, letterSpacing: "0.05em" }}>{title}</span>
-          </div>
-          <span style={{ color: "#000", fontWeight: 300, fontSize: 14, letterSpacing: "0.05em" }}>{price}</span>
-        </div>
-      </div>
-
-      {/* ── HERO FULLSCREEN ── */}
-      <div style={{ position: "relative", height: "100vh", width: "100%", overflow: "hidden", background: "#111" }}>
-        {images[currentImage] && (
-          <Image
-            src={images[currentImage]}
-            alt={title}
-            fill
-            priority
-            unoptimized
-            style={{ objectFit: "cover", opacity: 0.9 }}
-            sizes="100vw"
-          />
-        )}
-        {/* gradient overlay */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.25) 100%)" }} />
-
-        {/* top nav */}
-        <div style={{ position: "absolute", top: 32, left: 40, display: "flex", alignItems: "center", gap: 20 }}>
-          <a href="/" style={{ color: "rgba(255,255,255,0.7)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}>← Volver</a>
-          {property.status === "available" && (
-            <span style={{ padding: "4px 12px", border: "1px solid rgba(255,255,255,0.4)", color: "#fff", fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase" }}>
-              Disponible
-            </span>
+    <div className="bg-white min-h-screen">
+      {/* GALLERY — fullscreen masonry style */}
+      <div className="grid grid-cols-4 grid-rows-2 h-[70vh] gap-1 pt-20">
+        {/* Main large image */}
+        <div
+          className="col-span-2 row-span-2 relative cursor-pointer overflow-hidden"
+          onClick={() => setLightboxIndex(0)}
+        >
+          {images[0] && (
+            <Image
+              src={images[0]}
+              alt={p.title_es}
+              fill
+              className="object-cover hover:scale-105 transition-transform duration-700"
+              priority
+            />
           )}
         </div>
-
-        {/* bottom: title + price */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 40px 56px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-          <div style={{ maxWidth: 700 }}>
-            {location && (
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: 12 }}>
-                {location}
-              </p>
+        {/* Side images */}
+        {[1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            className="relative cursor-pointer overflow-hidden bg-neutral-100"
+            onClick={() => setLightboxIndex(i)}
+          >
+            {images[i] ? (
+              <Image
+                src={images[i]}
+                alt={`${p.title_es} ${i + 1}`}
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-700"
+              />
+            ) : (
+              <div className="w-full h-full bg-neutral-200" />
             )}
-            <h1 style={{ color: "#fff", fontSize: "clamp(2.2rem, 5vw, 4rem)", fontWeight: 200, lineHeight: 1.1, letterSpacing: "-0.01em", margin: 0 }}>
-              {title}
+            {i === 4 && images.length > 5 && (
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                <span className="text-white text-sm tracking-widest uppercase font-light">
+                  +{images.length - 5} fotos
+                </span>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* HEADER — title, location, price */}
+      <div className="border-b border-neutral-200">
+        <div className="max-w-7xl mx-auto px-8 py-10 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+          <div>
+            <p className="text-xs tracking-[0.25em] uppercase text-neutral-400 mb-2 font-light">
+              {location}
+            </p>
+            <h1 className="text-4xl md:text-5xl font-extralight text-neutral-900 tracking-tight leading-tight">
+              {p.title_es}
             </h1>
           </div>
-          {price && (
-            <div style={{ textAlign: "right" }}>
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", marginBottom: 4 }}>Precio</p>
-              <p style={{ color: "#fff", fontSize: "clamp(1.4rem, 2.5vw, 2rem)", fontWeight: 200, letterSpacing: "0.02em" }}>{price}</p>
-            </div>
-          )}
-        </div>
-
-        {/* image counter */}
-        {images.length > 1 && (
-          <>
-            <button onClick={prev} style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, border: "1px solid rgba(255,255,255,0.3)", background: "transparent", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>‹</button>
-            <button onClick={next} style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, border: "1px solid rgba(255,255,255,0.3)", background: "transparent", color: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18 }}>›</button>
-            <button
-              onClick={() => setShowModal(true)}
-              style={{ position: "absolute", bottom: 56, right: 40, color: "rgba(255,255,255,0.6)", fontSize: 10, letterSpacing: "0.25em", textTransform: "uppercase", background: "transparent", border: "none", cursor: "pointer" }}
-            >
-              Ver todas las fotos ({images.length})
-            </button>
-          </>
-        )}
-      </div>
-
-      {/* ── STATS BAR ── */}
-      <div style={{ borderBottom: "1px solid #f0f0f0", background: "#fafafa" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "32px 40px", display: "flex", flexWrap: "wrap", gap: 48 }}>
-          {!!property.bedrooms && (
-            <div>
-              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0, letterSpacing: "-0.01em" }}>{property.bedrooms}</p>
-              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Habitaciones</p>
-            </div>
-          )}
-          {!!property.bathrooms && (
-            <div>
-              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0, letterSpacing: "-0.01em" }}>{property.bathrooms}</p>
-              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Baños</p>
-            </div>
-          )}
-          {!!property.size_built && (
-            <div>
-              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0, letterSpacing: "-0.01em" }}>{property.size_built} m²</p>
-              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Construido</p>
-            </div>
-          )}
-          {!!property.size_plot && Number(property.size_plot) > 0 && (
-            <div>
-              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0, letterSpacing: "-0.01em" }}>{Number(property.size_plot).toLocaleString("es-ES")} m²</p>
-              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Parcela</p>
-            </div>
-          )}
-          {!!property.year_built && (
-            <div>
-              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0 }}>{property.year_built}</p>
-              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Año</p>
-            </div>
-          )}
-          {property.listing_type && (
-            <div>
-              <p style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: 0 }}>{property.listing_type === "sale" ? "Venta" : "Alquiler"}</p>
-              <p style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "#999", margin: "4px 0 0" }}>Tipo</p>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ── BODY ── */}
-      <div style={{ maxWidth: 1280, margin: "0 auto", padding: "80px 40px", display: "grid", gridTemplateColumns: "1fr 360px", gap: 80 }}>
-
-        {/* LEFT */}
-        <div>
-          {/* Description */}
-          <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", marginBottom: 24 }}>Sobre la propiedad</p>
-          <p style={{ fontSize: 17, fontWeight: 300, lineHeight: 1.9, color: "#444", margin: 0 }}>{description}</p>
-
-          {/* Features */}
-          {features.length > 0 && (
-            <div style={{ marginTop: 64 }}>
-              <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", marginBottom: 32 }}>Características</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
-                {features.map((f, i) => (
-                  <div key={i} style={{ padding: "12px 0", borderBottom: "1px solid #f0f0f0", display: "flex", alignItems: "center", gap: 12 }}>
-                    <span style={{ width: 4, height: 4, borderRadius: "50%", background: "#ccc", flexShrink: 0 }} />
-                    <span style={{ fontSize: 13, fontWeight: 300, color: "#555" }}>{f}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Map */}
-          {location && (
-            <div style={{ marginTop: 64 }}>
-              <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", marginBottom: 24 }}>Ubicación</p>
-              <div style={{ width: "100%", height: 320, background: "#f5f5f5", border: "1px solid #e8e8e8", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <div style={{ textAlign: "center" }}>
-                  <p style={{ fontSize: 20, margin: "0 0 8px", color: "#ccc" }}>◎</p>
-                  <p style={{ fontSize: 13, fontWeight: 300, color: "#999", margin: 0 }}>{location}</p>
-                  {property.island && <p style={{ fontSize: 11, color: "#bbb", margin: "4px 0 0", letterSpacing: "0.1em" }}>{property.island}</p>}
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* RIGHT: contact */}
-        <div style={{ position: "sticky", top: 90, alignSelf: "start" }}>
-          <div style={{ border: "1px solid #e5e5e5", padding: 36 }}>
-            <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", margin: "0 0 8px" }}>Contacto</p>
-            <h3 style={{ fontSize: 22, fontWeight: 200, color: "#000", margin: "0 0 32px", letterSpacing: "-0.01em" }}>Solicitar visita privada</h3>
-            <ContactForm propertyTitle={title} />
+          <div className="text-right">
+            <p className="text-xs tracking-[0.2em] uppercase text-neutral-400 mb-1 font-light">Precio</p>
+            <p className="text-3xl font-extralight text-neutral-900 tracking-tight">{priceLabel}</p>
           </div>
         </div>
       </div>
 
-      {/* ── GALLERY GRID ── */}
-      {images.length > 1 && (
-        <div style={{ background: "#fafafa", padding: "80px 0" }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", padding: "0 40px" }}>
-            <p style={{ fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "#999", marginBottom: 32 }}>Galería</p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 4 }}>
-              {images.map((src, i) => (
-                <div
-                  key={i}
-                  onClick={() => { setCurrentImage(i); setShowModal(true); }}
-                  style={{
-                    position: "relative",
-                    aspectRatio: i === 0 ? "16/9" : "4/3",
-                    gridColumn: i === 0 ? "span 2" : "span 1",
-                    overflow: "hidden",
-                    cursor: "pointer",
-                    background: "#eee",
-                  }}
-                >
-                  <Image
-                    src={src}
-                    alt={`${title} ${i + 1}`}
-                    fill
-                    unoptimized
-                    style={{ objectFit: "cover", transition: "transform 0.6s ease" }}
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                  />
+      {/* STATS BAR */}
+      {stats.length > 0 && (
+        <div className="border-b border-neutral-200 bg-neutral-50">
+          <div className="max-w-7xl mx-auto px-8 py-6 flex flex-wrap gap-8 md:gap-16">
+            {stats.map((s) => (
+              <div key={s.label} className="flex flex-col">
+                <span className="text-[10px] tracking-[0.2em] uppercase text-neutral-400 mb-1 font-light">{s.label}</span>
+                <span className="text-xl font-extralight text-neutral-900">{s.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* BODY — 2 columns */}
+      <div className="max-w-7xl mx-auto px-8 py-16 grid grid-cols-1 lg:grid-cols-3 gap-16">
+        {/* LEFT — description + features + map */}
+        <div className="lg:col-span-2 space-y-16">
+          {/* Description */}
+          <div>
+            <h2 className="text-xs tracking-[0.25em] uppercase text-neutral-400 mb-6 font-light">Descripción</h2>
+            <p className="text-neutral-600 font-light leading-relaxed text-lg">{p.description_es}</p>
+          </div>
+
+          {/* Divider */}
+          <div className="border-t border-neutral-200" />
+
+          {/* Details grid */}
+          <div>
+            <h2 className="text-xs tracking-[0.25em] uppercase text-neutral-400 mb-8 font-light">Detalles</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-8">
+              {[
+                { label: "Tipo de propiedad", value: p.property_type },
+                { label: "Estado", value: p.listing_type === "sale" ? "En venta" : "En alquiler" },
+                { label: "Dormitorios", value: p.bedrooms ? `${p.bedrooms}` : "—" },
+                { label: "Baños", value: p.bathrooms ? `${p.bathrooms}` : "—" },
+                { label: "Superficie construida", value: p.size_built && p.size_built !== "0" ? `${p.size_built} m²` : "—" },
+                { label: "Superficie parcela", value: p.size_plot && p.size_plot !== "0" ? `${p.size_plot} m²` : "—" },
+                { label: "Año de construcción", value: p.year_built ? `${p.year_built}` : "—" },
+                { label: "Municipio", value: p.municipality || "—" },
+                { label: "Isla", value: p.island || "—" },
+                p.ref ? { label: "Referencia", value: p.ref } : null,
+              ].filter(Boolean).map((item) => (
+                <div key={item!.label} className="border-b border-neutral-100 pb-4">
+                  <p className="text-[10px] tracking-[0.2em] uppercase text-neutral-400 mb-1 font-light">{item!.label}</p>
+                  <p className="text-sm font-light text-neutral-800 capitalize">{item!.value}</p>
                 </div>
               ))}
             </div>
           </div>
-        </div>
-      )}
 
-      {/* ── MODAL ── */}
-      {showModal && (
-        <div style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(0,0,0,0.95)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <button onClick={() => setShowModal(false)} style={{ position: "absolute", top: 24, right: 24, background: "transparent", border: "none", color: "rgba(255,255,255,0.6)", fontSize: 28, cursor: "pointer", lineHeight: 1 }}>×</button>
-          <button onClick={prev} style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, border: "1px solid rgba(255,255,255,0.2)", background: "transparent", color: "#fff", cursor: "pointer", fontSize: 20 }}>‹</button>
-          <div style={{ position: "relative", width: "85vw", height: "80vh" }}>
-            <Image
-              src={images[currentImage]}
-              alt={`${title} ${currentImage + 1}`}
-              fill
-              unoptimized
-              style={{ objectFit: "contain" }}
-              sizes="85vw"
-            />
+          {/* Features */}
+          {p.features && p.features.length > 0 && (
+            <>
+              <div className="border-t border-neutral-200" />
+              <div>
+                <h2 className="text-xs tracking-[0.25em] uppercase text-neutral-400 mb-8 font-light">Características</h2>
+                <ul className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  {p.features.map((f) => (
+                    <li key={f} className="text-sm font-light text-neutral-600 flex items-center gap-2">
+                      <span className="w-1 h-1 bg-neutral-400 rounded-full flex-shrink-0" />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          )}
+
+          {/* Map */}
+          <div className="border-t border-neutral-200 pt-16">
+            <h2 className="text-xs tracking-[0.25em] uppercase text-neutral-400 mb-6 font-light">Ubicación</h2>
+            <p className="text-sm font-light text-neutral-500 mb-4">{location}</p>
+            {p.latitude && p.longitude ? (
+              <div className="w-full h-72 rounded overflow-hidden">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  src={`https://www.google.com/maps?q=${p.latitude},${p.longitude}&z=14&output=embed`}
+                />
+              </div>
+            ) : (
+              <div className="w-full h-72 bg-neutral-100 flex items-center justify-center">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  src={`https://www.google.com/maps?q=${encodeURIComponent(location + ", España")}&z=13&output=embed`}
+                />
+              </div>
+            )}
           </div>
-          <button onClick={next} style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", width: 44, height: 44, border: "1px solid rgba(255,255,255,0.2)", background: "transparent", color: "#fff", cursor: "pointer", fontSize: 20 }}>›</button>
-          <p style={{ position: "absolute", bottom: 24, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.3)", fontSize: 11, letterSpacing: "0.3em" }}>
-            {currentImage + 1} / {images.length}
-          </p>
+        </div>
+
+        {/* RIGHT — contact form sticky */}
+        <div className="lg:col-span-1">
+          <div className="sticky top-28 border border-neutral-200 p-8">
+            <p className="text-xs tracking-[0.25em] uppercase text-neutral-400 mb-1 font-light">Solicitar información</p>
+            <h3 className="text-xl font-extralight text-neutral-900 mb-8">{p.title_es}</h3>
+
+            <div className="space-y-4">
+              {[
+                { id: "name", label: "Nombre", type: "text", placeholder: "Su nombre" },
+                { id: "email", label: "Email", type: "email", placeholder: "correo@ejemplo.com" },
+                { id: "phone", label: "Teléfono", type: "tel", placeholder: "+34 600 000 000" },
+              ].map((field) => (
+                <div key={field.id}>
+                  <label className="block text-[10px] tracking-[0.2em] uppercase text-neutral-400 mb-1 font-light">
+                    {field.label}
+                  </label>
+                  <input
+                    type={field.type}
+                    placeholder={field.placeholder}
+                    value={formData[field.id as keyof typeof formData]}
+                    onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
+                    className="w-full border-b border-neutral-200 py-2 text-sm font-light text-neutral-800 placeholder-neutral-300 focus:outline-none focus:border-neutral-900 bg-transparent transition-colors"
+                  />
+                </div>
+              ))}
+              <div>
+                <label className="block text-[10px] tracking-[0.2em] uppercase text-neutral-400 mb-1 font-light">
+                  Mensaje
+                </label>
+                <textarea
+                  rows={4}
+                  placeholder="Me interesa esta propiedad..."
+                  value={formData.message}
+                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                  className="w-full border-b border-neutral-200 py-2 text-sm font-light text-neutral-800 placeholder-neutral-300 focus:outline-none focus:border-neutral-900 bg-transparent transition-colors resize-none"
+                />
+              </div>
+              <button className="w-full bg-neutral-900 text-white text-xs tracking-[0.25em] uppercase py-4 font-light hover:bg-neutral-700 transition-colors mt-4">
+                Enviar consulta
+              </button>
+            </div>
+
+            <div className="mt-8 pt-8 border-t border-neutral-100 text-center">
+              <p className="text-[10px] tracking-[0.2em] uppercase text-neutral-400 mb-1 font-light">Contacto directo</p>
+              <a href="tel:+34971000000" className="text-sm font-light text-neutral-700 hover:text-neutral-900">
+                +34 971 000 000
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* LIGHTBOX */}
+      {lightboxIndex !== null && (
+        <div className="fixed inset-0 bg-black z-50 flex items-center justify-center">
+          <button
+            onClick={() => setLightboxIndex(null)}
+            className="absolute top-6 right-6 text-white/70 hover:text-white transition-colors z-10"
+          >
+            <X size={28} />
+          </button>
+          <button
+            onClick={prevLightbox}
+            className="absolute left-6 text-white/70 hover:text-white transition-colors z-10"
+          >
+            <ChevronLeft size={40} />
+          </button>
+          <button
+            onClick={nextLightbox}
+            className="absolute right-16 text-white/70 hover:text-white transition-colors z-10"
+          >
+            <ChevronRight size={40} />
+          </button>
+          <div className="relative w-full h-full max-w-6xl max-h-[90vh] mx-auto px-20 py-12">
+            <Image
+              src={images[lightboxIndex]}
+              alt={p.title_es}
+              fill
+              className="object-contain"
+            />
+            <p className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-xs tracking-widest font-light">
+              {lightboxIndex + 1} / {images.length}
+            </p>
+          </div>
         </div>
       )}
     </div>
-  );
-}
-
-function ContactForm({ propertyTitle }: { propertyTitle: string }) {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
-  const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      await fetch("/api/contacts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, property: propertyTitle, source: "property_page" }),
-      });
-      setSent(true);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (sent) {
-    return (
-      <div style={{ padding: "32px 0", textAlign: "center" }}>
-        <p style={{ fontSize: 18, fontWeight: 200, color: "#000", margin: "0 0 8px" }}>Mensaje enviado</p>
-        <p style={{ fontSize: 13, fontWeight: 300, color: "#999", margin: 0 }}>Nos pondremos en contacto pronto.</p>
-      </div>
-    );
-  }
-
-  const inputStyle: React.CSSProperties = {
-    width: "100%",
-    borderBottom: "1px solid #e0e0e0",
-    borderTop: "none",
-    borderLeft: "none",
-    borderRight: "none",
-    background: "transparent",
-    padding: "12px 0",
-    fontSize: 13,
-    fontWeight: 300,
-    color: "#000",
-    outline: "none",
-    boxSizing: "border-box",
-  };
-
-  return (
-    <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <input type="text" placeholder="Nombre completo" required value={form.name} onChange={(e) => setForm(f => ({ ...f, name: e.target.value }))} style={inputStyle} />
-      <input type="email" placeholder="Correo electrónico" required value={form.email} onChange={(e) => setForm(f => ({ ...f, email: e.target.value }))} style={inputStyle} />
-      <input type="tel" placeholder="Teléfono" value={form.phone} onChange={(e) => setForm(f => ({ ...f, phone: e.target.value }))} style={inputStyle} />
-      <textarea
-        placeholder="Mensaje (opcional)"
-        rows={3}
-        value={form.message}
-        onChange={(e) => setForm(f => ({ ...f, message: e.target.value }))}
-        style={{ ...inputStyle, resize: "none" }}
-      />
-      <button
-        type="submit"
-        disabled={loading}
-        style={{ marginTop: 8, padding: "14px", background: "#000", color: "#fff", border: "none", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.5 : 1 }}
-      >
-        {loading ? "Enviando..." : "Enviar consulta"}
-      </button>
-      <a
-        href="tel:+34600000000"
-        style={{ display: "block", padding: "14px", border: "1px solid #e5e5e5", color: "#000", fontSize: 11, letterSpacing: "0.3em", textTransform: "uppercase", textAlign: "center", textDecoration: "none" }}
-      >
-        Llamar
-      </a>
-    </form>
   );
 }

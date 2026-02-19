@@ -557,7 +557,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       {images.length > 0 && (
         <section style={{ background: "#0A0A0A", padding: "72px 52px 80px" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-            <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Galería completa</p>
+              <p style={{ fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Galería completa</p>
             {images[0] && (
               <div
                 onClick={() => setLightboxIdx(0)}

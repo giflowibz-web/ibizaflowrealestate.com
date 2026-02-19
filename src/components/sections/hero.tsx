@@ -22,12 +22,7 @@ const HeroSection = () => {
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/35" />
 
-      {/* Logo centrado en el hero — estilo Aaron Kirman */}
-      <div className="absolute inset-0 flex items-center justify-center z-10">
-        <Logo variant="light" size="hero" />
-      </div>
-
-      {/* Tagline abajo centrado */}
+        {/* Tagline abajo centrado */}
       <div className="absolute bottom-20 left-1/2 z-10 -translate-x-1/2 text-center">
         <div className="flex items-center justify-center gap-3">
           <div className="h-px w-8 bg-white/40" />

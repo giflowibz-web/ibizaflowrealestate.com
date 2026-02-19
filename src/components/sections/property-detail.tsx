@@ -46,6 +46,18 @@ type Property = {
   featured?: boolean;
 };
 
+const PROPERTY_TYPE_ES: Record<string, string> = {
+  finca: "Finca",
+  villa: "Villa",
+  penthouse: "Ático",
+  house: "Casa",
+  apartment: "Apartamento",
+  townhouse: "Casa adosada",
+  land: "Terreno",
+  commercial: "Comercial",
+  office: "Oficina",
+};
+
 function formatPrice(p: number | string | null | undefined, currency = "EUR") {
   if (!p) return null;
   const n = typeof p === "string" ? parseFloat(p) : p;

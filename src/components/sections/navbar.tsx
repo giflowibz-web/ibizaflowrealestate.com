@@ -26,7 +26,7 @@ export default function Navbar() {
         {/* Logo */}
           <a href="/" className="flex items-center gap-2 z-10">
             <div style={{ textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.45)" }}>
-              <Logo className={`h-8 w-auto transition-all`} variant="light" />
+              <Logo className={`transition-all`} variant="light" size="sm" />
             </div>
           </a>
 

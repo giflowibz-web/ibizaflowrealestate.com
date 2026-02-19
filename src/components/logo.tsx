@@ -18,8 +18,8 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
 
   const ibizaColor = light ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.85)";
   const flowColor  = "#002FA7";
-  const subColor   = light ? "rgba(255,255,255,0.4)" : "rgba(0,0,0,0.35)";
-  const lineColor  = light ? "rgba(255,255,255,0.25)" : "rgba(0,47,167,0.2)";
+    const subColor   = light ? "rgba(255,255,255,0.55)" : "rgba(0,47,167,0.7)";
+    const lineColor  = light ? "rgba(255,255,255,0.3)" : "rgba(0,47,167,0.3)";
 
   return (
     <div

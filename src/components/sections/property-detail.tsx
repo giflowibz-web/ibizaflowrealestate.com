@@ -342,8 +342,8 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           {(interiorFeatures.length > 0 || (p.features && p.features.length > 0)) && (
             <section id="caracteristicas" style={{ padding: "0 60px 56px" }}>
               <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 48 }}>
-                <p style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>
-                  Características y Comodidades
+                  <p style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>
+                    Características y Comodidades
                 </p>
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 48px" }}>
                   {/* Características del inmueble */}

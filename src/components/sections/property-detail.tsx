@@ -125,29 +125,36 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
     { label: "Año", value: p.year_built ? String(p.year_built) : null, icon: <IconYear /> },
   ].filter((d) => d.value);
 
-  // Información básica — solo los que tienen valor real
-  const basicInfo = [
-    { label: "Estado", value: listingLabel },
-    { label: "Tipo de propiedad", value: p.property_type ? p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1) : null },
-    { label: "Superficie construida", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null },
-    { label: "Superficie parcela", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
-    { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null },
-    { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null },
-    { label: "Año de construcción", value: p.year_built ? String(p.year_built) : null },
-    { label: "Referencia MLS", value: p.mls_id || null },
-    { label: "Zona", value: p.area || null },
-    { label: "Municipio", value: p.municipality || null },
-    { label: "Isla", value: p.island || null },
-    { label: "País", value: p.country || null },
-    { label: "Plantas", value: p.stories ? String(p.stories) : null },
-    { label: "Orientación / Vistas", value: p.view || null },
-    { label: "Estilo arquitectónico", value: p.architectural_style || null },
-    { label: "Piscina", value: p.pool || null },
-    { label: "Parking", value: p.parking || null },
-    { label: "Calefacción", value: p.heating || null },
-    { label: "Aire acondicionado", value: p.cooling || null },
-    { label: "Electrodomésticos", value: p.appliances || null },
-  ].filter((d) => d.value);
+    // Estado legible
+    const statusLabel = (() => {
+      if (p.listing_type === "rent" && p.price && p.price_rent) return "En venta y alquiler";
+      if (p.listing_type === "rent") return "En alquiler";
+      return "En venta";
+    })();
+
+    // Información básica — solo los que tienen valor real
+    const basicInfo = [
+      { label: "Estado", value: statusLabel },
+      { label: "Tipo de propiedad", value: p.property_type ? p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1) : null },
+      { label: "Superficie construida", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null },
+      { label: "Superficie parcela", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
+      { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null },
+      { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null },
+      { label: "Año de construcción", value: p.year_built ? String(p.year_built) : null },
+      { label: "Referencia MLS", value: p.mls_id || null },
+      { label: "Zona", value: p.area || null },
+      { label: "Municipio", value: p.municipality || null },
+      { label: "Isla", value: p.island || null },
+      { label: "País", value: p.country || null },
+      { label: "Plantas", value: p.stories ? String(p.stories) : null },
+      { label: "Orientación / Vistas", value: p.view || null },
+      { label: "Estilo arquitectónico", value: p.architectural_style || null },
+      { label: "Piscina", value: p.pool || null },
+      { label: "Parking", value: p.parking || null },
+      { label: "Calefacción", value: p.heating || null },
+      { label: "Aire acondicionado", value: p.cooling || null },
+      { label: "Electrodomésticos", value: p.appliances || null },
+    ].filter((d) => d.value);
 
   const mapSrc =
     p.latitude && p.longitude

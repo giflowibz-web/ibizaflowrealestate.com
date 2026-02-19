@@ -181,10 +181,10 @@ const ListingsGrid = () => {
                     </p>
                   </div>
                 </div>
-              </Link>
-            ))}
-          </div>
-        )}
+                </a>
+              ))}
+            </div>
+          )}
 
         {/* CTA centrado */}
         <div className="flex justify-center mt-20 pt-8 border-t border-[#E8E4DC]">

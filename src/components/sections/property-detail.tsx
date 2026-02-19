@@ -345,97 +345,101 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           </section>
 
           {/* ── INFORMACIÓN BÁSICA ── */}
-          {basicInfo.length > 0 && (
-            <section id="info-basica" style={{ padding: "0 64px 56px" }}>
-              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
-                <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>
-                  Información Básica
-                </p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
-                    {basicInfo.map((item, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          display: "contents",
-                        }}
-                      >
-                        <div style={{
-                          padding: "14px 32px 14px 0",
-                          borderBottom: "1px solid #f0f0f0",
-                          borderRight: "1px solid #f0f0f0",
-                        }}>
-                          <span style={{ fontSize: "0.75rem", fontWeight: 400, color: "#888", letterSpacing: "0.01em" }}>{item.label}</span>
-                        </div>
-                        <div style={{
-                          padding: "14px 0 14px 32px",
-                          borderBottom: "1px solid #f0f0f0",
-                        }}>
-                          <span style={{ fontSize: "0.82rem", fontWeight: 500, color: "#0A0A0A" }}>{String(item.value)}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-              </div>
-            </section>
-          )}
+          <section id="info-basica" style={{ padding: "0 64px 56px" }}>
+            <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
+              <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>
+                Información Básica
+              </p>
+              {basicInfo.length > 0 ? (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 0 }}>
+                  {basicInfo.map((item, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        padding: "18px 24px 18px 0",
+                        borderBottom: "1px solid #f0f0f0",
+                      }}
+                    >
+                      <p style={{ margin: "0 0 5px", fontSize: "0.68rem", fontWeight: 400, color: "#999", letterSpacing: "0.04em", textTransform: "uppercase" }}>{item.label}</p>
+                      <p style={{ margin: 0, fontSize: "0.88rem", fontWeight: 500, color: "#0A0A0A" }}>{String(item.value)}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>Sin información disponible.</p>
+              )}
+            </div>
+          </section>
 
-            {/* ── CARACTERÍSTICAS Y COMODIDADES ── */}
-            <section id="caracteristicas" style={{ padding: "0 64px 56px" }}>
-              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
-                <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>
-                  Características y Comodidades
-                </p>
+          {/* ── CARACTERÍSTICAS Y COMODIDADES ── */}
+          <section id="caracteristicas" style={{ padding: "0 64px 64px" }}>
+            <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
+              <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>
+                Características y Comodidades
+              </p>
 
-                {/* Features lista */}
-                {p.features && p.features.length > 0 ? (
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px" }}>
-                    {p.features.map((f, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 12,
-                          padding: "11px 0",
-                          borderBottom: "1px solid #f5f5f5",
-                        }}
-                      >
-                        <IconCheck />
-                        <span style={{ fontSize: "0.84rem", color: "#333", fontWeight: 300 }}>{f}</span>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  /* Tabla de extras si no hay features */
-                  (() => {
-                    const extras = [
-                      { label: "Piscina", value: val(p.pool) },
-                      { label: "Parking", value: val(p.parking) },
-                      { label: "Calefacción", value: val(p.heating) },
-                      { label: "Aire acondicionado", value: val(p.cooling) },
-                      { label: "Lavandería", value: val(p.laundry) },
-                      { label: "Chimenea", value: val(p.fireplace) },
-                      { label: "Electrodomésticos", value: val(p.appliances) },
-                      { label: "Estilo arquitectónico", value: val(p.architectural_style) },
-                      { label: "Vistas", value: val(p.view) },
-                    ].filter(d => d.value);
+              {(() => {
+                const interiorGroups: { label: string; value: string }[] = [];
+                const exteriorGroups: { label: string; value: string }[] = [];
+                const otherGroups: { label: string; value: string }[] = [];
 
-                    return extras.length > 0 ? (
-                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px" }}>
-                        {extras.map((item, i) => (
-                          <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 0", borderBottom: "1px solid #f5f5f5" }}>
-                            <IconCheck />
-                            <span style={{ fontSize: "0.84rem", color: "#333", fontWeight: 300 }}>{item.label}: {item.value}</span>
+                if (p.features && p.features.length > 0) {
+                  p.features.forEach(f => interiorGroups.push({ label: f, value: "" }));
+                }
+                if (val(p.heating)) interiorGroups.push({ label: "Calefacción", value: val(p.heating)! });
+                if (val(p.cooling)) interiorGroups.push({ label: "Aire acondicionado", value: val(p.cooling)! });
+                if (val(p.laundry)) interiorGroups.push({ label: "Lavandería", value: val(p.laundry)! });
+                if (val(p.fireplace)) interiorGroups.push({ label: "Chimenea", value: val(p.fireplace)! });
+                if (val(p.appliances)) interiorGroups.push({ label: "Electrodomésticos", value: val(p.appliances)! });
+
+                if (val(p.pool)) exteriorGroups.push({ label: "Piscina", value: val(p.pool)! });
+                if (val(p.architectural_style)) exteriorGroups.push({ label: "Estilo arquitectónico", value: val(p.architectural_style)! });
+                if (p.size_plot && Number(p.size_plot) > 0) exteriorGroups.push({ label: "Tamaño parcela", value: `${p.size_plot} m²` });
+
+                if (val(p.parking)) otherGroups.push({ label: "Parking", value: val(p.parking)! });
+                if (val(p.view)) otherGroups.push({ label: "Vistas", value: val(p.view)! });
+                if (val(p.mls_id)) otherGroups.push({ label: "Referencia MLS", value: val(p.mls_id)! });
+
+                const renderGroup = (title: string, items: { label: string; value: string }[]) => (
+                  items.length > 0 && (
+                    <div key={title} style={{ marginBottom: 40 }}>
+                      <h4 style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 20px", paddingBottom: 10, borderBottom: "1px solid #ebebeb" }}>
+                        {title}
+                      </h4>
+                      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0 24px" }}>
+                        {items.map((item, i) => (
+                          <div key={i} style={{ padding: "12px 0", borderBottom: "1px solid #f5f5f5" }}>
+                            {item.value ? (
+                              <>
+                                <p style={{ margin: "0 0 4px", fontSize: "0.68rem", color: "#999", fontWeight: 400, textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</p>
+                                <p style={{ margin: 0, fontSize: "0.86rem", color: "#0A0A0A", fontWeight: 400 }}>{item.value}</p>
+                              </>
+                            ) : (
+                              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                                <IconCheck />
+                                <p style={{ margin: 0, fontSize: "0.86rem", color: "#333", fontWeight: 300 }}>{item.label}</p>
+                              </div>
+                            )}
                           </div>
                         ))}
                       </div>
-                    ) : (
-                      <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>No hay características registradas para esta propiedad.</p>
-                    );
-                  })()
-                )}
-              </div>
-            </section>
+                    </div>
+                  )
+                );
+
+                const total = interiorGroups.length + exteriorGroups.length + otherGroups.length;
+                if (total === 0) return <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>No hay características registradas para esta propiedad.</p>;
+
+                return (
+                  <>
+                    {renderGroup("Características interiores", interiorGroups)}
+                    {renderGroup("Características exteriores", exteriorGroups)}
+                    {renderGroup("Otros detalles", otherGroups)}
+                  </>
+                );
+              })()}
+            </div>
+          </section>
 
           {/* ── MAPA ── */}
           {mapSrc && (

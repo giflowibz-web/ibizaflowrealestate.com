@@ -30,10 +30,10 @@ export default function Navbar() {
           : "bg-transparent py-6"
       }`}
     >
-      <div className="w-full flex items-center relative" style={{ paddingLeft: "4vw", paddingRight: "4vw" }}>
+        <div className="w-full flex items-center relative" style={{ paddingLeft: "1.5vw", paddingRight: "2vw" }}>
 
-        {/* LEFT — Propiedades · Servicios · Nosotros */}
-        <nav className="hidden md:flex items-center gap-10">
+          {/* LEFT — Propiedades · Servicios · Nosotros */}
+          <nav className="hidden md:flex items-center gap-8">
           {leftLinks.map((item) => (
             <a
               key={item.href}

@@ -379,33 +379,63 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             </section>
           )}
 
-          {/* ── CARACTERÍSTICAS Y COMODIDADES ── */}
-          {p.features && p.features.length > 0 && (
+            {/* ── CARACTERÍSTICAS Y COMODIDADES ── */}
             <section id="caracteristicas" style={{ padding: "0 64px 56px" }}>
               <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
                 <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>
                   Características y Comodidades
                 </p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px" }}>
-                  {p.features.map((f, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 12,
-                        padding: "11px 0",
-                        borderBottom: "1px solid #f5f5f5",
-                      }}
-                    >
-                      <IconCheck />
-                      <span style={{ fontSize: "0.84rem", color: "#333", fontWeight: 300 }}>{f}</span>
-                    </div>
-                  ))}
-                </div>
+
+                {/* Features lista */}
+                {p.features && p.features.length > 0 ? (
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px" }}>
+                    {p.features.map((f, i) => (
+                      <div
+                        key={i}
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: 12,
+                          padding: "11px 0",
+                          borderBottom: "1px solid #f5f5f5",
+                        }}
+                      >
+                        <IconCheck />
+                        <span style={{ fontSize: "0.84rem", color: "#333", fontWeight: 300 }}>{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  /* Tabla de extras si no hay features */
+                  (() => {
+                    const extras = [
+                      { label: "Piscina", value: val(p.pool) },
+                      { label: "Parking", value: val(p.parking) },
+                      { label: "Calefacción", value: val(p.heating) },
+                      { label: "Aire acondicionado", value: val(p.cooling) },
+                      { label: "Lavandería", value: val(p.laundry) },
+                      { label: "Chimenea", value: val(p.fireplace) },
+                      { label: "Electrodomésticos", value: val(p.appliances) },
+                      { label: "Estilo arquitectónico", value: val(p.architectural_style) },
+                      { label: "Vistas", value: val(p.view) },
+                    ].filter(d => d.value);
+
+                    return extras.length > 0 ? (
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px" }}>
+                        {extras.map((item, i) => (
+                          <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "11px 0", borderBottom: "1px solid #f5f5f5" }}>
+                            <IconCheck />
+                            <span style={{ fontSize: "0.84rem", color: "#333", fontWeight: 300 }}>{item.label}: {item.value}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>No hay características registradas para esta propiedad.</p>
+                    );
+                  })()
+                )}
               </div>
             </section>
-          )}
 
           {/* ── MAPA ── */}
           {mapSrc && (

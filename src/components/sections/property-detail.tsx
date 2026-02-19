@@ -6,504 +6,404 @@ type Property = {
   id: string;
   slug: string;
   title_es: string;
-  description_es: string;
-  price: number;
-  currency: string;
-  status: string;
-  bedrooms: number;
-  bathrooms: number;
-  area_sqm: number;
-  plot_sqm: number;
-  location_city: string;
-  location_country: string;
-  location_address: string;
-  images: string[];
-  features: string[];
-  property_type: string;
-  year_built: number;
-  latitude: number;
-  longitude: number;
-  mls_id?: string;
+  title_en?: string;
+  description_es?: string;
+  description_en?: string;
+  price?: number | string | null;
+  price_rent?: number | string | null;
+  price_on_request?: boolean;
+  currency?: string;
+  status?: string;
+  listing_type?: string;
+  area?: string;
+  municipality?: string;
+  island?: string;
+  country?: string;
+  address?: string;
+  latitude?: number | null;
+  longitude?: number | null;
+  bedrooms?: number;
+  bathrooms?: number;
+  size_built?: number | string | null;
+  size_plot?: number | string | null;
+  year_built?: number | null;
+  property_type?: string;
+  images?: string[];
+  features?: string[];
   lot_size?: string;
-  email?: string;
+  mls_id?: string;
+  contact_email?: string;
   architectural_style?: string;
-  views?: string;
-  stories?: number;
+  view?: string;
+  stories?: number | null;
   pool?: string;
   parking?: string;
-  heat_type?: string;
-  ac_type?: string;
+  heating?: string;
+  cooling?: string;
   laundry?: string;
   fireplace?: string;
   appliances?: string;
-  lease_price?: string;
+  featured?: boolean;
 };
 
-export default function PropertyDetail({ property }: { property: Property }) {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
-  const [sent, setSent] = useState(false);
+function formatPrice(p: number | string | null | undefined, currency = "EUR") {
+  if (!p) return null;
+  const n = typeof p === "string" ? parseFloat(p) : p;
+  if (isNaN(n)) return null;
+  return new Intl.NumberFormat("es-ES", {
+    style: "currency",
+    currency,
+    maximumFractionDigits: 0,
+  }).format(n);
+}
 
-  const images: string[] = Array.isArray(property.images) ? property.images : [];
-  const heroImage = images[0] || "https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=1800&q=80";
+export default function PropertyDetail({ property: p }: { property: Property }) {
+  const images = p.images?.filter(Boolean) ?? [];
+  const mainImage = images[0] ?? "";
+  const galleryImages = images.slice(1);
+  const [activeImg, setActiveImg] = useState<string | null>(null);
 
-  const price = typeof property.price === "number"
-    ? property.price.toLocaleString("es-ES")
-    : property.price;
+  const price = p.price_on_request
+    ? "Precio bajo consulta"
+    : formatPrice(p.price, p.currency ?? "EUR");
+  const priceRent = formatPrice(p.price_rent, p.currency ?? "EUR");
 
-  const statusLabel: Record<string, string> = {
-    for_sale: "En Venta",
-    for_rent: "En Alquiler",
-    sold: "Vendida",
-    rented: "Alquilada",
-  };
+  const location = [p.area, p.municipality, p.island, p.country].filter(Boolean).join(", ");
+  const listingLabel = p.listing_type === "rent" ? "En Alquiler" : "En Venta";
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSent(true);
-  }
+  const stats = [
+    { label: "Habitaciones", value: p.bedrooms },
+    { label: "Baños", value: p.bathrooms },
+    { label: "Superficie", value: p.size_built ? `${p.size_built} m²` : null },
+    { label: "Parcela", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
+    { label: "Año", value: p.year_built },
+  ].filter((d) => d.value != null && d.value !== "");
+
+  const basicInfo = [
+    { label: "Contacto", value: p.contact_email },
+    { label: "Estado", value: listingLabel },
+    { label: "Tamaño del lote", value: p.lot_size },
+    { label: "Referencia MLS", value: p.mls_id },
+    { label: "Tipo de propiedad", value: p.property_type },
+  ].filter((d) => d.value);
+
+  const areaFeatures = [
+    { label: "Estilo arquitectónico", value: p.architectural_style },
+    { label: "Vistas", value: p.view },
+    { label: "Tamaño del lote", value: p.lot_size },
+  ].filter((d) => d.value);
+
+  const interiorFeatures = [
+    { label: "Plantas", value: p.stories },
+    { label: "Piscina", value: p.pool },
+    { label: "Estacionamiento", value: p.parking },
+    { label: "Calefacción", value: p.heating },
+    { label: "Aire acondicionado", value: p.cooling },
+    { label: "Lavandería", value: p.laundry },
+    { label: "Chimenea", value: p.fireplace },
+    { label: "Electrodomésticos", value: p.appliances },
+  ].filter((d) => d.value);
+
+  const hasFeatures = areaFeatures.length > 0 || interiorFeatures.length > 0 || priceRent || (p.features && p.features.length > 0);
+
+  const mapSrc = p.latitude && p.longitude
+    ? `https://maps.google.com/maps?q=${p.latitude},${p.longitude}&z=15&output=embed`
+    : location
+    ? `https://maps.google.com/maps?q=${encodeURIComponent(location)}&z=13&output=embed`
+    : null;
 
   return (
-    <div style={{ fontFamily: "var(--font-body)", background: "#fff", color: "#0A0A0A" }}>
-
-      {/* ── HERO BANNER: fullscreen, una sola foto ── */}
-      <section style={{ position: "relative", width: "100%", height: "100vh", overflow: "hidden" }}>
-        <img
-          src={heroImage}
-          alt={property.title_es}
-          style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-        />
-        {/* overlay gradiente sutil */}
-        <div style={{
-          position: "absolute", inset: 0,
-          background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.6) 100%)"
-        }} />
-
-        {/* Texto sobre el hero */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0,
-          padding: "0 6% 5%",
-          display: "flex", justifyContent: "space-between", alignItems: "flex-end"
-        }}>
-          <div>
-            <p style={{
-              color: "rgba(255,255,255,0.65)", fontSize: "0.7rem",
-              letterSpacing: "0.25em", textTransform: "uppercase", marginBottom: "0.75rem", margin: "0 0 0.75rem"
-            }}>
-              {property.location_city}, {property.location_country}
-            </p>
-            <h1 style={{
-              fontFamily: "var(--font-display)", fontWeight: 300, color: "#fff",
-              fontSize: "clamp(2rem, 4.5vw, 3.75rem)", lineHeight: 1.1,
-              margin: 0, maxWidth: "600px"
-            }}>
-              {property.title_es}
-            </h1>
-          </div>
-          <div style={{ textAlign: "right" }}>
-            <p style={{
-              color: "rgba(255,255,255,0.65)", fontSize: "0.65rem",
-              letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 0.4rem"
-            }}>
-              {statusLabel[property.status] || property.status}
-            </p>
-            <p style={{
-              fontFamily: "var(--font-display)", fontWeight: 300, color: "#fff",
-              fontSize: "clamp(1.25rem, 2.5vw, 2rem)", margin: 0
-            }}>
-              {price} {property.currency}
-            </p>
-          </div>
-        </div>
-
-        {/* scroll indicator */}
-        <div style={{
-          position: "absolute", bottom: "2.5rem", left: "50%", transform: "translateX(-50%)",
-          display: "flex", flexDirection: "column", alignItems: "center", gap: "8px"
-        }}>
-          <div style={{ width: "1px", height: "50px", background: "rgba(255,255,255,0.25)", overflow: "hidden", position: "relative" }}>
-            <div style={{
-              position: "absolute", top: 0, left: 0, width: "100%", height: "35%",
-              background: "rgba(255,255,255,0.75)",
-              animation: "scrollLine 2s ease-in-out infinite"
-            }} />
-          </div>
-        </div>
-      </section>
-
-      {/* ── STATS BAR — fondo negro corporativo ── */}
-      <section style={{ background: "#0A0A0A", padding: "2.75rem 6%" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: "2rem",
-          maxWidth: "1200px", margin: "0 auto",
-          textAlign: "center"
-        }}>
-          {[
-            { label: "Dormitorios", value: property.bedrooms },
-            { label: "Baños", value: property.bathrooms },
-            { label: "Superficie", value: `${property.area_sqm} m²` },
-            { label: "Parcela", value: property.plot_sqm ? `${property.plot_sqm} m²` : "—" },
-            { label: "Año", value: property.year_built || "—" },
-          ].map((s) => (
-            <div key={s.label}>
-              <p style={{
-                fontFamily: "var(--font-display)", fontWeight: 300,
-                fontSize: "2rem", color: "#fff", margin: "0 0 0.3rem"
-              }}>
-                {s.value}
-              </p>
-              <p style={{
-                fontSize: "0.6rem", letterSpacing: "0.2em",
-                textTransform: "uppercase", color: "#002FA7", margin: 0
-              }}>
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── MAIN CONTENT — 2 columnas ── */}
-      <section style={{ padding: "6rem 6%", maxWidth: "1400px", margin: "0 auto" }}>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "1fr 360px",
-          gap: "6rem",
-          alignItems: "start"
-        }}>
-
-          {/* COLUMNA IZQUIERDA */}
-          <div>
-
-            {/* Descripción */}
-            <div style={{ marginBottom: "5rem" }}>
-              <p style={labelStyle}>Descripción</p>
-              <p style={{
-                fontFamily: "var(--font-display)", fontWeight: 300,
-                fontSize: "1.1rem", lineHeight: 1.85, color: "#0A0A0A"
-              }}>
-                {property.description_es}
-              </p>
-            </div>
-
-            {/* Información Básica */}
-            <div style={{ marginBottom: "5rem" }}>
-              <p style={sectionTitleStyle}>Información Básica</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1.5rem 3rem" }}>
-                {[
-                  { label: "Dirección", value: property.location_address },
-                  { label: "Estado de la propiedad", value: statusLabel[property.status] || property.status },
-                  { label: "Tipo de propiedad", value: property.property_type },
-                  { label: "Identificación de la MLS", value: property.mls_id || "—" },
-                  { label: "Tamaño del lote", value: property.lot_size || (property.plot_sqm ? `${property.plot_sqm} m²` : "—") },
-                  { label: "Dirección de correo electrónico", value: property.email || "info@luxuryproperty.es" },
-                ].map((item) => (
-                  <div key={item.label} style={{ borderBottom: "1px solid #E0E0E0", paddingBottom: "1rem" }}>
-                    <p style={fieldLabelStyle}>{item.label}</p>
-                    <p style={fieldValueStyle}>{item.value}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Características y Comodidades */}
-            <div style={{ marginBottom: "5rem" }}>
-              <p style={sectionTitleStyle}>Características y Comodidades</p>
-
-              {/* Área y lote */}
-              {(property.architectural_style || property.views) && (
-                <div style={{ marginBottom: "2.5rem" }}>
-                  <p style={subSectionStyle}>Área y lote</p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem 3rem" }}>
-                    {property.architectural_style && (
-                      <div style={{ borderBottom: "1px solid #E0E0E0", paddingBottom: "0.75rem" }}>
-                        <p style={fieldLabelStyle}>Estilos arquitectónicos</p>
-                        <p style={fieldValueStyle}>{property.architectural_style}</p>
-                      </div>
-                    )}
-                    {property.views && (
-                      <div style={{ borderBottom: "1px solid #E0E0E0", paddingBottom: "0.75rem" }}>
-                        <p style={fieldLabelStyle}>Ver descripción</p>
-                        <p style={fieldValueStyle}>{property.views}</p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {/* Interior y exterior */}
-              <div style={{ marginBottom: "2.5rem" }}>
-                <p style={subSectionStyle}>Interior y exterior</p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem 3rem" }}>
-                  {[
-                    { label: "Historias", value: property.stories },
-                    { label: "Piscina", value: property.pool },
-                    { label: "Estacionamiento", value: property.parking },
-                    { label: "Tipo de calor", value: property.heat_type },
-                    { label: "Aire acondicionado", value: property.ac_type },
-                    { label: "Cuarto de lavado", value: property.laundry },
-                    { label: "Chimenea", value: property.fireplace },
-                    { label: "Electrodomésticos", value: property.appliances },
-                  ].filter(i => i.value).map((item) => (
-                    <div key={item.label} style={{ borderBottom: "1px solid #E0E0E0", paddingBottom: "0.75rem" }}>
-                      <p style={fieldLabelStyle}>{item.label}</p>
-                      <p style={fieldValueStyle}>{String(item.value)}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Financiero */}
-              {property.lease_price && (
-                <div>
-                  <p style={subSectionStyle}>Financiero</p>
-                  <div style={{ borderBottom: "1px solid #E0E0E0", paddingBottom: "0.75rem", maxWidth: "50%" }}>
-                    <p style={fieldLabelStyle}>Precio de arrendamiento</p>
-                    <p style={fieldValueStyle}>{property.lease_price}</p>
-                  </div>
-                </div>
-              )}
-
-              {/* Features pills */}
-              {property.features && property.features.length > 0 && (
-                <div style={{ marginTop: "2.5rem", display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-                  {property.features.map((f: string) => (
-                    <span key={f} style={{
-                      border: "1px solid #E0E0E0",
-                      padding: "0.35rem 0.9rem",
-                      fontSize: "0.65rem",
-                      letterSpacing: "0.1em",
-                      textTransform: "uppercase",
-                      color: "#6B6B6B"
-                    }}>
-                      {f}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Mapa */}
-            {property.latitude && property.longitude && (
-              <div style={{ marginBottom: "5rem" }}>
-                <p style={sectionTitleStyle}>Ubicación</p>
-                <div style={{ width: "100%", height: "380px", overflow: "hidden" }}>
-                  <iframe
-                    title="mapa"
-                    width="100%"
-                    height="100%"
-                    style={{ border: 0, filter: "grayscale(1) contrast(1.05)" }}
-                    loading="lazy"
-                    src={`https://www.google.com/maps?q=${property.latitude},${property.longitude}&z=15&output=embed`}
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Galería completa */}
-            {images.length > 1 && (
-              <div>
-                <p style={sectionTitleStyle}>Galería</p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "4px" }}>
-                  {images.map((img, i) => (
-                    <div
-                      key={i}
-                      onClick={() => setLightboxIndex(i)}
-                      style={{ aspectRatio: "4/3", overflow: "hidden", cursor: "zoom-in", background: "#F5F5F5" }}
-                    >
-                      <img
-                        src={img}
-                        alt={`Foto ${i + 1}`}
-                        style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s ease" }}
-                        onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.06)")}
-                        onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* COLUMNA DERECHA: formulario sticky */}
-          <div style={{ position: "sticky", top: "6rem" }}>
-            <div style={{ border: "1px solid #E0E0E0", padding: "2.5rem" }}>
-              <p style={{ ...labelStyle, marginBottom: "0.5rem" }}>Contactar</p>
-              <p style={{
-                fontFamily: "var(--font-display)", fontWeight: 300,
-                fontSize: "1.35rem", marginBottom: "2rem", lineHeight: 1.3, color: "#0A0A0A"
-              }}>
-                {property.title_es}
-              </p>
-
-              {sent ? (
-                <div style={{ textAlign: "center", padding: "2rem 0" }}>
-                  <p style={{ fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#002FA7" }}>
-                    Mensaje enviado
-                  </p>
-                  <p style={{ marginTop: "0.75rem", fontSize: "0.85rem", color: "#6B6B6B" }}>
-                    Nos pondremos en contacto contigo pronto.
-                  </p>
-                </div>
-              ) : (
-                <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                  {[
-                    { name: "name", label: "Nombre completo", type: "text", required: true },
-                    { name: "email", label: "Correo electrónico", type: "email", required: true },
-                    { name: "phone", label: "Teléfono", type: "tel", required: false },
-                  ].map((f) => (
-                    <div key={f.name} style={{ borderBottom: "1px solid #E0E0E0", paddingBottom: "0.4rem" }}>
-                      <input
-                        type={f.type}
-                        placeholder={f.label}
-                        required={f.required}
-                        value={formData[f.name as keyof typeof formData]}
-                        onChange={e => setFormData(p => ({ ...p, [f.name]: e.target.value }))}
-                        style={{
-                          background: "transparent", border: "none", outline: "none",
-                          width: "100%", fontSize: "0.85rem", color: "#0A0A0A",
-                          padding: "0.25rem 0", fontFamily: "inherit"
-                        }}
-                      />
-                    </div>
-                  ))}
-                  <div style={{ borderBottom: "1px solid #E0E0E0", paddingBottom: "0.4rem" }}>
-                    <textarea
-                      placeholder="Mensaje"
-                      rows={4}
-                      value={formData.message}
-                      onChange={e => setFormData(p => ({ ...p, message: e.target.value }))}
-                      style={{
-                        background: "transparent", border: "none", outline: "none",
-                        width: "100%", fontSize: "0.85rem", color: "#0A0A0A",
-                        padding: "0.25rem 0", fontFamily: "inherit", resize: "none"
-                      }}
-                    />
-                  </div>
-                  <button
-                    type="submit"
-                    style={{
-                      background: "#002FA7", color: "#fff", border: "none",
-                      padding: "1rem", cursor: "pointer", fontFamily: "inherit",
-                      fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase",
-                      transition: "background 0.3s ease"
-                    }}
-                    onMouseEnter={e => (e.currentTarget.style.background = "#0A0A0A")}
-                    onMouseLeave={e => (e.currentTarget.style.background = "#002FA7")}
-                  >
-                    Solicitar información
-                  </button>
-                </form>
-              )}
-
-              <div style={{ marginTop: "2rem", paddingTop: "2rem", borderTop: "1px solid #E0E0E0", textAlign: "center" }}>
-                <p style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "#6B6B6B", margin: "0 0 0.4rem" }}>
-                  Precio
-                </p>
-                <p style={{ fontFamily: "var(--font-display)", fontWeight: 300, fontSize: "1.4rem", color: "#0A0A0A", margin: 0 }}>
-                  {price} {property.currency}
-                </p>
-                <p style={{ fontSize: "0.65rem", color: "#6B6B6B", marginTop: "0.25rem" }}>
-                  {statusLabel[property.status] || property.status}
-                </p>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
+    <>
       {/* LIGHTBOX */}
-      {lightboxIndex !== null && (
+      {activeImg && (
         <div
-          onClick={() => setLightboxIndex(null)}
+          onClick={() => setActiveImg(null)}
           style={{
-            position: "fixed", inset: 0, background: "rgba(0,0,0,0.96)",
+            position: "fixed", inset: 0, zIndex: 9999,
+            background: "rgba(0,0,0,0.96)",
             display: "flex", alignItems: "center", justifyContent: "center",
-            zIndex: 9999, cursor: "zoom-out"
           }}
         >
           <button
-            onClick={e => { e.stopPropagation(); setLightboxIndex(i => i !== null && i > 0 ? i - 1 : images.length - 1); }}
-            style={{ position: "absolute", left: "2rem", background: "none", border: "none", color: "#fff", fontSize: "1.75rem", cursor: "pointer", opacity: 0.7 }}
-          >
-            ←
-          </button>
-          <img
-            src={images[lightboxIndex]}
-            alt=""
-            style={{ maxHeight: "88vh", maxWidth: "88vw", objectFit: "contain" }}
-            onClick={e => e.stopPropagation()}
-          />
-          <button
-            onClick={e => { e.stopPropagation(); setLightboxIndex(i => i !== null && i < images.length - 1 ? i + 1 : 0); }}
-            style={{ position: "absolute", right: "2rem", background: "none", border: "none", color: "#fff", fontSize: "1.75rem", cursor: "pointer", opacity: 0.7 }}
-          >
-            →
-          </button>
-          <button
-            onClick={() => setLightboxIndex(null)}
-            style={{ position: "absolute", top: "1.5rem", right: "1.5rem", background: "none", border: "none", color: "#fff", fontSize: "1.25rem", cursor: "pointer", opacity: 0.7 }}
-          >
-            ✕
-          </button>
-          <p style={{ position: "absolute", bottom: "1.5rem", color: "rgba(255,255,255,0.4)", fontSize: "0.7rem", letterSpacing: "0.1em" }}>
-            {lightboxIndex + 1} / {images.length}
-          </p>
+            onClick={() => setActiveImg(null)}
+            style={{
+              position: "absolute", top: 24, right: 32,
+              background: "none", border: "none", color: "#fff",
+              fontSize: 36, cursor: "pointer", fontWeight: 200,
+            }}
+          >×</button>
+          <img src={activeImg} alt="" style={{ maxWidth: "90vw", maxHeight: "88vh", objectFit: "contain" }} />
+          {images.length > 1 && (
+            <>
+              <button
+                onClick={(e) => { e.stopPropagation(); const idx = images.indexOf(activeImg); setActiveImg(images[(idx - 1 + images.length) % images.length]); }}
+                style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", width: 48, height: 48, fontSize: 22, cursor: "pointer" }}
+              >‹</button>
+              <button
+                onClick={(e) => { e.stopPropagation(); const idx = images.indexOf(activeImg); setActiveImg(images[(idx + 1) % images.length]); }}
+                style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", width: 48, height: 48, fontSize: 22, cursor: "pointer" }}
+              >›</button>
+            </>
+          )}
         </div>
       )}
 
+      {/* HERO BANNER — una sola foto fullscreen */}
+      <section style={{ position: "relative", width: "100%", height: "100vh", minHeight: 520, background: "#0A0A0A", overflow: "hidden" }}>
+        {mainImage && (
+          <img
+            src={mainImage}
+            alt={p.title_es}
+            style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
+          />
+        )}
+        {/* Overlay */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.6) 100%)" }} />
+
+        {/* Badge */}
+        <div style={{ position: "absolute", top: 96, left: 48, background: "#002FA7", color: "#fff", fontSize: 10, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", padding: "6px 16px" }}>
+          {listingLabel}
+        </div>
+
+        {/* Ver todas las fotos */}
+        {images.length > 1 && (
+          <button
+            onClick={() => setActiveImg(mainImage)}
+            style={{ position: "absolute", top: 96, right: 48, background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", fontSize: 10, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", padding: "8px 20px", cursor: "pointer" }}
+          >
+            Ver todas las fotos ({images.length})
+          </button>
+        )}
+
+        {/* Título + Precio */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 48px 56px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+          <div>
+            {location && (
+              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", margin: "0 0 14px" }}>
+                {location}
+              </p>
+            )}
+            <h1 style={{ color: "#fff", fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 200, letterSpacing: "-0.02em", margin: 0, lineHeight: 1.05, maxWidth: 680 }}>
+              {p.title_es}
+            </h1>
+          </div>
+          {price && (
+            <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 40 }}>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", margin: "0 0 6px" }}>Precio</p>
+              <p style={{ color: "#fff", fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)", fontWeight: 200, margin: 0 }}>{price}</p>
+            </div>
+          )}
+        </div>
+
+        {/* Scroll indicator */}
+        <div style={{ position: "absolute", bottom: 18, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+          <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" }}>scroll</span>
+          <div style={{ width: 1, height: 30, background: "linear-gradient(to bottom, rgba(255,255,255,0.45), transparent)" }} />
+        </div>
+      </section>
+
+      {/* STATS BAR */}
+      {stats.length > 0 && (
+        <section style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "center" }}>
+          {stats.map((d, i) => (
+            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "36px 52px", borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none" }}>
+              <span style={{ color: "#fff", fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1 }}>
+                {d.value}
+              </span>
+              <span style={{ color: "#002FA7", fontSize: 9, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", marginTop: 8 }}>
+                {d.label}
+              </span>
+            </div>
+          ))}
+        </section>
+      )}
+
+      {/* CONTENIDO PRINCIPAL */}
+      <main style={{ maxWidth: 1320, margin: "0 auto", padding: "88px 48px", display: "grid", gridTemplateColumns: "1fr 380px", gap: 80, alignItems: "start" }}>
+
+        {/* COLUMNA IZQUIERDA */}
+        <div>
+
+          {/* Descripción */}
+          {p.description_es && (
+            <section style={{ marginBottom: 64 }}>
+              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Descripción</p>
+              <p style={{ fontSize: "clamp(1rem, 1.3vw, 1.1rem)", fontWeight: 300, lineHeight: 1.9, color: "#1a1a1a", margin: 0, maxWidth: 680 }}>
+                {p.description_es}
+              </p>
+            </section>
+          )}
+
+          <div style={{ height: 1, background: "#e8e8e8", marginBottom: 64 }} />
+
+          {/* Información Básica */}
+          {basicInfo.length > 0 && (
+            <section style={{ marginBottom: 64 }}>
+              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Información Básica</p>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", border: "1px solid #e8e8e8" }}>
+                {basicInfo.map((item, i) => (
+                  <div key={i} style={{ padding: "20px 24px", borderBottom: i < basicInfo.length - 2 ? "1px solid #e8e8e8" : "none", borderRight: i % 2 === 0 ? "1px solid #e8e8e8" : "none" }}>
+                    <p style={{ fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#aaa", margin: "0 0 6px" }}>{item.label}</p>
+                    <p style={{ fontSize: 14, fontWeight: 300, color: "#0A0A0A", margin: 0 }}>{item.value}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <div style={{ height: 1, background: "#e8e8e8", marginBottom: 64 }} />
+
+          {/* Características */}
+          {hasFeatures && (
+            <section style={{ marginBottom: 64 }}>
+              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Características y Comodidades</p>
+
+              {areaFeatures.length > 0 && (
+                <div style={{ marginBottom: 36 }}>
+                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 16px", paddingBottom: 12, borderBottom: "1px solid #e8e8e8" }}>Área y Lote</p>
+                  {areaFeatures.map((f, i) => (
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "10px 0", borderBottom: "1px solid #f0f0f0" }}>
+                      <span style={{ fontSize: 13, color: "#666", fontWeight: 300 }}>{f.label}</span>
+                      <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{f.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {interiorFeatures.length > 0 && (
+                <div style={{ marginBottom: 36 }}>
+                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 16px", paddingBottom: 12, borderBottom: "1px solid #e8e8e8" }}>Interior y Exterior</p>
+                  {interiorFeatures.map((f, i) => (
+                    <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "10px 0", borderBottom: "1px solid #f0f0f0" }}>
+                      <span style={{ fontSize: 13, color: "#666", fontWeight: 300 }}>{f.label}</span>
+                      <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{String(f.value)}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {priceRent && (
+                <div style={{ marginBottom: 36 }}>
+                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 16px", paddingBottom: 12, borderBottom: "1px solid #e8e8e8" }}>Financiero</p>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "10px 0" }}>
+                    <span style={{ fontSize: 13, color: "#666", fontWeight: 300 }}>Precio de arrendamiento</span>
+                    <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{priceRent}/mes</span>
+                  </div>
+                </div>
+              )}
+
+              {p.features && p.features.length > 0 && (
+                <div>
+                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 16px", paddingBottom: 12, borderBottom: "1px solid #e8e8e8" }}>Extras</p>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 24px", paddingTop: 8 }}>
+                    {p.features.map((f, i) => (
+                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <div style={{ width: 4, height: 4, background: "#002FA7", flexShrink: 0 }} />
+                        <span style={{ fontSize: 13, color: "#333", fontWeight: 300 }}>{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+
+          {/* Mapa */}
+          {mapSrc && (
+            <section style={{ marginBottom: 64 }}>
+              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Ubicación</p>
+              <div style={{ width: "100%", height: 420, border: "1px solid #e8e8e8", overflow: "hidden" }}>
+                <iframe src={mapSrc} width="100%" height="420" style={{ border: 0, display: "block" }} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
+              </div>
+            </section>
+          )}
+
+          {/* Galería */}
+          {galleryImages.length > 0 && (
+            <section>
+              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Galería</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 3 }}>
+                {galleryImages.map((img, i) => (
+                  <div
+                    key={i}
+                    onClick={() => setActiveImg(img)}
+                    style={{ aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
+                  >
+                    <img
+                      src={img}
+                      alt={`${p.title_es} ${i + 2}`}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s ease" }}
+                      onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
+                      onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+                    />
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+        </div>
+
+        {/* COLUMNA DERECHA — FORMULARIO STICKY */}
+        <aside style={{ position: "sticky", top: 100 }}>
+          <div style={{ background: "#fff", border: "1px solid #e8e8e8", padding: "40px 36px" }}>
+            <p style={{ fontSize: 9, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>Solicitar información</p>
+            <h3 style={{ fontSize: "1rem", fontWeight: 300, color: "#0A0A0A", margin: "0 0 28px", lineHeight: 1.4 }}>{p.title_es}</h3>
+
+            {price && (
+              <div style={{ background: "#0A0A0A", padding: "14px 20px", marginBottom: 28, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Precio</span>
+                <span style={{ fontSize: "0.95rem", fontWeight: 300, color: "#fff" }}>{price}</span>
+              </div>
+            )}
+
+            <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column" }}>
+              {[
+                { label: "Nombre completo", type: "text", id: "name" },
+                { label: "Correo electrónico", type: "email", id: "email" },
+                { label: "Teléfono", type: "tel", id: "phone" },
+              ].map((field) => (
+                <div key={field.id} style={{ marginBottom: 22 }}>
+                  <label htmlFor={field.id} style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#aaa", marginBottom: 8 }}>
+                    {field.label}
+                  </label>
+                  <input id={field.id} type={field.type} style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid #d8d8d8", padding: "8px 0", fontSize: 14, fontWeight: 300, color: "#0A0A0A", outline: "none", boxSizing: "border-box" }} />
+                </div>
+              ))}
+
+              <div style={{ marginBottom: 28 }}>
+                <label htmlFor="msg" style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#aaa", marginBottom: 8 }}>Mensaje</label>
+                <textarea id="msg" rows={4} defaultValue={`Hola, me interesa: ${p.title_es}`} style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid #d8d8d8", padding: "8px 0", fontSize: 14, fontWeight: 300, color: "#0A0A0A", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
+              </div>
+
+              <button
+                type="submit"
+                style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "15px 32px", fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer" }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#001f7a"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#002FA7"; }}
+              >
+                Enviar solicitud
+              </button>
+            </form>
+
+            <div style={{ marginTop: 28, paddingTop: 24, borderTop: "1px solid #e8e8e8", display: "flex", alignItems: "center", gap: 14 }}>
+              <div style={{ width: 40, height: 40, background: "#0A0A0A", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <span style={{ color: "#fff", fontSize: 12, fontWeight: 300 }}>IB</span>
+              </div>
+              <div>
+                <p style={{ margin: 0, fontSize: 13, fontWeight: 400, color: "#0A0A0A" }}>Ibiza Luxury Estates</p>
+                <p style={{ margin: "3px 0 0", fontSize: 11, color: "#999", fontWeight: 300 }}>Agente exclusivo</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </main>
+
       <style>{`
-        @keyframes scrollLine {
-          0%   { top: -35%; }
-          100% { top: 135%; }
+        @media (max-width: 900px) {
+          main { grid-template-columns: 1fr !important; padding: 48px 24px !important; gap: 48px !important; }
+          aside { position: static !important; }
         }
       `}</style>
-    </div>
+    </>
   );
 }
-
-/* ── Shared style objects ── */
-const labelStyle: React.CSSProperties = {
-  fontSize: "0.65rem",
-  letterSpacing: "0.25em",
-  textTransform: "uppercase",
-  color: "#002FA7",
-  marginBottom: "1.5rem",
-};
-
-const sectionTitleStyle: React.CSSProperties = {
-  fontSize: "0.65rem",
-  letterSpacing: "0.25em",
-  textTransform: "uppercase",
-  color: "#002FA7",
-  marginBottom: "2rem",
-  paddingBottom: "1rem",
-  borderBottom: "1px solid #E0E0E0",
-};
-
-const subSectionStyle: React.CSSProperties = {
-  fontSize: "0.65rem",
-  letterSpacing: "0.15em",
-  textTransform: "uppercase",
-  color: "#0A0A0A",
-  fontWeight: 600,
-  marginBottom: "1rem",
-};
-
-const fieldLabelStyle: React.CSSProperties = {
-  fontSize: "0.6rem",
-  letterSpacing: "0.15em",
-  textTransform: "uppercase",
-  color: "#6B6B6B",
-  marginBottom: "0.3rem",
-  margin: "0 0 0.3rem",
-};
-
-const fieldValueStyle: React.CSSProperties = {
-  fontSize: "0.875rem",
-  margin: 0,
-  color: "#0A0A0A",
-};

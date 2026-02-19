@@ -10,9 +10,9 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const light = variant === "light";
 
   const sizes = {
-    sm: { flow: 20, ibiza: 7,  sub: 5.5, spacing: 3,  lineW: 1 },
-    md: { flow: 30, ibiza: 9,  sub: 7,   spacing: 4,  lineW: 1.5 },
-    lg: { flow: 42, ibiza: 11, sub: 8,   spacing: 5,  lineW: 2 },
+    sm: { flow: 20, ibiza: 7,  sub: 5.5, spacing: 3,  lineW: 1,  infinityH: 13, infinityW: 22 },
+    md: { flow: 30, ibiza: 9,  sub: 7,   spacing: 4,  lineW: 1.5, infinityH: 19, infinityW: 33 },
+    lg: { flow: 42, ibiza: 11, sub: 8,   spacing: 5,  lineW: 2,  infinityH: 27, infinityW: 46 },
   };
   const s = sizes[size];
 
@@ -26,7 +26,7 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
       translate="no"
       style={{ lineHeight: 1, gap: 0 }}
     >
-      {/* IBIZA — muy espaciado, tenue */}
+      {/* IBIZA */}
       <span
         style={{
           fontFamily: "'Montserrat', 'Inter', sans-serif",
@@ -42,7 +42,7 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
         IBIZA
       </span>
 
-      {/* FLOW — protagonista */}
+      {/* FLOW con ∞ como la O */}
       <span
         style={{
           fontFamily: "'Montserrat', 'Inter', sans-serif",
@@ -52,10 +52,40 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
           textTransform: "uppercase",
           color: mainColor,
           lineHeight: 1,
+          display: "flex",
+          alignItems: "center",
         }}
       >
         FL
-        <span style={{ color: blue }}>O</span>
+        <svg
+          width={s.infinityW}
+          height={s.infinityH}
+          viewBox="0 0 44 26"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={{
+            display: "inline-block",
+            verticalAlign: "middle",
+            marginTop: -s.flow * 0.04,
+            marginLeft: s.flow * 0.01,
+            marginRight: s.flow * 0.01,
+          }}
+        >
+          <path
+            d="M22 13C22 13 17.5 4 11 4C5.477 4 1 8.477 1 13C1 17.523 5.477 22 11 22C17.5 22 22 13 22 13Z"
+            stroke={blue}
+            strokeWidth="2.8"
+            fill="none"
+            strokeLinecap="round"
+          />
+          <path
+            d="M22 13C22 13 26.5 22 33 22C38.523 22 43 17.523 43 13C43 8.477 38.523 4 33 4C26.5 4 22 13 22 13Z"
+            stroke={blue}
+            strokeWidth="2.8"
+            fill="none"
+            strokeLinecap="round"
+          />
+        </svg>
         W
       </span>
 

@@ -148,7 +148,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
     // Información básica — solo los que tienen valor real
     const basicInfo = [
       { label: "Estado", value: statusLabel },
-      { label: "Tipo de propiedad", value: p.property_type ? p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1) : null },
+        { label: "Tipo de propiedad", value: p.property_type ? (PROPERTY_TYPE_ES[p.property_type.toLowerCase()] ?? p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1)) : null },
       { label: "Superficie construida", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null },
       { label: "Tamaño terreno", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
       { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null },

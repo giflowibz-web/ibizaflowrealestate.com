@@ -48,8 +48,8 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
             lineHeight: 1,
           }}
         >
-          IBIZA
-          <span style={{ color: "#002FA7", fontWeight: 600, marginLeft: "0.2em" }}>FLOW</span>
+            IBIZA
+            <span style={{ color: "#002FA7", fontWeight: 300, marginLeft: "0.2em" }}>FLOW</span>
         </span>
         <span
           style={{

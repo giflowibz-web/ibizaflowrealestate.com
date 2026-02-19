@@ -3,333 +3,298 @@
 import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X, Bed, Bath, Maximize, MapPin } from "lucide-react";
-import Navbar from "@/components/sections/navbar";
-import Footer from "@/components/sections/footer";
-import { useLang } from "@/lib/i18n";
-import { type Property as SupabaseProperty } from "@/lib/supabase";
+import Link from "next/link";
+import { type Property } from "@/lib/supabase";
 
-interface LocalProperty {
-  id: string;
-  slug: string;
-  title: string;
-  address: string;
-  price: string;
-  status: string;
-  beds: number;
-  baths: number;
-  sqm: number;
-  lotSqm?: number;
-  yearBuilt?: number;
-  description: string;
-  features: string[];
-  images: string[];
-}
-
-type AnyProperty = SupabaseProperty | LocalProperty;
-
-function isSupabase(p: AnyProperty): p is SupabaseProperty {
-  return "title_es" in p;
-}
-
-export function PropertyDetail({ property }: { property: AnyProperty }) {
-  const { t, lang } = useLang();
+export function PropertyDetail({ property }: { property: Property }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [showGallery, setShowGallery] = useState(false);
-  const [stickyVisible, setStickyVisible] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
-  const images: string[] = isSupabase(property) ? property.images || [] : property.images || [];
+  const images: string[] = property.images || [];
+  const title = property.title_es || property.title_en || "";
+  const description = property.description_es || property.description_en || "";
+  const location = [property.area, property.municipality].filter(Boolean).join(", ");
+  const price = property.price_on_request
+    ? "Precio a consultar"
+    : property.price
+    ? `€${property.price.toLocaleString("es-ES")}`
+    : "";
+  const beds = property.bedrooms;
+  const baths = property.bathrooms;
+  const sqm = property.size_built;
+  const plot = property.size_plot;
+  const features: string[] = property.features || [];
 
-  const title = isSupabase(property)
-    ? lang === "en" ? property.title_en || property.title_es : property.title_es || property.title_en
-    : (property as LocalProperty).title;
-
-  const description = isSupabase(property)
-    ? lang === "en" ? property.description_en || property.description_es : property.description_es || property.description_en
-    : (property as LocalProperty).description;
-
-  const address = isSupabase(property)
-    ? [property.area, property.municipality].filter(Boolean).join(", ")
-    : (property as LocalProperty).address;
-
-  const price = isSupabase(property)
-    ? property.price_on_request
-      ? lang === "en" ? "Price on request" : "Precio a consultar"
-      : property.price ? `€${property.price.toLocaleString()}` : ""
-    : (property as LocalProperty).price;
-
-  const beds = isSupabase(property) ? property.bedrooms : (property as LocalProperty).beds;
-  const baths = isSupabase(property) ? property.bathrooms : (property as LocalProperty).baths;
-  const sqm = isSupabase(property) ? property.size_built : (property as LocalProperty).sqm;
-  const lotSqm = isSupabase(property) ? property.size_plot : (property as LocalProperty).lotSqm;
-  const yearBuilt = isSupabase(property) ? property.year_built : (property as LocalProperty).yearBuilt;
-  const features: string[] = isSupabase(property) ? (property.features || []) : (property as LocalProperty).features;
-  const status = property.status;
-
-  const nextImage = () => setCurrentImage((prev) => (prev + 1) % images.length);
-  const prevImage = () => setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+  const next = () => setCurrentImage((p) => (p + 1) % images.length);
+  const prev = () => setCurrentImage((p) => (p - 1 + images.length) % images.length);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (heroRef.current) {
-        setStickyVisible(window.scrollY > heroRef.current.offsetHeight * 0.7);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > window.innerHeight * 0.6);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <>
-      <Navbar />
-
-      {/* Sticky stats bar */}
+    <div className="bg-white min-h-screen">
+      {/* ── STICKY HEADER ── */}
       <div
-        className={`fixed top-0 left-0 right-0 z-40 bg-white border-b border-[#E5E0D8] transition-all duration-500 ${
-          stickyVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+        className={`fixed top-0 left-0 right-0 z-50 bg-white border-b border-neutral-200 transition-all duration-500 ${
+          scrolled ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-full pointer-events-none"
         }`}
-        style={{ paddingTop: "64px" }}
       >
-        <div className="max-w-[1400px] mx-auto px-[6%] py-4 flex items-center justify-between gap-6">
-          <div>
-            <p className="text-black font-serif text-lg leading-tight">{title}</p>
-            <p className="text-[#888] text-[12px] tracking-wider">{address}</p>
+        <div className="max-w-screen-xl mx-auto px-8 h-16 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            <Link href="/propiedades" className="text-neutral-400 text-xs tracking-widest uppercase hover:text-black transition-colors">
+              ← Propiedades
+            </Link>
+            <span className="w-px h-4 bg-neutral-200" />
+            <span className="text-black font-light text-sm tracking-wide">{title}</span>
           </div>
-          <div className="hidden md:flex items-center gap-8">
-            {beds && <span className="text-[13px] text-[#333] font-body"><strong>{beds}</strong> {t.property.beds}</span>}
-            {baths && <span className="text-[13px] text-[#333] font-body"><strong>{baths}</strong> {t.property.baths}</span>}
-            {sqm && <span className="text-[13px] text-[#333] font-body"><strong>{sqm}</strong> m²</span>}
-          </div>
-          <p className="text-black font-serif text-xl">{price}</p>
+          <span className="text-black text-sm font-light tracking-wide">{price}</span>
         </div>
       </div>
 
-      {/* Hero — fullscreen image */}
-      <section ref={heroRef} className="relative h-screen bg-black">
+      {/* ── HERO ── */}
+      <div ref={heroRef} className="relative h-screen w-full overflow-hidden bg-neutral-900">
         {images[currentImage] ? (
           <Image
             src={images[currentImage]}
-            alt={title || ""}
+            alt={title}
             fill
-            className="object-cover"
             priority
-            sizes="100vw"
             unoptimized
+            className="object-cover"
+            sizes="100vw"
           />
         ) : (
-          <div className="w-full h-full bg-[#111]" />
+          <div className="w-full h-full bg-neutral-900" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
 
-        {/* Bottom overlay: status + title + price */}
-        <div className="absolute bottom-0 left-0 right-0 px-[6%] pb-16">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
-            <div>
-              {status && (
-                <span className="inline-block px-4 py-1.5 bg-white text-black text-[11px] uppercase tracking-[0.2em] font-bold mb-5">
-                  {status}
-                </span>
-              )}
-              <h1 className="text-white text-4xl md:text-6xl lg:text-7xl font-serif leading-[1.05] max-w-3xl">
-                {title}
-              </h1>
-              {address && (
-                <p className="text-white/60 text-base mt-4 flex items-center gap-2 font-body">
-                  <MapPin className="w-4 h-4" />
-                  {address}
-                </p>
-              )}
-            </div>
-            <div className="text-right">
-              <p className="text-white/50 text-[12px] uppercase tracking-[0.2em] mb-1 font-body">
-                {lang === "en" ? "Price" : "Precio"}
+        {/* gradient */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-black/20" />
+
+        {/* top-left: back + status */}
+        <div className="absolute top-8 left-8 flex items-center gap-4">
+          <Link
+            href="/propiedades"
+            className="text-white/70 text-xs tracking-[0.2em] uppercase hover:text-white transition-colors"
+          >
+            ← Volver
+          </Link>
+          {property.status && (
+            <span className="px-3 py-1 border border-white/40 text-white text-[10px] tracking-[0.3em] uppercase">
+              {property.status === "available" ? "Disponible" : property.status}
+            </span>
+          )}
+        </div>
+
+        {/* bottom: title + price */}
+        <div className="absolute bottom-0 left-0 right-0 px-10 pb-14 flex items-end justify-between">
+          <div className="max-w-2xl">
+            {location && (
+              <p className="text-white/50 text-xs tracking-[0.25em] uppercase mb-3 flex items-center gap-2">
+                <MapPin className="w-3 h-3" />
+                {location}
               </p>
-              <p className="text-white text-3xl md:text-4xl font-serif">{price}</p>
-            </div>
+            )}
+            <h1 className="text-white text-4xl md:text-6xl font-extralight leading-[1.1] tracking-tight">
+              {title}
+            </h1>
+          </div>
+          <div className="text-right hidden md:block">
+            <p className="text-white/40 text-[10px] tracking-[0.3em] uppercase mb-1">Precio</p>
+            <p className="text-white text-3xl font-extralight">{price}</p>
           </div>
         </div>
 
-        {/* Gallery controls */}
+        {/* image nav */}
         {images.length > 1 && (
-          <div className="absolute right-8 bottom-16 hidden md:flex items-center gap-3">
-            <button onClick={prevImage} className="w-11 h-11 border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
+          <>
+            <button
+              onClick={prev}
+              className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+            >
               <ChevronLeft className="w-5 h-5" />
             </button>
-            <button onClick={nextImage} className="w-11 h-11 border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
+            <button
+              onClick={next}
+              className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+            >
               <ChevronRight className="w-5 h-5" />
             </button>
             <button
               onClick={() => setShowGallery(true)}
-              className="ml-2 px-5 py-2.5 border border-white/30 text-white text-[12px] uppercase tracking-[0.15em] font-bold hover:bg-white/10 transition-colors"
+              className="absolute bottom-14 right-10 text-white/60 text-[10px] tracking-[0.25em] uppercase hover:text-white transition-colors hidden md:block"
             >
-              {lang === "en" ? "All photos" : "Ver fotos"} ({images.length})
+              Ver todas las fotos ({images.length})
             </button>
-          </div>
+          </>
         )}
-      </section>
+      </div>
 
-      {/* Stats bar */}
-      <section className="bg-[#F9F7F4] border-b border-[#E5E0D8]">
-        <div className="max-w-[1400px] mx-auto px-[6%] py-8 flex flex-wrap gap-10 md:gap-16">
-          {beds && (
+      {/* ── STATS BAR ── */}
+      <div className="border-b border-neutral-100 bg-neutral-50">
+        <div className="max-w-screen-xl mx-auto px-10 py-8 flex flex-wrap gap-12">
+          {!!beds && (
             <div className="flex items-center gap-3">
-              <Bed className="w-5 h-5 text-[#888]" />
+              <Bed className="w-4 h-4 text-neutral-400" />
               <div>
-                <p className="text-black text-2xl font-serif">{beds}</p>
-                <p className="text-[#888] text-[11px] uppercase tracking-wider font-body">{t.property.beds}</p>
+                <p className="text-black text-xl font-extralight">{beds}</p>
+                <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Habitaciones</p>
               </div>
             </div>
           )}
-          {baths && (
+          {!!baths && (
             <div className="flex items-center gap-3">
-              <Bath className="w-5 h-5 text-[#888]" />
+              <Bath className="w-4 h-4 text-neutral-400" />
               <div>
-                <p className="text-black text-2xl font-serif">{baths}</p>
-                <p className="text-[#888] text-[11px] uppercase tracking-wider font-body">{t.property.baths}</p>
+                <p className="text-black text-xl font-extralight">{baths}</p>
+                <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Baños</p>
               </div>
             </div>
           )}
-          {sqm && (
+          {!!sqm && (
             <div className="flex items-center gap-3">
-              <Maximize className="w-5 h-5 text-[#888]" />
+              <Maximize className="w-4 h-4 text-neutral-400" />
               <div>
-                <p className="text-black text-2xl font-serif">{sqm} m²</p>
-                <p className="text-[#888] text-[11px] uppercase tracking-wider font-body">{t.property.sqm}</p>
+                <p className="text-black text-xl font-extralight">{sqm} m²</p>
+                <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Construido</p>
               </div>
             </div>
           )}
-          {lotSqm && (
-            <div className="flex items-center gap-3">
-              <MapPin className="w-5 h-5 text-[#888]" />
-              <div>
-                <p className="text-black text-2xl font-serif">{lotSqm.toLocaleString()} m²</p>
-                <p className="text-[#888] text-[11px] uppercase tracking-wider font-body">{lang === "en" ? "Plot" : "Parcela"}</p>
-              </div>
-            </div>
-          )}
-          {yearBuilt && (
+          {!!plot && plot > 0 && (
             <div>
-              <p className="text-black text-2xl font-serif">{yearBuilt}</p>
-              <p className="text-[#888] text-[11px] uppercase tracking-wider font-body">{lang === "en" ? "Year Built" : "Año construcción"}</p>
+              <p className="text-black text-xl font-extralight">{plot.toLocaleString("es-ES")} m²</p>
+              <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Parcela</p>
+            </div>
+          )}
+          {!!property.year_built && (
+            <div>
+              <p className="text-black text-xl font-extralight">{property.year_built}</p>
+              <p className="text-neutral-400 text-[10px] tracking-[0.2em] uppercase">Año</p>
             </div>
           )}
         </div>
-      </section>
+      </div>
 
-      {/* Description + Contact sidebar */}
-      <section className="bg-white py-20 md:py-32">
-        <div className="max-w-[1400px] mx-auto px-[6%]">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16 lg:gap-24">
+      {/* ── BODY: description + contact ── */}
+      <div className="max-w-screen-xl mx-auto px-10 py-20 grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-20">
+        {/* left */}
+        <div>
+          <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-6">Sobre la propiedad</p>
+          <p className="text-neutral-700 text-lg font-light leading-[1.9]">{description}</p>
 
-            {/* Left: description + features */}
-            <div>
-              <p className="text-[#888] text-[11px] uppercase tracking-[0.25em] font-body mb-4">
-                {lang === "en" ? "About this property" : "Sobre esta propiedad"}
-              </p>
-              <p className="text-black text-[17px] leading-[2] font-body whitespace-pre-line text-[#444]">
-                {description}
-              </p>
-
-              {features.length > 0 && (
-                <div className="mt-16">
-                  <p className="text-[#888] text-[11px] uppercase tracking-[0.25em] font-body mb-8">
-                    {lang === "en" ? "Features & Amenities" : "Características y Servicios"}
-                  </p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
-                    {features.map((feature, i) => (
-                      <div key={i} className="flex items-center gap-3 py-3 border-b border-[#F0EDE8]">
-                        <span className="w-px h-4 bg-black shrink-0" />
-                        <span className="text-[#333] text-[14px] font-body">{feature}</span>
-                      </div>
-                    ))}
+          {features.length > 0 && (
+            <div className="mt-16">
+              <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-8">Características</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-0">
+                {features.map((f, i) => (
+                  <div key={i} className="py-3 border-b border-neutral-100 flex items-center gap-3">
+                    <span className="w-1 h-1 rounded-full bg-neutral-400 shrink-0" />
+                    <span className="text-neutral-600 text-sm font-light">{f}</span>
                   </div>
-                </div>
-              )}
-            </div>
-
-            {/* Right: contact form */}
-            <div className="lg:sticky lg:top-28 self-start">
-              <div className="border border-[#E5E0D8] p-8">
-                <p className="text-[11px] uppercase tracking-[0.25em] text-[#888] font-body mb-2">
-                  {lang === "en" ? "Interested?" : "¿Interesado?"}
-                </p>
-                <h3 className="font-serif text-2xl text-black mb-6">
-                  {lang === "en" ? "Request a private viewing" : "Solicita una visita privada"}
-                </h3>
-                <ContactForm lang={lang} propertyTitle={title || ""} />
+                ))}
               </div>
             </div>
+          )}
+
+          {/* Map placeholder */}
+          {location && (
+            <div className="mt-16">
+              <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-6">Ubicación</p>
+              <div className="w-full h-72 bg-neutral-100 flex items-center justify-center border border-neutral-200">
+                <div className="text-center">
+                  <MapPin className="w-6 h-6 text-neutral-300 mx-auto mb-2" />
+                  <p className="text-neutral-400 text-sm font-light">{location}</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* right: contact */}
+        <div className="lg:sticky lg:top-24 self-start">
+          <div className="border border-neutral-200 p-8">
+            <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-2">Contacto</p>
+            <h3 className="text-black text-2xl font-extralight mb-8">Solicitar visita privada</h3>
+            <ContactForm propertyTitle={title} />
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* Gallery grid */}
+      {/* ── GALLERY GRID ── */}
       {images.length > 1 && (
-        <section className="bg-[#F9F7F4] py-20 md:py-32">
-          <div className="max-w-[1400px] mx-auto px-[6%]">
-            <p className="text-[#888] text-[11px] uppercase tracking-[0.25em] font-body mb-12">
-              {lang === "en" ? "Gallery" : "Galería"}
-            </p>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-              {images.map((img, i) => (
+        <div className="bg-neutral-50 py-20">
+          <div className="max-w-screen-xl mx-auto px-10">
+            <p className="text-neutral-400 text-[10px] tracking-[0.3em] uppercase mb-10">Galería</p>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+              {images.map((src, i) => (
                 <div
                   key={i}
-                  className={`relative overflow-hidden cursor-pointer group ${i === 0 ? "col-span-2 row-span-2 aspect-[16/10]" : "aspect-[4/3]"}`}
+                  className={`relative overflow-hidden cursor-pointer group ${
+                    i === 0 ? "col-span-2 aspect-[16/9]" : "aspect-[4/3]"
+                  }`}
                   onClick={() => { setCurrentImage(i); setShowGallery(true); }}
                 >
                   <Image
-                    src={img}
+                    src={src}
                     alt={`${title} ${i + 1}`}
                     fill
+                    unoptimized
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                     sizes="(max-width: 768px) 50vw, 33vw"
-                    unoptimized
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors duration-300" />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300" />
                 </div>
               ))}
             </div>
           </div>
-        </section>
+        </div>
       )}
 
-      <Footer />
-
-      {/* Fullscreen gallery modal */}
+      {/* ── GALLERY MODAL ── */}
       {showGallery && (
-        <div className="fixed inset-0 z-[100] bg-black flex items-center justify-center">
+        <div className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center">
           <button
             onClick={() => setShowGallery(false)}
-            className="absolute top-6 right-6 z-10 w-12 h-12 flex items-center justify-center text-white hover:opacity-60 transition-opacity"
+            className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center text-white/60 hover:text-white transition-colors"
           >
-            <X className="w-7 h-7" />
+            <X className="w-6 h-6" />
           </button>
-          <button onClick={prevImage} className="absolute left-4 md:left-8 z-10 w-12 h-12 border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
-            <ChevronLeft className="w-6 h-6" />
+          <button
+            onClick={prev}
+            className="absolute left-6 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5" />
           </button>
-          <div className="relative w-full h-full max-w-[90vw] max-h-[85vh] mx-auto">
+          <div className="relative w-[85vw] h-[80vh]">
             <Image
               src={images[currentImage]}
               alt={`${title} ${currentImage + 1}`}
               fill
-              className="object-contain"
-              sizes="90vw"
               unoptimized
+              className="object-contain"
+              sizes="85vw"
             />
           </div>
-          <button onClick={nextImage} className="absolute right-4 md:right-8 z-10 w-12 h-12 border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors">
-            <ChevronRight className="w-6 h-6" />
+          <button
+            onClick={next}
+            className="absolute right-6 top-1/2 -translate-y-1/2 w-10 h-10 border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+          >
+            <ChevronRight className="w-5 h-5" />
           </button>
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/40 text-sm font-body tracking-widest">
+          <p className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/30 text-xs tracking-[0.3em]">
             {currentImage + 1} / {images.length}
-          </div>
+          </p>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
-function ContactForm({ lang, propertyTitle }: { lang: string; propertyTitle: string }) {
+function ContactForm({ propertyTitle }: { propertyTitle: string }) {
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -351,63 +316,49 @@ function ContactForm({ lang, propertyTitle }: { lang: string; propertyTitle: str
 
   if (sent) {
     return (
-      <div className="text-center py-8">
-        <p className="font-serif text-xl text-black mb-2">
-          {lang === "en" ? "Message sent" : "Mensaje enviado"}
-        </p>
-        <p className="text-[#888] text-sm font-body">
-          {lang === "en" ? "We'll be in touch shortly." : "Nos pondremos en contacto pronto."}
-        </p>
+      <div className="py-8 text-center">
+        <p className="text-black text-lg font-extralight">Mensaje enviado</p>
+        <p className="text-neutral-400 text-sm mt-1">Nos pondremos en contacto pronto.</p>
       </div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <input
-        type="text"
-        placeholder={lang === "en" ? "Full name" : "Nombre completo"}
-        required
-        value={form.name}
-        onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-        className="w-full border-b border-[#E5E0D8] bg-transparent py-3 text-[14px] font-body text-black placeholder-[#aaa] focus:outline-none focus:border-black transition-colors"
-      />
-      <input
-        type="email"
-        placeholder={lang === "en" ? "Email address" : "Correo electrónico"}
-        required
-        value={form.email}
-        onChange={e => setForm(f => ({ ...f, email: e.target.value }))}
-        className="w-full border-b border-[#E5E0D8] bg-transparent py-3 text-[14px] font-body text-black placeholder-[#aaa] focus:outline-none focus:border-black transition-colors"
-      />
-      <input
-        type="tel"
-        placeholder={lang === "en" ? "Phone number" : "Teléfono"}
-        value={form.phone}
-        onChange={e => setForm(f => ({ ...f, phone: e.target.value }))}
-        className="w-full border-b border-[#E5E0D8] bg-transparent py-3 text-[14px] font-body text-black placeholder-[#aaa] focus:outline-none focus:border-black transition-colors"
-      />
+    <form onSubmit={handleSubmit} className="space-y-5">
+      {[
+        { key: "name", label: "Nombre completo", type: "text", required: true },
+        { key: "email", label: "Correo electrónico", type: "email", required: true },
+        { key: "phone", label: "Teléfono", type: "tel", required: false },
+      ].map(({ key, label, type, required }) => (
+        <input
+          key={key}
+          type={type}
+          placeholder={label}
+          required={required}
+          value={form[key as keyof typeof form]}
+          onChange={(e) => setForm((f) => ({ ...f, [key]: e.target.value }))}
+          className="w-full border-b border-neutral-200 bg-transparent py-3 text-sm font-light text-black placeholder-neutral-400 focus:outline-none focus:border-black transition-colors"
+        />
+      ))}
       <textarea
-        placeholder={lang === "en" ? "Message" : "Mensaje"}
+        placeholder="Mensaje (opcional)"
         rows={3}
         value={form.message}
-        onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
-        className="w-full border-b border-[#E5E0D8] bg-transparent py-3 text-[14px] font-body text-black placeholder-[#aaa] focus:outline-none focus:border-black transition-colors resize-none"
+        onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
+        className="w-full border-b border-neutral-200 bg-transparent py-3 text-sm font-light text-black placeholder-neutral-400 focus:outline-none focus:border-black transition-colors resize-none"
       />
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-4 bg-black text-white text-[12px] uppercase tracking-[0.2em] font-bold hover:bg-[#222] transition-colors disabled:opacity-50 mt-2"
+        className="w-full py-4 bg-black text-white text-[11px] tracking-[0.3em] uppercase hover:bg-neutral-800 transition-colors disabled:opacity-50 mt-2"
       >
-        {loading
-          ? (lang === "en" ? "Sending..." : "Enviando...")
-          : (lang === "en" ? "Send enquiry" : "Enviar consulta")}
+        {loading ? "Enviando..." : "Enviar consulta"}
       </button>
       <a
-        href="tel:+34971000000"
-        className="block w-full py-4 border border-[#E5E0D8] text-black text-[12px] uppercase tracking-[0.2em] font-bold text-center hover:border-black transition-colors"
+        href="tel:+34600000000"
+        className="block w-full py-4 border border-neutral-200 text-black text-[11px] tracking-[0.3em] uppercase text-center hover:border-black transition-colors"
       >
-        {lang === "en" ? "Or call us" : "O llámanos"}
+        Llamar
       </a>
     </form>
   );

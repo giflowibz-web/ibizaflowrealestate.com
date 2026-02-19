@@ -1,7 +1,6 @@
 "use client";
 
 import { useLang } from '@/lib/i18n';
-import Logo from '../logo';
 
 const HeroSection = () => {
   const { lang } = useLang();

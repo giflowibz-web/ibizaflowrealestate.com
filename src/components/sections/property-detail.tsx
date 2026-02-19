@@ -270,9 +270,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
           {/* SECCIÓN: Descripción */}
           <section id="descripcion" style={{ padding: "72px 60px 56px" }}>
-            <p style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 20px" }}>
-              Descripción de la propiedad
-            </p>
+              <p style={{ fontSize: "1.1rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 20px" }}>
+                Descripción de la propiedad
+              </p>
             <h2 style={{ fontSize: "clamp(1.4rem, 2vw, 1.85rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 32px", letterSpacing: "-0.025em", lineHeight: 1.2 }}>
               {p.title_es}
             </h2>

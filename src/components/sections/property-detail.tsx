@@ -364,32 +364,32 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             {/* ── INFORMACIÓN BÁSICA ── */}
             <section id="info-basica" style={{ padding: "0 64px 64px" }}>
               <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 56 }}>
-                <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>
-                  Información Básica
-                </p>
-                <h3 style={{ fontSize: "clamp(1.3rem, 2vw, 1.9rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 44px", letterSpacing: "-0.025em" }}>
-                  Detalles de la propiedad
-                </h3>
-                {basicInfo.length > 0 ? (
-                  <div>
-                    {basicInfo.map((item, i) => (
-                      <div
-                        key={i}
-                        style={{
-                          display: "grid",
-                          gridTemplateColumns: "1fr 1fr",
-                          borderBottom: "1px solid #f0f0f0",
-                          padding: "0",
-                        }}
-                      >
-                        <div style={{ padding: "16px 0", borderRight: "1px solid #f0f0f0" }}>
-                          <p style={{ margin: 0, fontSize: "0.72rem", fontWeight: 600, color: "#b0b0b0", letterSpacing: "0.12em", textTransform: "uppercase" }}>{item.label}</p>
+                  <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>
+                    Información Básica
+                  </p>
+                  <h3 style={{ fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 44px", letterSpacing: "-0.03em" }}>
+                    Detalles de la propiedad
+                  </h3>
+                  {basicInfo.length > 0 ? (
+                    <div>
+                      {basicInfo.map((item, i) => (
+                        <div
+                          key={i}
+                          style={{
+                            display: "grid",
+                            gridTemplateColumns: "1fr 1fr",
+                            borderBottom: "1px solid #f0f0f0",
+                            padding: "0",
+                          }}
+                        >
+                          <div style={{ padding: "20px 0", borderRight: "1px solid #f0f0f0" }}>
+                            <p style={{ margin: 0, fontSize: "0.78rem", fontWeight: 600, color: "#b0b0b0", letterSpacing: "0.12em", textTransform: "uppercase" }}>{item.label}</p>
+                          </div>
+                          <div style={{ padding: "20px 0 20px 24px" }}>
+                            <p style={{ margin: 0, fontSize: "1rem", fontWeight: 400, color: "#0A0A0A", letterSpacing: "0.01em" }}>{String(item.value)}</p>
+                          </div>
                         </div>
-                        <div style={{ padding: "16px 0 16px 24px" }}>
-                          <p style={{ margin: 0, fontSize: "0.88rem", fontWeight: 400, color: "#0A0A0A", letterSpacing: "0.01em" }}>{String(item.value)}</p>
-                        </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 ) : (
                   <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>Sin información disponible.</p>

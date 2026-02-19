@@ -389,7 +389,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           {mapSrc && (
             <section style={{ padding: "0 60px 80px" }}>
               <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 48 }}>
-                <p style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Ubicación</p>
+                  <p style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Ubicación</p>
                 <div style={{ overflow: "hidden", border: "1px solid #ebebeb" }}>
                   <iframe src={mapSrc} width="100%" height="400" style={{ border: 0, display: "block" }} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
                 </div>

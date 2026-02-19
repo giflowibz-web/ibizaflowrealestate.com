@@ -1,6 +1,7 @@
 "use client";
 
 import { useLang } from '@/lib/i18n';
+import Logo from '../logo';
 
 const HeroSection = () => {
   const { lang } = useLang();
@@ -15,11 +16,16 @@ const HeroSection = () => {
         playsInline
         className="absolute inset-0 h-full w-full object-cover"
       >
-          <source src="/hero-small.mp4" type="video/mp4" />
+        <source src="/hero-small.mp4" type="video/mp4" />
       </video>
 
-      {/* Overlay oscuro sutil */}
-      <div className="absolute inset-0 bg-black/25" />
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/35" />
+
+      {/* Logo centrado en el hero — estilo Aaron Kirman */}
+      <div className="absolute inset-0 flex items-center justify-center z-10">
+        <Logo variant="light" size="hero" />
+      </div>
 
       {/* Tagline abajo centrado */}
       <div className="absolute bottom-20 left-1/2 z-10 -translate-x-1/2 text-center">

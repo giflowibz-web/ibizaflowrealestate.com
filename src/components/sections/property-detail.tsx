@@ -351,20 +351,27 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                 <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>
                   Información Básica
                 </p>
-                  <div>
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 0 }}>
                     {basicInfo.map((item, i) => (
                       <div
                         key={i}
                         style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "baseline",
-                          padding: "16px 0",
-                          borderBottom: "1px solid #f0f0f0",
+                          display: "contents",
                         }}
                       >
-                        <span style={{ fontSize: "0.78rem", fontWeight: 300, color: "#999", letterSpacing: "0.01em" }}>{item.label}</span>
-                        <span style={{ fontSize: "0.82rem", fontWeight: 500, color: "#0A0A0A", textAlign: "right", marginLeft: 24 }}>{String(item.value)}</span>
+                        <div style={{
+                          padding: "14px 32px 14px 0",
+                          borderBottom: "1px solid #f0f0f0",
+                          borderRight: "1px solid #f0f0f0",
+                        }}>
+                          <span style={{ fontSize: "0.75rem", fontWeight: 400, color: "#888", letterSpacing: "0.01em" }}>{item.label}</span>
+                        </div>
+                        <div style={{
+                          padding: "14px 0 14px 32px",
+                          borderBottom: "1px solid #f0f0f0",
+                        }}>
+                          <span style={{ fontSize: "0.82rem", fontWeight: 500, color: "#0A0A0A" }}>{String(item.value)}</span>
+                        </div>
                       </div>
                     ))}
                   </div>

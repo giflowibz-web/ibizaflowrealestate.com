@@ -64,12 +64,12 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
             fontWeight: 800,
             letterSpacing: "0.22em",
             textTransform: "uppercase",
-            color: accentColor,
-            fontFamily: "'Montserrat', var(--font-body, sans-serif)",
-            lineHeight: 1,
-          }}
-        >
-          FLOW
+          color: textColor,
+          fontFamily: "'Montserrat', var(--font-body, sans-serif)",
+          lineHeight: 1,
+        }}
+      >
+        FLOW
         </span>
       </div>
 

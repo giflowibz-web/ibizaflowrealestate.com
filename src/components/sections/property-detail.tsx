@@ -127,7 +127,8 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
     // Estado legible
     const statusLabel = (() => {
-      if (p.listing_type === "rent" && p.price && p.price_rent) return "En venta y alquiler";
+      if (p.listing_type === "rent" && p.price_rent) return "En alquiler";
+      if (p.listing_type === "sale" && p.price_rent) return "En venta y alquiler";
       if (p.listing_type === "rent") return "En alquiler";
       return "En venta";
     })();

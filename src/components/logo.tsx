@@ -8,35 +8,14 @@ interface LogoProps {
 
 export default function Logo({ variant = "light", size = "md", className = "" }: LogoProps) {
   const isLight = variant === "light";
-
-  const subColor = isLight ? "rgba(255,255,255,0.45)" : "rgba(10,10,10,0.45)";
+  const textColor = isLight ? "#FFFFFF" : "#0A0A0A";
+  const subColor = isLight ? "rgba(255,255,255,0.5)" : "rgba(10,10,10,0.5)";
   const accentColor = "#002FA7";
 
   const sizes = {
-    sm: {
-      ibiza: "0.55rem",
-      flow: "1.6rem",
-      sub: "0.48rem",
-      tracking: "0.42em",
-      gap: "2px",
-      lineW: "28px",
-    },
-    md: {
-      ibiza: "0.65rem",
-      flow: "2.4rem",
-      sub: "0.55rem",
-      tracking: "0.42em",
-      gap: "3px",
-      lineW: "36px",
-    },
-    lg: {
-      ibiza: "0.75rem",
-      flow: "3.2rem",
-      sub: "0.62rem",
-      tracking: "0.44em",
-      gap: "4px",
-      lineW: "44px",
-    },
+    sm: { main: "1.05rem", sub: "0.42rem", block: 14, tracking: "0.28em" },
+    md: { main: "1.6rem",  sub: "0.52rem", block: 20, tracking: "0.28em" },
+    lg: { main: "2.2rem",  sub: "0.58rem", block: 26, tracking: "0.28em" },
   };
 
   const s = sizes[size];
@@ -45,69 +24,69 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
     <div
       className={className}
       style={{
-        display: "flex",
+        display: "inline-flex",
         flexDirection: "column",
-        alignItems: "center",
+        alignItems: "flex-start",
         userSelect: "none",
+        gap: 4,
       }}
     >
-      {/* IBIZA — pequeño, muy espaciado */}
-      <span
-        style={{
-          fontSize: s.ibiza,
-          fontWeight: 400,
-          letterSpacing: "0.55em",
-          textTransform: "uppercase",
-          color: subColor,
-          fontFamily: "var(--font-body, 'Gilroy', sans-serif)",
-          marginBottom: s.gap,
-          paddingLeft: "0.55em",
-        }}
-      >
-        IBIZA
-      </span>
-
-      {/* FLOW — serif bold, azul Klein, protagonista */}
-      <span
-        style={{
-          fontSize: s.flow,
-          fontWeight: 700,
-          letterSpacing: "0.18em",
-          textTransform: "uppercase",
-          color: accentColor,
-          fontFamily: "'Playfair Display', serif",
-          lineHeight: 1,
-          paddingLeft: "0.18em",
-        }}
-      >
-        FLOW
-      </span>
-
-      {/* líneas + REAL ESTATE */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          marginTop: s.gap,
-        }}
-      >
-        <span style={{ display: "block", width: s.lineW, height: "0.5px", background: subColor }} />
+      {/* Main line: IBIZA [block] FLOW */}
+      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <span
           style={{
-            fontSize: s.sub,
-            fontWeight: 400,
-            letterSpacing: s.tracking,
+            fontSize: s.main,
+            fontWeight: 300,
+            letterSpacing: "0.22em",
             textTransform: "uppercase",
-            color: subColor,
-            fontFamily: "var(--font-body, 'Gilroy', sans-serif)",
-            paddingLeft: s.tracking,
+            color: textColor,
+            fontFamily: "'Montserrat', var(--font-body, sans-serif)",
+            lineHeight: 1,
           }}
         >
-          Real Estate
+          IBIZA
         </span>
-        <span style={{ display: "block", width: s.lineW, height: "0.5px", background: subColor }} />
+
+        {/* Blue Klein vertical block */}
+        <span
+          style={{
+            display: "inline-block",
+            width: s.block * 0.35,
+            height: s.block,
+            background: accentColor,
+            flexShrink: 0,
+          }}
+        />
+
+        <span
+          style={{
+            fontSize: s.main,
+            fontWeight: 800,
+            letterSpacing: "0.22em",
+            textTransform: "uppercase",
+            color: accentColor,
+            fontFamily: "'Montserrat', var(--font-body, sans-serif)",
+            lineHeight: 1,
+          }}
+        >
+          FLOW
+        </span>
       </div>
+
+      {/* Subtitle: REAL ESTATE */}
+      <span
+        style={{
+          fontSize: s.sub,
+          fontWeight: 400,
+          letterSpacing: s.tracking,
+          textTransform: "uppercase",
+          color: subColor,
+          fontFamily: "'Montserrat', var(--font-body, sans-serif)",
+          paddingLeft: "0.1em",
+        }}
+      >
+        Real Estate
+      </span>
     </div>
   );
 }

@@ -40,18 +40,18 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
           IBIZA
         </span>
 
-        <span
-          style={{
-            fontSize: s.ibiza * 0.45,
-            color: flowColor,
-            opacity: 0.6,
-            letterSpacing: 0,
-            alignSelf: "center",
-            marginBottom: 1,
-          }}
-        >
-          ·
-        </span>
+          <span
+            style={{
+              fontSize: s.ibiza * 0.45,
+              color: ibizaColor,
+              opacity: 0.4,
+              letterSpacing: 0,
+              alignSelf: "center",
+              marginBottom: 1,
+            }}
+          >
+            ·
+          </span>
 
         <span
           style={{

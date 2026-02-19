@@ -16,7 +16,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const links = [
+  const leftLinks = [
     { label: t.nav.properties, href: "/propiedades" },
     { label: t.nav.services, href: "#servicios" },
     { label: t.nav.about, href: "#nosotros" },
@@ -30,16 +30,12 @@ export default function Navbar() {
           : "bg-transparent py-6"
       }`}
     >
-      <div className="w-full flex items-center justify-between px-8 md:px-12">
+      {/* Contenedor relativo para que el logo absoluto se centre respecto al header */}
+      <div className="relative w-full flex items-center px-6 md:px-10">
 
-        {/* LEFT — Logo */}
-        <a href="/" className="flex-shrink-0">
-          <Logo variant="light" size={scrolled ? "sm" : "md"} />
-        </a>
-
-        {/* RIGHT — Links + Contacto CTA + idioma + búsqueda */}
-        <nav className="hidden md:flex items-center gap-10">
-          {links.map((item) => (
+        {/* LEFT — Links pegados al borde izquierdo */}
+        <nav className="hidden md:flex items-center gap-8 flex-none">
+          {leftLinks.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -48,8 +44,18 @@ export default function Navbar() {
               {item.label}
             </a>
           ))}
+        </nav>
 
-          {/* Contacto — botón CTA estilo Aaron Kirman */}
+        {/* CENTER — Logo centrado absolutamente en el header */}
+        <a
+          href="/"
+          className="absolute left-1/2 -translate-x-1/2 flex-shrink-0"
+        >
+          <Logo variant="light" size={scrolled ? "sm" : "md"} />
+        </a>
+
+        {/* RIGHT — Contacto + idioma + lupa */}
+        <div className="hidden md:flex items-center gap-7 ml-auto flex-none">
           <a
             href="#contacto"
             className="text-[10px] uppercase tracking-[0.25em] font-medium text-white border border-white/40 px-4 py-1.5 hover:bg-white hover:text-black transition-all duration-300"
@@ -57,7 +63,6 @@ export default function Navbar() {
             {t.nav.contact}
           </a>
 
-          {/* Idioma */}
           <button
             onClick={() => setLang(lang === "es" ? "en" : "es")}
             className="flex items-center gap-1 text-[10px] uppercase tracking-[0.22em] font-medium text-white/70 hover:text-white transition-colors"
@@ -67,18 +72,17 @@ export default function Navbar() {
             <span className={lang === "en" ? "text-white" : "text-white/35"}>EN</span>
           </button>
 
-          {/* Búsqueda */}
           <button
             className="flex items-center text-white/70 hover:text-white transition-colors"
             aria-label={t.nav.search}
           >
             <Search size={15} strokeWidth={1.5} />
           </button>
-        </nav>
+        </div>
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-white"
+          className="md:hidden text-white ml-auto"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
         >
@@ -89,7 +93,7 @@ export default function Navbar() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-b border-white/10 py-6 px-8 flex flex-col gap-5">
-          {[...links, { label: t.nav.contact, href: "#contacto" }].map((item) => (
+          {[...leftLinks, { label: t.nav.contact, href: "#contacto" }].map((item) => (
             <a
               key={item.href}
               href={item.href}

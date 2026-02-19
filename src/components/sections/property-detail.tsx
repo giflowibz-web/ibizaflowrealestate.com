@@ -62,6 +62,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
   const mainImage = images[0] ?? "";
   const galleryImages = images.slice(1);
   const [activeImg, setActiveImg] = useState<string | null>(null);
+  const [activeIdx, setActiveIdx] = useState(0);
 
   const price = p.price_on_request
     ? "Precio bajo consulta"
@@ -112,44 +113,54 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
     ? `https://maps.google.com/maps?q=${encodeURIComponent(location)}&z=13&output=embed`
     : null;
 
+  function openLightbox(img: string) {
+    const idx = images.indexOf(img);
+    setActiveIdx(idx >= 0 ? idx : 0);
+    setActiveImg(img);
+  }
+
+  function lightboxPrev(e: React.MouseEvent) {
+    e.stopPropagation();
+    const idx = (activeIdx - 1 + images.length) % images.length;
+    setActiveIdx(idx);
+    setActiveImg(images[idx]);
+  }
+
+  function lightboxNext(e: React.MouseEvent) {
+    e.stopPropagation();
+    const idx = (activeIdx + 1) % images.length;
+    setActiveIdx(idx);
+    setActiveImg(images[idx]);
+  }
+
   return (
     <>
-      {/* LIGHTBOX */}
+      {/* ─── LIGHTBOX ─── */}
       {activeImg && (
         <div
           onClick={() => setActiveImg(null)}
           style={{
             position: "fixed", inset: 0, zIndex: 9999,
-            background: "rgba(0,0,0,0.96)",
+            background: "rgba(0,0,0,0.97)",
             display: "flex", alignItems: "center", justifyContent: "center",
           }}
         >
           <button
             onClick={() => setActiveImg(null)}
-            style={{
-              position: "absolute", top: 24, right: 32,
-              background: "none", border: "none", color: "#fff",
-              fontSize: 36, cursor: "pointer", fontWeight: 200,
-            }}
+            style={{ position: "absolute", top: 28, right: 36, background: "none", border: "none", color: "#fff", fontSize: 40, cursor: "pointer", fontWeight: 200, lineHeight: 1 }}
           >×</button>
-          <img src={activeImg} alt="" style={{ maxWidth: "90vw", maxHeight: "88vh", objectFit: "contain" }} />
-          {images.length > 1 && (
-            <>
-              <button
-                onClick={(e) => { e.stopPropagation(); const idx = images.indexOf(activeImg); setActiveImg(images[(idx - 1 + images.length) % images.length]); }}
-                style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", width: 48, height: 48, fontSize: 22, cursor: "pointer" }}
-              >‹</button>
-              <button
-                onClick={(e) => { e.stopPropagation(); const idx = images.indexOf(activeImg); setActiveImg(images[(idx + 1) % images.length]); }}
-                style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.3)", color: "#fff", width: 48, height: 48, fontSize: 22, cursor: "pointer" }}
-              >›</button>
-            </>
-          )}
+          <button onClick={lightboxPrev} style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", width: 52, height: 52, fontSize: 26, cursor: "pointer" }}>‹</button>
+          <img src={activeImg} alt="" style={{ maxWidth: "88vw", maxHeight: "86vh", objectFit: "contain" }} />
+          <button onClick={lightboxNext} style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", width: 52, height: 52, fontSize: 26, cursor: "pointer" }}>›</button>
+          <span style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.4)", fontSize: 12, letterSpacing: "0.15em" }}>{activeIdx + 1} / {images.length}</span>
         </div>
       )}
 
-      {/* HERO BANNER — una sola foto fullscreen */}
-      <section style={{ position: "relative", width: "100%", height: "100vh", minHeight: 520, background: "#0A0A0A", overflow: "hidden" }}>
+      {/* ─── HERO BANNER fullscreen ─── */}
+      <section
+        onClick={() => mainImage && openLightbox(mainImage)}
+        style={{ position: "relative", width: "100%", height: "100vh", minHeight: 600, background: "#0A0A0A", overflow: "hidden", cursor: mainImage ? "pointer" : "default" }}
+      >
         {mainImage && (
           <img
             src={mainImage}
@@ -157,60 +168,60 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
           />
         )}
-        {/* Overlay */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.6) 100%)" }} />
+        {/* Overlay gradient */}
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.72) 100%)" }} />
 
-        {/* Badge */}
-        <div style={{ position: "absolute", top: 96, left: 48, background: "#002FA7", color: "#fff", fontSize: 10, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", padding: "6px 16px" }}>
+        {/* Badge estado */}
+        <div style={{ position: "absolute", top: 100, left: 52, background: "#002FA7", color: "#fff", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", padding: "7px 18px" }}>
           {listingLabel}
         </div>
 
-        {/* Ver todas las fotos */}
+        {/* Ver galería */}
         {images.length > 1 && (
           <button
-            onClick={() => setActiveImg(mainImage)}
-            style={{ position: "absolute", top: 96, right: 48, background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)", border: "1px solid rgba(255,255,255,0.25)", color: "#fff", fontSize: 10, fontWeight: 500, letterSpacing: "0.15em", textTransform: "uppercase", padding: "8px 20px", cursor: "pointer" }}
+            onClick={(e) => { e.stopPropagation(); openLightbox(mainImage); }}
+            style={{ position: "absolute", top: 100, right: 52, background: "rgba(0,0,0,0.35)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.22)", color: "#fff", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", padding: "9px 22px", cursor: "pointer" }}
           >
-            Ver todas las fotos ({images.length})
+            Ver {images.length} fotos
           </button>
         )}
 
-        {/* Título + Precio */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 48px 56px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
-          <div>
+        {/* Título + Precio bottom */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 52px 64px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+          <div style={{ flex: 1 }}>
             {location && (
-              <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 11, fontWeight: 400, letterSpacing: "0.18em", textTransform: "uppercase", margin: "0 0 14px" }}>
+              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: 10, fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 16px" }}>
                 {location}
               </p>
             )}
-            <h1 style={{ color: "#fff", fontSize: "clamp(2rem, 5vw, 4rem)", fontWeight: 200, letterSpacing: "-0.02em", margin: 0, lineHeight: 1.05, maxWidth: 680 }}>
+            <h1 style={{ color: "#fff", fontSize: "clamp(2.2rem, 5vw, 4.2rem)", fontWeight: 200, letterSpacing: "-0.025em", margin: 0, lineHeight: 1.02, maxWidth: 720 }}>
               {p.title_es}
             </h1>
           </div>
           {price && (
-            <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 40 }}>
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", margin: "0 0 6px" }}>Precio</p>
-              <p style={{ color: "#fff", fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)", fontWeight: 200, margin: 0 }}>{price}</p>
+            <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 48 }}>
+              <p style={{ color: "rgba(255,255,255,0.45)", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase", margin: "0 0 8px" }}>Precio</p>
+              <p style={{ color: "#fff", fontSize: "clamp(1.5rem, 2.5vw, 2.3rem)", fontWeight: 200, margin: 0, letterSpacing: "-0.01em" }}>{price}</p>
             </div>
           )}
         </div>
 
         {/* Scroll indicator */}
-        <div style={{ position: "absolute", bottom: 18, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-          <span style={{ color: "rgba(255,255,255,0.35)", fontSize: 9, letterSpacing: "0.2em", textTransform: "uppercase" }}>scroll</span>
-          <div style={{ width: 1, height: 30, background: "linear-gradient(to bottom, rgba(255,255,255,0.45), transparent)" }} />
+        <div style={{ position: "absolute", bottom: 16, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 5 }}>
+          <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase" }}>scroll</span>
+          <div style={{ width: 1, height: 28, background: "linear-gradient(to bottom, rgba(255,255,255,0.4), transparent)" }} />
         </div>
       </section>
 
-      {/* STATS BAR */}
+      {/* ─── STATS BAR ─── */}
       {stats.length > 0 && (
-        <section style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "center" }}>
+        <section style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
           {stats.map((d, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "36px 52px", borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none" }}>
-              <span style={{ color: "#fff", fontSize: "clamp(1.8rem, 3vw, 2.6rem)", fontWeight: 200, letterSpacing: "-0.02em", lineHeight: 1 }}>
+            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "38px 56px", borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none" }}>
+              <span style={{ color: "#fff", fontSize: "clamp(2rem, 3.2vw, 2.8rem)", fontWeight: 200, letterSpacing: "-0.03em", lineHeight: 1 }}>
                 {d.value}
               </span>
-              <span style={{ color: "#002FA7", fontSize: 9, fontWeight: 600, letterSpacing: "0.2em", textTransform: "uppercase", marginTop: 8 }}>
+              <span style={{ color: "#002FA7", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginTop: 10 }}>
                 {d.label}
               </span>
             </div>
@@ -218,190 +229,222 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </section>
       )}
 
-      {/* CONTENIDO PRINCIPAL */}
-      <main style={{ maxWidth: 1320, margin: "0 auto", padding: "88px 48px", display: "grid", gridTemplateColumns: "1fr 380px", gap: 80, alignItems: "start" }}>
-
-        {/* COLUMNA IZQUIERDA */}
-        <div>
-
-          {/* Descripción */}
+      {/* ─── DESCRIPCIÓN + FORMULARIO (lado a lado, full width) ─── */}
+      <section style={{ display: "grid", gridTemplateColumns: "1fr 440px", alignItems: "stretch" }}>
+        {/* Descripción */}
+        <div style={{ padding: "88px 72px 88px 52px", background: "#fff" }}>
+          <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Descripción de la propiedad</p>
+          {p.title_es && (
+            <h2 style={{ fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 32px", letterSpacing: "-0.02em", lineHeight: 1.15 }}>
+              {p.title_es}
+            </h2>
+          )}
           {p.description_es && (
-            <section style={{ marginBottom: 64 }}>
-              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Descripción</p>
-              <p style={{ fontSize: "clamp(1rem, 1.3vw, 1.1rem)", fontWeight: 300, lineHeight: 1.9, color: "#1a1a1a", margin: 0, maxWidth: 680 }}>
-                {p.description_es}
-              </p>
-            </section>
+            <p style={{ fontSize: "clamp(0.95rem, 1.2vw, 1.05rem)", fontWeight: 300, lineHeight: 2, color: "#333", margin: 0 }}>
+              {p.description_es}
+            </p>
+          )}
+        </div>
+
+        {/* Formulario fondo negro */}
+        <div style={{ background: "#0A0A0A", padding: "72px 48px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 10px" }}>Contacte con nosotros</p>
+          <h3 style={{ fontSize: "1.5rem", fontWeight: 200, color: "#fff", margin: "0 0 10px", letterSpacing: "-0.02em", lineHeight: 1.2 }}>
+            Solicitar información
+          </h3>
+          <p style={{ fontSize: 12, fontWeight: 300, color: "rgba(255,255,255,0.45)", margin: "0 0 36px", lineHeight: 1.6 }}>
+            Un agente exclusivo se pondrá en contacto con usted en menos de 24 horas.
+          </p>
+
+          {price && (
+            <div style={{ border: "1px solid rgba(255,255,255,0.1)", padding: "14px 20px", marginBottom: 32, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>Precio</span>
+              <span style={{ fontSize: "1rem", fontWeight: 300, color: "#fff" }}>{price}</span>
+            </div>
           )}
 
-          <div style={{ height: 1, background: "#e8e8e8", marginBottom: 64 }} />
-
-          {/* Información Básica */}
-          {basicInfo.length > 0 && (
-            <section style={{ marginBottom: 64 }}>
-              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Información Básica</p>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", border: "1px solid #e8e8e8" }}>
-                {basicInfo.map((item, i) => (
-                  <div key={i} style={{ padding: "20px 24px", borderBottom: i < basicInfo.length - 2 ? "1px solid #e8e8e8" : "none", borderRight: i % 2 === 0 ? "1px solid #e8e8e8" : "none" }}>
-                    <p style={{ fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#aaa", margin: "0 0 6px" }}>{item.label}</p>
-                    <p style={{ fontSize: 14, fontWeight: 300, color: "#0A0A0A", margin: 0 }}>{item.value}</p>
-                  </div>
-                ))}
+          <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column" }}>
+            {[
+              { label: "Nombre completo", type: "text", id: "nm" },
+              { label: "Correo electrónico", type: "email", id: "em" },
+              { label: "Teléfono", type: "tel", id: "ph" },
+            ].map((field) => (
+              <div key={field.id} style={{ marginBottom: 24 }}>
+                <label htmlFor={field.id} style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>
+                  {field.label}
+                </label>
+                <input
+                  id={field.id}
+                  type={field.type}
+                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.18)", padding: "10px 0", fontSize: 14, fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
+                />
               </div>
-            </section>
-          )}
+            ))}
 
-          <div style={{ height: 1, background: "#e8e8e8", marginBottom: 64 }} />
+            <div style={{ marginBottom: 32 }}>
+              <label htmlFor="msgc" style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: 10 }}>Mensaje</label>
+              <textarea
+                id="msgc"
+                rows={3}
+                defaultValue={`Me interesa: ${p.title_es}`}
+                style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.18)", padding: "10px 0", fontSize: 14, fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
+              />
+            </div>
 
-          {/* Características */}
-          {hasFeatures && (
-            <section style={{ marginBottom: 64 }}>
-              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Características y Comodidades</p>
+            <button
+              type="submit"
+              style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "16px 32px", fontSize: 10, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0037c4"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#002FA7"; }}
+            >
+              Enviar solicitud
+            </button>
+          </form>
+        </div>
+      </section>
 
-              {areaFeatures.length > 0 && (
-                <div style={{ marginBottom: 36 }}>
-                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 16px", paddingBottom: 12, borderBottom: "1px solid #e8e8e8" }}>Área y Lote</p>
-                  {areaFeatures.map((f, i) => (
-                    <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "10px 0", borderBottom: "1px solid #f0f0f0" }}>
-                      <span style={{ fontSize: 13, color: "#666", fontWeight: 300 }}>{f.label}</span>
-                      <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{f.value}</span>
-                    </div>
-                  ))}
+      {/* ─── CONTENIDO: Info Básica + Características ─── */}
+      <main style={{ maxWidth: 1200, margin: "0 auto", padding: "88px 52px" }}>
+
+        {/* Información Básica */}
+        {basicInfo.length > 0 && (
+          <section style={{ marginBottom: 72 }}>
+            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>Información Básica</p>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", border: "1px solid #e8e8e8" }}>
+              {basicInfo.map((item, i) => (
+                <div key={i} style={{ padding: "22px 28px", borderBottom: i < basicInfo.length - 2 ? "1px solid #e8e8e8" : "none", borderRight: i % 2 === 0 ? "1px solid #e8e8e8" : "none" }}>
+                  <p style={{ fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#bbb", margin: "0 0 8px" }}>{item.label}</p>
+                  <p style={{ fontSize: 14, fontWeight: 300, color: "#0A0A0A", margin: 0 }}>{item.value}</p>
                 </div>
-              )}
+              ))}
+            </div>
+          </section>
+        )}
 
-              {interiorFeatures.length > 0 && (
-                <div style={{ marginBottom: 36 }}>
-                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 16px", paddingBottom: 12, borderBottom: "1px solid #e8e8e8" }}>Interior y Exterior</p>
-                  {interiorFeatures.map((f, i) => (
-                    <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "10px 0", borderBottom: "1px solid #f0f0f0" }}>
-                      <span style={{ fontSize: 13, color: "#666", fontWeight: 300 }}>{f.label}</span>
-                      <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{String(f.value)}</span>
-                    </div>
-                  ))}
-                </div>
-              )}
+        <div style={{ height: 1, background: "#e8e8e8", marginBottom: 72 }} />
 
-              {priceRent && (
-                <div style={{ marginBottom: 36 }}>
-                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 16px", paddingBottom: 12, borderBottom: "1px solid #e8e8e8" }}>Financiero</p>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", padding: "10px 0" }}>
-                    <span style={{ fontSize: 13, color: "#666", fontWeight: 300 }}>Precio de arrendamiento</span>
-                    <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{priceRent}/mes</span>
-                  </div>
-                </div>
-              )}
+        {/* Características */}
+        {hasFeatures && (
+          <section style={{ marginBottom: 72 }}>
+            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>Características y Comodidades</p>
 
-              {p.features && p.features.length > 0 && (
-                <div>
-                  <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 16px", paddingBottom: 12, borderBottom: "1px solid #e8e8e8" }}>Extras</p>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 24px", paddingTop: 8 }}>
-                    {p.features.map((f, i) => (
-                      <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                        <div style={{ width: 4, height: 4, background: "#002FA7", flexShrink: 0 }} />
-                        <span style={{ fontSize: 13, color: "#333", fontWeight: 300 }}>{f}</span>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 80px" }}>
+              <div>
+                {areaFeatures.length > 0 && (
+                  <div style={{ marginBottom: 40 }}>
+                    <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 20px", paddingBottom: 14, borderBottom: "1px solid #e0e0e0" }}>Área y Lote</p>
+                    {areaFeatures.map((f, i) => (
+                      <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid #f2f2f2" }}>
+                        <span style={{ fontSize: 13, color: "#777", fontWeight: 300 }}>{f.label}</span>
+                        <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{f.value}</span>
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
-            </section>
-          )}
+                )}
 
-          {/* Mapa */}
-          {mapSrc && (
-            <section style={{ marginBottom: 64 }}>
-              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Ubicación</p>
-              <div style={{ width: "100%", height: 420, border: "1px solid #e8e8e8", overflow: "hidden" }}>
-                <iframe src={mapSrc} width="100%" height="420" style={{ border: 0, display: "block" }} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
+                {priceRent && (
+                  <div style={{ marginBottom: 40 }}>
+                    <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 20px", paddingBottom: 14, borderBottom: "1px solid #e0e0e0" }}>Financiero</p>
+                    <div style={{ display: "flex", justifyContent: "space-between", padding: "12px 0" }}>
+                      <span style={{ fontSize: 13, color: "#777", fontWeight: 300 }}>Precio de arrendamiento</span>
+                      <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{priceRent}/mes</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                {interiorFeatures.length > 0 && (
+                  <div style={{ marginBottom: 40 }}>
+                    <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 20px", paddingBottom: 14, borderBottom: "1px solid #e0e0e0" }}>Interior y Exterior</p>
+                    {interiorFeatures.map((f, i) => (
+                      <div key={i} style={{ display: "flex", justifyContent: "space-between", padding: "12px 0", borderBottom: "1px solid #f2f2f2" }}>
+                        <span style={{ fontSize: 13, color: "#777", fontWeight: 300 }}>{f.label}</span>
+                        <span style={{ fontSize: 13, color: "#0A0A0A", fontWeight: 400 }}>{String(f.value)}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {p.features && p.features.length > 0 && (
+                  <div>
+                    <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 20px", paddingBottom: 14, borderBottom: "1px solid #e0e0e0" }}>Extras</p>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px 16px", paddingTop: 8 }}>
+                      {p.features.map((f, i) => (
+                        <div key={i} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                          <div style={{ width: 4, height: 4, background: "#002FA7", borderRadius: "50%", flexShrink: 0 }} />
+                          <span style={{ fontSize: 13, color: "#333", fontWeight: 300 }}>{f}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Mapa */}
+        {mapSrc && (
+          <>
+            <div style={{ height: 1, background: "#e8e8e8", marginBottom: 72 }} />
+            <section style={{ marginBottom: 72 }}>
+              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Ubicación</p>
+              <div style={{ width: "100%", height: 480, overflow: "hidden", border: "1px solid #e8e8e8" }}>
+                <iframe src={mapSrc} width="100%" height="480" style={{ border: 0, display: "block" }} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
               </div>
             </section>
-          )}
+          </>
+        )}
+      </main>
 
-          {/* Galería */}
-          {galleryImages.length > 0 && (
-            <section>
-              <p style={{ fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Galería</p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 3 }}>
-                {galleryImages.map((img, i) => (
+      {/* ─── GALERÍA FULLWIDTH ─── */}
+      {galleryImages.length > 0 && (
+        <section style={{ background: "#0A0A0A", padding: "80px 52px" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>Galería</p>
+            {/* Primera fila: 1 foto grande */}
+            {galleryImages[0] && (
+              <div
+                onClick={() => openLightbox(galleryImages[0])}
+                style={{ width: "100%", height: 560, overflow: "hidden", cursor: "pointer", marginBottom: 4 }}
+              >
+                <img
+                  src={galleryImages[0]}
+                  alt={`${p.title_es} 2`}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.7s ease" }}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.03)"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
+                />
+              </div>
+            )}
+            {/* Resto en grid 3 columnas */}
+            {galleryImages.length > 1 && (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 4, marginTop: 4 }}>
+                {galleryImages.slice(1).map((img, i) => (
                   <div
                     key={i}
-                    onClick={() => setActiveImg(img)}
+                    onClick={() => openLightbox(img)}
                     style={{ aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
                   >
                     <img
                       src={img}
-                      alt={`${p.title_es} ${i + 2}`}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.5s ease" }}
+                      alt={`${p.title_es} ${i + 3}`}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.7s ease" }}
                       onMouseEnter={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1.05)"; }}
                       onMouseLeave={(e) => { (e.currentTarget as HTMLImageElement).style.transform = "scale(1)"; }}
                     />
                   </div>
                 ))}
               </div>
-            </section>
-          )}
-        </div>
-
-        {/* COLUMNA DERECHA — FORMULARIO STICKY */}
-        <aside style={{ position: "sticky", top: 100 }}>
-          <div style={{ background: "#fff", border: "1px solid #e8e8e8", padding: "40px 36px" }}>
-            <p style={{ fontSize: 9, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>Solicitar información</p>
-            <h3 style={{ fontSize: "1rem", fontWeight: 300, color: "#0A0A0A", margin: "0 0 28px", lineHeight: 1.4 }}>{p.title_es}</h3>
-
-            {price && (
-              <div style={{ background: "#0A0A0A", padding: "14px 20px", marginBottom: 28, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Precio</span>
-                <span style={{ fontSize: "0.95rem", fontWeight: 300, color: "#fff" }}>{price}</span>
-              </div>
             )}
-
-            <form onSubmit={(e) => e.preventDefault()} style={{ display: "flex", flexDirection: "column" }}>
-              {[
-                { label: "Nombre completo", type: "text", id: "name" },
-                { label: "Correo electrónico", type: "email", id: "email" },
-                { label: "Teléfono", type: "tel", id: "phone" },
-              ].map((field) => (
-                <div key={field.id} style={{ marginBottom: 22 }}>
-                  <label htmlFor={field.id} style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#aaa", marginBottom: 8 }}>
-                    {field.label}
-                  </label>
-                  <input id={field.id} type={field.type} style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid #d8d8d8", padding: "8px 0", fontSize: 14, fontWeight: 300, color: "#0A0A0A", outline: "none", boxSizing: "border-box" }} />
-                </div>
-              ))}
-
-              <div style={{ marginBottom: 28 }}>
-                <label htmlFor="msg" style={{ display: "block", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#aaa", marginBottom: 8 }}>Mensaje</label>
-                <textarea id="msg" rows={4} defaultValue={`Hola, me interesa: ${p.title_es}`} style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid #d8d8d8", padding: "8px 0", fontSize: 14, fontWeight: 300, color: "#0A0A0A", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }} />
-              </div>
-
-              <button
-                type="submit"
-                style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "15px 32px", fontSize: 10, fontWeight: 600, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer" }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#001f7a"; }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#002FA7"; }}
-              >
-                Enviar solicitud
-              </button>
-            </form>
-
-            <div style={{ marginTop: 28, paddingTop: 24, borderTop: "1px solid #e8e8e8", display: "flex", alignItems: "center", gap: 14 }}>
-              <div style={{ width: 40, height: 40, background: "#0A0A0A", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                <span style={{ color: "#fff", fontSize: 12, fontWeight: 300 }}>IB</span>
-              </div>
-              <div>
-                <p style={{ margin: 0, fontSize: 13, fontWeight: 400, color: "#0A0A0A" }}>Ibiza Luxury Estates</p>
-                <p style={{ margin: "3px 0 0", fontSize: 11, color: "#999", fontWeight: 300 }}>Agente exclusivo</p>
-              </div>
-            </div>
           </div>
-        </aside>
-      </main>
+        </section>
+      )}
 
       <style>{`
         @media (max-width: 900px) {
-          main { grid-template-columns: 1fr !important; padding: 48px 24px !important; gap: 48px !important; }
-          aside { position: static !important; }
+          section[style*="gridTemplateColumns: 1fr 440px"] { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </>

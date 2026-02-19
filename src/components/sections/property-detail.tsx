@@ -215,13 +215,13 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
       {/* ─── STATS BAR ─── */}
       {stats.length > 0 && (
-        <section style={{ background: "#0A0A0A", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+        <section style={{ background: "#fff", borderTop: "1px solid #e8e8e8", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
           {stats.map((d, i) => (
-            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "38px 56px", borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.07)" : "none" }}>
-              <span style={{ color: "#fff", fontSize: "clamp(2rem, 3.2vw, 2.8rem)", fontWeight: 200, letterSpacing: "-0.03em", lineHeight: 1 }}>
+            <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "22px 52px", borderRight: i < stats.length - 1 ? "1px solid #e8e8e8" : "none" }}>
+              <span style={{ color: "#0A0A0A", fontSize: "clamp(1.5rem, 2.4vw, 2.1rem)", fontWeight: 200, letterSpacing: "-0.03em", lineHeight: 1 }}>
                 {d.value}
               </span>
-              <span style={{ color: "#002FA7", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginTop: 10 }}>
+              <span style={{ color: "#002FA7", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", marginTop: 8 }}>
                 {d.label}
               </span>
             </div>

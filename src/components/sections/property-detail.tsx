@@ -561,7 +561,8 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       {images.length > 0 && (
         <section style={{ background: "#0A0A0A", padding: "72px 52px 80px" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-                <p style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Galería completa</p>
+                  <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>Galería completa</p>
+                  <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#fff", margin: "0 0 40px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>Todas las imágenes</h3>
             {images[0] && (
               <div
                 onClick={() => setLightboxIdx(0)}

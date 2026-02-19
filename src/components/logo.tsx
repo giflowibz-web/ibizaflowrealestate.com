@@ -49,17 +49,20 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
           ·
         </span>
 
-        <span
-          style={{
-            fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-            fontSize: s.flow,
-            fontWeight: 700,
-            letterSpacing: "0.3em",
-            color: "#002FA7",
-          }}
-        >
-          FLOW
-        </span>
+          <span
+            style={{
+              fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
+              fontSize: s.flow,
+              fontWeight: 700,
+              letterSpacing: "0.3em",
+              background: "linear-gradient(135deg, #C9A96E 0%, #F0D080 45%, #C9A96E 75%, #A07840 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
+          >
+            FLOW
+          </span>
       </div>
 
       {/* línea dorada + subtítulo */}

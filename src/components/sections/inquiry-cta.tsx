@@ -16,8 +16,8 @@ const InquiryCTA = () => {
         {/* Left: Image */}
         <div className="relative min-h-[400px] lg:min-h-[600px]">
           <Image
-src="https://images.unsplash.com/photo-1558618047-f4e2f7f92090?w=1200&q=80"
-              alt="Ibiza infinity pool Es Vedra"
+src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/project-uploads/a6bda00f-9d85-4858-8c8d-a58f8ab1c935/13048209_1209163009095942_677535093064324347_o-1771512577838.jpg?width=1200&height=800&resize=cover"
+              alt="Piscina infinita con vistas a Es Vedrà, Ibiza"
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"

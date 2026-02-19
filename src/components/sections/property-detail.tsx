@@ -405,17 +405,18 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         {/* ── COLUMNA DERECHA — formulario sticky negro ──────────────────── */}
         <div
           id="contacto"
-          style={{
-            position: "sticky",
-            top: 117, /* navbar 68px + subnav 49px */
-            height: "calc(100vh - 117px)",
-            background: "#0A0A0A",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            padding: "32px 32px",
-            overflowY: "auto",
-          }}
+            style={{
+              position: "sticky",
+              top: 137, /* navbar 68px + subnav 49px + 20px gap */
+              height: "calc(100vh - 157px)",
+              background: "#0A0A0A",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              padding: "28px 28px",
+              overflowY: "auto",
+              marginTop: 20,
+            }}
         >
           <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>
             Póngase en contacto

@@ -22,7 +22,7 @@ export default function Navbar() {
         scrolled ? "bg-black/85 backdrop-blur-md border-b border-white/10 py-3" : "bg-transparent py-6"
       }`}
     >
-        <div className="container flex items-center justify-between gap-16">
+        <div className="w-full flex items-center justify-between px-6 md:px-10">
         {/* Logo */}
           <a href="/" className="flex items-center gap-2 z-10">
             <div style={{ textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.45)" }}>

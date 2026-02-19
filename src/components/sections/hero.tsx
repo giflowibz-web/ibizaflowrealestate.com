@@ -33,12 +33,11 @@ const HeroSection = () => {
       {/* Fondo */}
       <div className="absolute inset-0 z-0">
         <img
-          src={FALLBACK_IMAGE}
-          alt="Ibiza"
-          className="h-full w-full object-cover"
-          style={{ opacity: videoLoaded ? 0 : 0.85, transition: 'opacity 0.8s ease' }}
-        />
-        {videoUrl && (
+            src={FALLBACK_IMAGE}
+            alt="Ibiza"
+            className="h-full w-full object-cover"
+            style={{ opacity: videoLoaded ? 0 : 0.85, transition: 'opacity 0.8s ease' }}
+          />
           <video
             key={videoUrl}
             autoPlay
@@ -50,9 +49,7 @@ const HeroSection = () => {
             style={{ opacity: videoLoaded ? 0.85 : 0, transition: 'opacity 0.8s ease' }}
           >
             <source src={videoUrl} type="video/mp4" />
-            <source src={videoUrl} type="video/webm" />
           </video>
-        )}
         <div className="absolute inset-0 bg-black/30" />
       </div>
 

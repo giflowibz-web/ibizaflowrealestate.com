@@ -15,8 +15,7 @@ const HeroSection = () => {
         playsInline
         className="absolute inset-0 h-full w-full object-cover"
       >
-        <source src="/hero.mp4" type="video/mp4" />
-        <source src="/hero2.mp4" type="video/mp4" />
+          <source src="/hero-small.mp4" type="video/mp4" />
       </video>
 
       {/* Overlay oscuro sutil */}

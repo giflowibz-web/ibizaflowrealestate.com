@@ -232,7 +232,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       </section>
 
       {/* ── BARRA DE NAVEGACIÓN DE SECCIONES — texto como Aaron ─────────── */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center", position: "sticky", top: 0, zIndex: 100 }}>
+      <nav style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center", position: "sticky", top: 68, zIndex: 40 }}>
         {[
           { label: "Descripción de la propiedad", href: "#descripcion" },
           { label: "Información básica", href: "#info-basica" },

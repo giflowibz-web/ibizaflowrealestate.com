@@ -400,9 +400,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           {/* ── CARACTERÍSTICAS Y COMODIDADES ── */}
           <section id="caracteristicas" style={{ padding: "0 64px 64px" }}>
             <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
-              <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>
-                Características y Comodidades
-              </p>
+                <p style={{ fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>
+                  Características y Comodidades
+                </p>
 
               {(() => {
                 const interiorGroups: { label: string; value: string }[] = [];

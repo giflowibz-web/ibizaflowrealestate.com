@@ -10,93 +10,63 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const light = variant === "light";
 
   const sizes = {
-    sm: { ibiza: 17, flow: 19, sub: 6, lineW: 16, gap: 4 },
-    md: { ibiza: 21, flow: 24, sub: 7, lineW: 22, gap: 5 },
-    lg: { ibiza: 27, flow: 31, sub: 8.5, lineW: 28, gap: 6 },
+    sm: { main: 18, sub: 6.5, spacing: "0.35em" },
+    md: { main: 24, sub: 8,   spacing: "0.35em" },
+    lg: { main: 32, sub: 10,  spacing: "0.35em" },
   };
   const s = sizes[size];
 
-  const ibizaColor = light ? "rgba(255,255,255,0.9)" : "rgba(0,0,0,0.85)";
+  const ibizaColor = light ? "#ffffff" : "#111111";
   const flowColor  = "#002FA7";
-    const subColor   = light ? "rgba(255,255,255,0.55)" : "rgba(0,47,167,0.7)";
-    const lineColor  = light ? "rgba(255,255,255,0.3)" : "rgba(0,47,167,0.3)";
+  const subColor   = light ? "rgba(255,255,255,0.5)" : "rgba(0,47,167,0.6)";
 
   return (
     <div
       className={`flex flex-col items-center select-none leading-none ${className}`}
       translate="no"
     >
-      {/* IBIZA · FLOW */}
-      <div className="flex items-baseline" style={{ gap: "0.3em" }}>
+      {/* IBIZA FLOW */}
+      <div className="flex items-baseline" style={{ gap: "0.25em" }}>
         <span
           style={{
             fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-            fontSize: s.ibiza,
+            fontSize: s.main,
             fontWeight: 300,
-            letterSpacing: "0.38em",
+            letterSpacing: s.spacing,
             color: ibizaColor,
+            textTransform: "uppercase",
           }}
         >
           IBIZA
         </span>
-
-          <span
-            style={{
-              fontSize: s.ibiza * 0.45,
-              color: ibizaColor,
-              opacity: 0.4,
-              letterSpacing: 0,
-              alignSelf: "center",
-              marginBottom: 1,
-            }}
-          >
-            ·
-          </span>
-
         <span
           style={{
             fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-            fontSize: s.flow,
+            fontSize: s.main,
             fontWeight: 700,
-            letterSpacing: "0.32em",
+            letterSpacing: s.spacing,
             color: flowColor,
+            textTransform: "uppercase",
           }}
         >
           FLOW
         </span>
       </div>
 
-      {/* línea + REAL ESTATE */}
-      <div className="flex items-center" style={{ gap: s.gap, marginTop: 4 }}>
-        <span
-          style={{
-            display: "block",
-            height: "0.5px",
-            width: s.lineW,
-            background: lineColor,
-          }}
-        />
-        <span
-          style={{
-            fontFamily: "sans-serif",
-            fontWeight: 300,
-            fontSize: s.sub,
-            letterSpacing: "0.5em",
-            textTransform: "uppercase",
-            color: subColor,
-          }}
-        >
-          REAL ESTATE
-        </span>
-        <span
-          style={{
-            display: "block",
-            height: "0.5px",
-            width: s.lineW,
-            background: lineColor,
-          }}
-        />
-      </div>
+      {/* REAL ESTATE */}
+      <span
+        style={{
+          fontFamily: "'Montserrat', 'Inter', sans-serif",
+          fontWeight: 300,
+          fontSize: s.sub,
+          letterSpacing: "0.55em",
+          textTransform: "uppercase",
+          color: subColor,
+          marginTop: 3,
+        }}
+      >
+        REAL ESTATE
+      </span>
     </div>
   );
 }

@@ -74,9 +74,7 @@ export default function Navbar() {
 
           {/* Mobile menu toggle */}
           <button
-            className={`md:hidden transition-colors duration-300 ${
-              scrolled ? "text-foreground" : "text-white"
-            }`}
+              className={`md:hidden transition-colors duration-300 text-white`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Menu"
           >

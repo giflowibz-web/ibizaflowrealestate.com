@@ -435,29 +435,29 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                   { label: "Correo electrónico", type: "email", id: "em" },
                   { label: "Teléfono", type: "tel", id: "ph" },
                 ].map((field) => (
-                  <div key={field.id} style={{ marginBottom: 14 }}>
-                    <label htmlFor={field.id} style={{ display: "block", fontSize: 8, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 5 }}>
+                  <div key={field.id} style={{ marginBottom: 11 }}>
+                    <label htmlFor={field.id} style={{ display: "block", fontSize: 8, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 4 }}>
                       {field.label}
                     </label>
                     <input
                       id={field.id}
                       type={field.type}
-                      style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "6px 0", fontSize: 12, fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
+                      style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "5px 0", fontSize: 11, fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
                     />
                   </div>
                 ))}
-                <div style={{ marginBottom: 18 }}>
-                  <label htmlFor="msgc" style={{ display: "block", fontSize: 8, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 5 }}>Mensaje</label>
+                <div style={{ marginBottom: 14 }}>
+                  <label htmlFor="msgc" style={{ display: "block", fontSize: 8, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 4 }}>Mensaje</label>
                   <textarea
                     id="msgc"
-                    rows={3}
+                    rows={2}
                     defaultValue={`Me interesa: ${p.title_es}`}
-                    style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "6px 0", fontSize: 12, fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
+                    style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "5px 0", fontSize: 11, fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
                   />
                 </div>
                 <button
                   type="submit"
-                  style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "11px 0", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", transition: "background 0.2s" }}
+                  style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "10px 0", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", transition: "background 0.2s" }}
                   onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#0037c4"; }}
                   onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#002FA7"; }}
                 >

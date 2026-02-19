@@ -26,72 +26,70 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled ? "bg-black/85 backdrop-blur-md border-b border-white/10 py-3" : "bg-transparent py-6"
+        scrolled
+          ? "bg-black/90 backdrop-blur-md border-b border-white/10 py-3"
+          : "bg-transparent py-5"
       }`}
     >
-      <div className="w-full flex items-center px-6 md:px-10 relative">
+      <div className="w-full flex items-center relative" style={{ paddingLeft: "3vw", paddingRight: "3vw" }}>
 
-          {/* Left — nav links pegados al borde izquierdo */}
-          <nav className="hidden md:flex items-center gap-10">
-            {navLinks.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-[11px] uppercase tracking-[0.18em] font-bold text-white/90 transition-colors duration-300 hover:text-accent"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Center — logo absolute */}
-          <div className="absolute left-1/2 -translate-x-1/2">
-            <a href="/" style={{ textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.45)" }}>
-              <Logo variant="light" size={scrolled ? "sm" : "lg"} />
-            </a>
-          </div>
-
-          {/* Right — lang + search */}
-          <div className="flex items-center gap-4 ml-auto">
-            <button
-              onClick={() => setLang(lang === "es" ? "en" : "es")}
-              className={`hidden md:flex items-center gap-1 text-[11px] uppercase tracking-[0.18em] font-bold border px-3 py-1.5 transition-all duration-300 ${
-                scrolled
-                  ? "border-white/30 text-white hover:border-accent hover:text-accent"
-                  : "border-white/40 text-white hover:border-white hover:text-white"
-              }`}
-            >
-              <span className={lang === "es" ? "opacity-100" : "opacity-40"}>ES</span>
-              <span className="opacity-30 mx-0.5">/</span>
-              <span className={lang === "en" ? "opacity-100" : "opacity-40"}>EN</span>
-            </button>
-
-            <button
-              className="hidden md:flex items-center text-white/90 transition-colors duration-300 hover:text-accent"
-              aria-label={t.nav.search}
-            >
-              <Search size={17} strokeWidth={1.5} />
-            </button>
-
-            {/* Mobile toggle */}
-            <button
-              className="md:hidden text-white"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              aria-label="Menu"
-            >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
-          </div>
-      </div>
-
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-background/98 backdrop-blur-md border-b border-border py-6 px-[6%] flex flex-col gap-5">
+        {/* Left — nav links pegados al borde izquierdo */}
+        <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-[11px] uppercase tracking-[0.18em] font-bold text-foreground hover:text-accent transition-colors"
+              className="text-[10px] uppercase tracking-[0.22em] font-medium text-white/75 transition-colors duration-300 hover:text-white"
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Center — logo absolute centrado */}
+        <div className="absolute left-1/2 -translate-x-1/2">
+          <a href="/">
+            <Logo variant="light" size={scrolled ? "sm" : "md"} />
+          </a>
+        </div>
+
+        {/* Right — lang + search */}
+        <div className="flex items-center gap-5 ml-auto">
+          <button
+            onClick={() => setLang(lang === "es" ? "en" : "es")}
+            className="hidden md:flex items-center gap-1 text-[10px] uppercase tracking-[0.22em] font-medium text-white/75 hover:text-white transition-colors"
+          >
+            <span className={lang === "es" ? "text-white" : "text-white/40"}>ES</span>
+            <span className="text-white/25 mx-0.5">/</span>
+            <span className={lang === "en" ? "text-white" : "text-white/40"}>EN</span>
+          </button>
+
+          <button
+            className="hidden md:flex items-center text-white/75 hover:text-white transition-colors"
+            aria-label={t.nav.search}
+          >
+            <Search size={16} strokeWidth={1.5} />
+          </button>
+
+          {/* Mobile toggle */}
+          <button
+            className="md:hidden text-white"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Menu"
+          >
+            {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-b border-white/10 py-6 px-6 flex flex-col gap-5">
+          {navLinks.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-[10px] uppercase tracking-[0.22em] font-medium text-white/75 hover:text-white transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               {item.label}

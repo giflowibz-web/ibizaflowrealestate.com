@@ -98,16 +98,16 @@ const ListingsGrid = () => {
         </div>
 
         {/* Grid 2 columnas estilo Aaron Kirman */}
-        {properties.length === 0 ? (
-          <div className="text-center py-20 text-[#999] text-sm">{t.listings.no_properties}</div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
-            {properties.map((property, index) => (
-              <Link
-                key={property.id}
-                href={`/propiedades/${property.slug || property.id}`}
-                className="group block"
-              >
+          {properties.length === 0 ? (
+            <div className="text-center py-20 text-[#999] text-sm">{t.listings.no_properties}</div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
+              {properties.map((property, index) => (
+                <a
+                  key={property.id}
+                  href={`/propiedades/${property.slug || property.id}`}
+                  className="group block"
+                >
                 {/* Imagen vertical */}
                 <div className="relative overflow-hidden bg-[#F0EDE8]"
                   style={{ aspectRatio: index % 3 === 0 ? "3/4" : "4/5" }}

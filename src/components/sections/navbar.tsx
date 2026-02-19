@@ -24,9 +24,11 @@ export default function Navbar() {
     >
       <div className="container flex items-center justify-between">
         {/* Logo */}
-        <a href="/" className="flex items-center gap-2 z-10">
-            <Logo className={`h-8 w-auto transition-all text-white`} />
-        </a>
+          <a href="/" className="flex items-center gap-2 z-10">
+            <div style={{ textShadow: scrolled ? "none" : "0 1px 8px rgba(0,0,0,0.45)" }}>
+              <Logo className={`h-8 w-auto transition-all`} variant="light" />
+            </div>
+          </a>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-8">

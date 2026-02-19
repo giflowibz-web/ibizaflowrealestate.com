@@ -30,35 +30,31 @@ export default function Navbar() {
           : "bg-transparent py-6"
       }`}
     >
-      {/* Contenedor relativo para que el logo absoluto se centre respecto al header */}
-      <div className="relative w-full flex items-center px-6 md:px-10">
+      <div className="w-full flex items-center">
 
-        {/* LEFT — Links pegados al borde izquierdo */}
-        <nav className="hidden md:flex items-center gap-8 flex-none">
+        {/* LEFT — flex:1, links pegados al borde izquierdo */}
+        <nav className="hidden md:flex items-center gap-8 flex-1 pl-8">
           {leftLinks.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-[10px] uppercase tracking-[0.25em] font-medium text-white/70 transition-colors duration-300 hover:text-white"
+              className="text-[10px] uppercase tracking-[0.25em] font-medium text-white/70 transition-colors duration-300 hover:text-white whitespace-nowrap"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        {/* CENTER — Logo centrado absolutamente en el header */}
-        <a
-          href="/"
-          className="absolute left-1/2 -translate-x-1/2 flex-shrink-0"
-        >
+        {/* CENTER — Logo centrado, sin flex */}
+        <a href="/" className="flex-shrink-0 px-6">
           <Logo variant="light" size={scrolled ? "sm" : "md"} />
         </a>
 
-        {/* RIGHT — Contacto + idioma + lupa */}
-        <div className="hidden md:flex items-center gap-7 ml-auto flex-none">
+        {/* RIGHT — flex:1, elementos al borde derecho */}
+        <div className="hidden md:flex items-center gap-7 flex-1 justify-end pr-8">
           <a
             href="#contacto"
-            className="text-[10px] uppercase tracking-[0.25em] font-medium text-white border border-white/40 px-4 py-1.5 hover:bg-white hover:text-black transition-all duration-300"
+            className="text-[10px] uppercase tracking-[0.25em] font-medium text-white/70 hover:text-white transition-colors whitespace-nowrap"
           >
             {t.nav.contact}
           </a>
@@ -82,7 +78,7 @@ export default function Navbar() {
 
         {/* Mobile toggle */}
         <button
-          className="md:hidden text-white ml-auto"
+          className="md:hidden text-white ml-auto pr-6"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Menu"
         >

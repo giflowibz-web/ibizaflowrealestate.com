@@ -58,7 +58,7 @@ function formatPrice(p: number | string | null | undefined, currency = "EUR") {
 }
 
 const IconBed = () => (
-  <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.3">
+  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4">
     <rect x="4" y="15" width="24" height="10" rx="1" />
     <rect x="4" y="10" width="10" height="6" rx="1" />
     <rect x="18" y="10" width="10" height="6" rx="1" />
@@ -68,7 +68,7 @@ const IconBed = () => (
 );
 
 const IconBath = () => (
-  <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.3">
+  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4">
     <path d="M6 16h20v4a7 7 0 01-7 7H13a7 7 0 01-7-7v-4z" />
     <path d="M9 16V9a3 3 0 016 0v1" strokeLinecap="round" />
     <line x1="12" y1="27" x2="10" y2="30" strokeLinecap="round" />
@@ -77,24 +77,30 @@ const IconBath = () => (
 );
 
 const IconArea = () => (
-  <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.3">
+  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4">
     <rect x="4" y="4" width="24" height="24" rx="1" />
     <path d="M4 11h4M4 19h4M11 4v4M19 4v4" strokeLinecap="round" />
   </svg>
 );
 
 const IconPlot = () => (
-  <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.3">
+  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4">
     <polygon points="16,3 29,12 24,28 8,28 3,12" />
   </svg>
 );
 
 const IconYear = () => (
-  <svg width="22" height="22" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.3">
+  <svg width="20" height="20" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4">
     <rect x="4" y="7" width="24" height="21" rx="1.5" />
     <line x1="4" y1="13" x2="28" y2="13" />
     <line x1="10" y1="4" x2="10" y2="10" strokeLinecap="round" />
     <line x1="22" y1="4" x2="22" y2="10" strokeLinecap="round" />
+  </svg>
+);
+
+const IconCheck = () => (
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#002FA7" strokeWidth="1.8">
+    <polyline points="2,8 6,12 14,4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
@@ -114,31 +120,33 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
   const stats = [
     { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null, icon: <IconBed /> },
     { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null, icon: <IconBath /> },
-    { label: "Construidos", value: p.size_built ? `${p.size_built} m²` : null, icon: <IconArea /> },
+    { label: "Construidos", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null, icon: <IconArea /> },
     { label: "Parcela", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null, icon: <IconPlot /> },
     { label: "Año", value: p.year_built ? String(p.year_built) : null, icon: <IconYear /> },
   ].filter((d) => d.value);
 
+  // Información básica — solo los que tienen valor real
   const basicInfo = [
     { label: "Estado", value: listingLabel },
-    { label: "Tipo", value: p.property_type },
-    { label: "Referencia MLS", value: p.mls_id },
-    { label: "Tamaño del lote", value: p.lot_size },
-    { label: "Año de construcción", value: p.year_built },
-    { label: "Contacto", value: p.contact_email },
-  ].filter((d) => d.value);
-
-  const interiorFeatures = [
-    { label: "Plantas", value: p.stories },
-    { label: "Piscina", value: p.pool },
-    { label: "Estacionamiento", value: p.parking },
-    { label: "Calefacción", value: p.heating },
-    { label: "Aire acondicionado", value: p.cooling },
-    { label: "Lavandería", value: p.laundry },
-    { label: "Chimenea", value: p.fireplace },
-    { label: "Electrodomésticos", value: p.appliances },
-    { label: "Vistas", value: p.view },
-    { label: "Estilo arquitectónico", value: p.architectural_style },
+    { label: "Tipo de propiedad", value: p.property_type ? p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1) : null },
+    { label: "Superficie construida", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null },
+    { label: "Superficie parcela", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
+    { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null },
+    { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null },
+    { label: "Año de construcción", value: p.year_built ? String(p.year_built) : null },
+    { label: "Referencia MLS", value: p.mls_id || null },
+    { label: "Zona", value: p.area || null },
+    { label: "Municipio", value: p.municipality || null },
+    { label: "Isla", value: p.island || null },
+    { label: "País", value: p.country || null },
+    { label: "Plantas", value: p.stories ? String(p.stories) : null },
+    { label: "Orientación / Vistas", value: p.view || null },
+    { label: "Estilo arquitectónico", value: p.architectural_style || null },
+    { label: "Piscina", value: p.pool || null },
+    { label: "Parking", value: p.parking || null },
+    { label: "Calefacción", value: p.heating || null },
+    { label: "Aire acondicionado", value: p.cooling || null },
+    { label: "Electrodomésticos", value: p.appliances || null },
   ].filter((d) => d.value);
 
   const mapSrc =
@@ -154,28 +162,28 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       {lightboxIdx !== null && (
         <div
           onClick={() => setLightboxIdx(null)}
-          style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.96)", display: "flex", alignItems: "center", justifyContent: "center" }}
+          style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.97)", display: "flex", alignItems: "center", justifyContent: "center" }}
         >
           <button
             onClick={() => setLightboxIdx(null)}
-            style={{ position: "absolute", top: 24, right: 32, background: "none", border: "none", color: "#fff", fontSize: 40, cursor: "pointer", fontWeight: 200, lineHeight: 1, opacity: 0.7 }}
+            style={{ position: "absolute", top: 24, right: 32, background: "none", border: "none", color: "#fff", fontSize: 40, cursor: "pointer", fontWeight: 200, lineHeight: 1, opacity: 0.6 }}
           >×</button>
           <button
             onClick={(e) => { e.stopPropagation(); setLightboxIdx((lightboxIdx - 1 + images.length) % images.length); }}
-            style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", width: 48, height: 48, fontSize: 26, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+            style={{ position: "absolute", left: 20, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", width: 52, height: 52, fontSize: 28, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
           >‹</button>
-          <img src={images[lightboxIdx]} alt="" style={{ maxWidth: "86vw", maxHeight: "84vh", objectFit: "contain" }} />
+          <img src={images[lightboxIdx]} alt="" style={{ maxWidth: "88vw", maxHeight: "86vh", objectFit: "contain" }} />
           <button
             onClick={(e) => { e.stopPropagation(); setLightboxIdx((lightboxIdx + 1) % images.length); }}
-            style={{ position: "absolute", right: 20, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.15)", color: "#fff", width: 48, height: 48, fontSize: 26, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
+            style={{ position: "absolute", right: 20, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.12)", color: "#fff", width: 52, height: 52, fontSize: 28, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
           >›</button>
-          <span style={{ position: "absolute", bottom: 24, color: "rgba(255,255,255,0.25)", fontSize: 9, letterSpacing: "0.2em" }}>
+          <span style={{ position: "absolute", bottom: 24, color: "rgba(255,255,255,0.22)", fontSize: 9, letterSpacing: "0.22em" }}>
             {lightboxIdx + 1} / {images.length}
           </span>
         </div>
       )}
 
-      {/* ══ HERO — foto única fullscreen ══ */}
+      {/* ══ HERO ══ */}
       <section style={{ position: "relative", width: "100%", height: "100vh", minHeight: 640, background: "#111", overflow: "hidden" }}>
         {mainImage && (
           <img
@@ -184,10 +192,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
           />
         )}
-        {/* gradiente overlay */}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.78) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 38%, rgba(0,0,0,0.72) 100%)" }} />
 
-        {/* top bar: badge + fotos */}
+        {/* badge + ver fotos */}
         <div style={{ position: "absolute", top: 96, left: 52, right: 52, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <span style={{ background: "#002FA7", color: "#fff", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", padding: "6px 14px" }}>
             {listingLabel}
@@ -195,18 +202,18 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           {images.length > 1 && (
             <button
               onClick={() => setLightboxIdx(0)}
-              style={{ background: "rgba(0,0,0,0.3)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.18)", color: "#fff", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", padding: "8px 18px", cursor: "pointer" }}
+              style={{ background: "rgba(0,0,0,0.28)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.16)", color: "#fff", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", padding: "8px 18px", cursor: "pointer" }}
             >
               Ver todas las fotos ({images.length})
             </button>
           )}
         </div>
 
-        {/* bottom: ubicación + título + precio */}
+        {/* título + precio */}
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 52px 68px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>
-          <div style={{ maxWidth: 800 }}>
+          <div style={{ maxWidth: 820 }}>
             {location && (
-              <p style={{ color: "rgba(255,255,255,0.4)", fontSize: 9, fontWeight: 600, letterSpacing: "0.28em", textTransform: "uppercase", margin: "0 0 14px" }}>
+              <p style={{ color: "rgba(255,255,255,0.38)", fontSize: 9, fontWeight: 600, letterSpacing: "0.28em", textTransform: "uppercase", margin: "0 0 14px" }}>
                 {[location, country].filter(Boolean).join(" — ")}
               </p>
             )}
@@ -216,20 +223,20 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           </div>
           {price && (
             <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 48 }}>
-              <p style={{ color: "rgba(255,255,255,0.3)", fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 8px" }}>Precio</p>
+              <p style={{ color: "rgba(255,255,255,0.28)", fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 8px" }}>Precio</p>
               <p style={{ color: "#fff", fontSize: "clamp(1.3rem, 2vw, 2rem)", fontWeight: 200, margin: 0, letterSpacing: "-0.02em" }}>{price}</p>
             </div>
           )}
         </div>
 
-        {/* scroll line */}
+        {/* scroll indicator */}
         <div style={{ position: "absolute", bottom: 22, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
-          <span style={{ color: "rgba(255,255,255,0.2)", fontSize: 7, letterSpacing: "0.26em", textTransform: "uppercase" }}>scroll</span>
-          <div style={{ width: 1, height: 30, background: "linear-gradient(to bottom, rgba(255,255,255,0.3), transparent)" }} />
+          <span style={{ color: "rgba(255,255,255,0.18)", fontSize: 7, letterSpacing: "0.26em", textTransform: "uppercase" }}>scroll</span>
+          <div style={{ width: 1, height: 28, background: "linear-gradient(to bottom, rgba(255,255,255,0.28), transparent)" }} />
         </div>
       </section>
 
-      {/* ══ NAV TABS — como Aaron: texto de secciones ══ */}
+      {/* ══ NAV TABS ══ */}
       <nav style={{ background: "#fff", borderBottom: "1px solid #e5e5e5", position: "sticky", top: 68, zIndex: 40 }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex" }}>
           {[
@@ -244,9 +251,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               style={{
                 display: "inline-block",
                 padding: "15px 28px",
-                fontSize: 8,
+                fontSize: 10,
                 fontWeight: 700,
-                letterSpacing: "0.18em",
+                letterSpacing: "0.15em",
                 textTransform: "uppercase",
                 color: "#0A0A0A",
                 textDecoration: "none",
@@ -262,75 +269,105 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
       </nav>
 
-      {/* ══ LAYOUT PRINCIPAL: 2 COLUMNAS ══ */}
-      <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 340px", gap: 0, alignItems: "start", background: "#fff", padding: "0 0 0 0" }}>
+      {/* ══ LAYOUT PRINCIPAL 2 COLUMNAS ══ */}
+      <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 360px", alignItems: "start", background: "#fff" }}>
 
         {/* ── COLUMNA IZQUIERDA ── */}
         <div style={{ borderRight: "1px solid #ebebeb" }}>
 
-          {/* SECCIÓN: Descripción */}
-          <section id="descripcion" style={{ padding: "72px 60px 56px" }}>
-              <p style={{ fontSize: "1.1rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 20px" }}>
-                Descripción de la propiedad
-              </p>
-            <h2 style={{ fontSize: "clamp(1.4rem, 2vw, 1.85rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 32px", letterSpacing: "-0.025em", lineHeight: 1.2 }}>
+          {/* ── DESCRIPCIÓN ── */}
+          <section id="descripcion" style={{ padding: "64px 64px 48px" }}>
+            <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 12px" }}>
+              Descripción de la propiedad
+            </p>
+            <h2 style={{ fontSize: "clamp(1.45rem, 2.2vw, 2rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 36px", letterSpacing: "-0.025em", lineHeight: 1.18 }}>
               {p.title_es}
             </h2>
 
-              {/* ICONOS STATS — debajo del título de descripción, como Aaron */}
-              {stats.length > 0 && (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 0, marginBottom: 40, borderTop: "1px solid #ebebeb", paddingTop: 28 }}>
-                  {stats.map((d, i) => (
+            {/* ICONOS STATS — fila limpia sin cajas */}
+            {stats.length > 0 && (
+              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 0, marginBottom: 40, paddingBottom: 40, borderBottom: "1px solid #ebebeb" }}>
+                {stats.map((d, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 11,
+                      paddingRight: 32,
+                      marginRight: 32,
+                      borderRight: i < stats.length - 1 ? "1px solid #e0e0e0" : "none",
+                    }}
+                  >
+                    <div style={{ color: "#002FA7" }}>{d.icon}</div>
+                    <div>
+                      <p style={{ margin: 0, fontSize: "1.1rem", fontWeight: 300, color: "#0A0A0A", lineHeight: 1 }}>{d.value}</p>
+                      <p style={{ margin: "5px 0 0", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#002FA7" }}>{d.label}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {p.description_es && (
+              <p style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 2, color: "#4a4a4a", margin: 0 }}>
+                {p.description_es}
+              </p>
+            )}
+          </section>
+
+          {/* ── INFORMACIÓN BÁSICA ── */}
+          {basicInfo.length > 0 && (
+            <section id="info-basica" style={{ padding: "0 64px 56px" }}>
+              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
+                <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>
+                  Información Básica
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+                  {basicInfo.map((item, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        padding: "18px 0",
+                        borderBottom: "1px solid #f0f0f0",
+                        paddingRight: i % 2 === 0 ? 40 : 0,
+                        paddingLeft: i % 2 === 1 ? 40 : 0,
+                        borderLeft: i % 2 === 1 ? "1px solid #f0f0f0" : "none",
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "baseline",
+                      }}
+                    >
+                      <span style={{ fontSize: "0.72rem", fontWeight: 300, color: "#999", letterSpacing: "0.02em" }}>{item.label}</span>
+                      <span style={{ fontSize: "0.82rem", fontWeight: 500, color: "#0A0A0A", textAlign: "right" }}>{String(item.value)}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* ── CARACTERÍSTICAS Y COMODIDADES ── */}
+          {p.features && p.features.length > 0 && (
+            <section id="caracteristicas" style={{ padding: "0 64px 56px" }}>
+              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
+                <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>
+                  Características y Comodidades
+                </p>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 32px" }}>
+                  {p.features.map((f, i) => (
                     <div
                       key={i}
                       style={{
                         display: "flex",
                         alignItems: "center",
                         gap: 12,
-                        paddingRight: 36,
-                        marginRight: 36,
-                        borderRight: i < stats.length - 1 ? "1px solid #e8e8e8" : "none",
-                        color: "#0A0A0A",
-                        marginBottom: 8,
+                        padding: "11px 0",
+                        borderBottom: "1px solid #f5f5f5",
                       }}
                     >
-                      <div style={{ color: "#002FA7", flexShrink: 0 }}>{d.icon}</div>
-                      <div>
-                        <p style={{ margin: 0, fontSize: "1.05rem", fontWeight: 300, color: "#0A0A0A", lineHeight: 1 }}>{d.value}</p>
-                        <p style={{ margin: "5px 0 0", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "#002FA7" }}>{d.label}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-            {p.description_es && (
-              <p style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.95, color: "#4a4a4a", margin: 0 }}>
-                {p.description_es}
-              </p>
-            )}
-          </section>
-
-          {/* SECCIÓN: Información Básica */}
-          {basicInfo.length > 0 && (
-            <section id="info-basica" style={{ padding: "0 60px 56px" }}>
-              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 48 }}>
-                  <p style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>
-                    Información Básica
-                </p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", border: "1px solid #ebebeb" }}>
-                  {basicInfo.map((item, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        padding: "16px 20px",
-                        borderBottom: i < basicInfo.length - 2 ? "1px solid #ebebeb" : "none",
-                        borderRight: i % 2 === 0 ? "1px solid #ebebeb" : "none",
-                        background: i % 4 < 2 ? "#fafafa" : "#fff",
-                      }}
-                    >
-                      <p style={{ fontSize: 7, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#aaa", margin: "0 0 6px" }}>{item.label}</p>
-                      <p style={{ fontSize: "0.8125rem", fontWeight: 300, color: "#0A0A0A", margin: 0 }}>{String(item.value)}</p>
+                      <IconCheck />
+                      <span style={{ fontSize: "0.84rem", color: "#333", fontWeight: 300 }}>{f}</span>
                     </div>
                   ))}
                 </div>
@@ -338,58 +375,11 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             </section>
           )}
 
-          {/* SECCIÓN: Características */}
-          {(interiorFeatures.length > 0 || (p.features && p.features.length > 0)) && (
-            <section id="caracteristicas" style={{ padding: "0 60px 56px" }}>
-              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 48 }}>
-                  <p style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>
-                    Características y Comodidades
-                </p>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 48px" }}>
-                  {/* Características del inmueble */}
-                  <div>
-                    {interiorFeatures.length > 0 && (
-                      <>
-                        <p style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 12px", paddingBottom: 12, borderBottom: "1px solid #ebebeb" }}>
-                          Detalles del inmueble
-                        </p>
-                        {interiorFeatures.map((f, i) => (
-                          <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "10px 0", borderBottom: "1px solid #f5f5f5" }}>
-                            <span style={{ fontSize: "0.8125rem", color: "#888", fontWeight: 300 }}>{f.label}</span>
-                            <span style={{ fontSize: "0.8125rem", color: "#0A0A0A", fontWeight: 400 }}>{String(f.value)}</span>
-                          </div>
-                        ))}
-                      </>
-                    )}
-                  </div>
-                  {/* Extras / amenities */}
-                  <div>
-                    {p.features && p.features.length > 0 && (
-                      <>
-                        <p style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 12px", paddingBottom: 12, borderBottom: "1px solid #ebebeb" }}>
-                          Extras y servicios
-                        </p>
-                        <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
-                          {p.features.map((f, i) => (
-                            <div key={i} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 0", borderBottom: "1px solid #f5f5f5" }}>
-                              <div style={{ width: 4, height: 4, background: "#002FA7", borderRadius: "50%", flexShrink: 0 }} />
-                              <span style={{ fontSize: "0.8125rem", color: "#333", fontWeight: 300 }}>{f}</span>
-                            </div>
-                          ))}
-                        </div>
-                      </>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </section>
-          )}
-
-          {/* SECCIÓN: Mapa */}
+          {/* ── MAPA ── */}
           {mapSrc && (
-            <section style={{ padding: "0 60px 80px" }}>
-              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 48 }}>
-                  <p style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Ubicación</p>
+            <section style={{ padding: "0 64px 80px" }}>
+              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
+                <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 24px" }}>Ubicación</p>
                 <div style={{ overflow: "hidden", border: "1px solid #ebebeb" }}>
                   <iframe src={mapSrc} width="100%" height="400" style={{ border: 0, display: "block" }} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
                 </div>
@@ -398,70 +388,69 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           )}
         </div>
 
-        {/* ── COLUMNA DERECHA — sticky contact ── */}
+        {/* ── COLUMNA DERECHA — sticky ── */}
         <div
           id="contacto"
           style={{
             position: "sticky",
             top: 117,
             alignSelf: "start",
-            padding: "40px 28px 28px 24px",
+            padding: "52px 28px 28px 28px",
           }}
         >
-          {/* Tarjeta negra */}
-          <div style={{ background: "#0A0A0A", marginTop: 32 }}>
+          <div style={{ background: "#0A0A0A" }}>
             {/* Header */}
-            <div style={{ padding: "28px 24px 0" }}>
-                <h3 style={{ fontSize: "2.1rem", fontWeight: 700, color: "#002FA7", margin: "0 0 8px", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                  Contacte con nosotros
-                </h3>
-              <p style={{ fontSize: 8, fontWeight: 300, color: "rgba(255,255,255,0.35)", margin: "0 0 16px", lineHeight: 1.6 }}>
+            <div style={{ padding: "26px 26px 0" }}>
+              <h3 style={{ fontSize: "1.75rem", fontWeight: 700, color: "#002FA7", margin: "0 0 10px", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                Contacte con nosotros
+              </h3>
+              <p style={{ fontSize: "0.72rem", fontWeight: 300, color: "rgba(255,255,255,0.3)", margin: "0 0 18px", lineHeight: 1.7 }}>
                 Un asesor exclusivo le atenderá en menos de 24h.
               </p>
             </div>
 
             {/* Precio */}
             {price && (
-              <div style={{ margin: "0 24px 14px", border: "1px solid rgba(255,255,255,0.06)", padding: "7px 10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <span style={{ fontSize: 7, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)" }}>
-                  {p.listing_type === "rent" ? "Alquiler" : "Precio"}
+              <div style={{ margin: "0 26px 16px", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "10px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <span style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)" }}>
+                  {p.listing_type === "rent" ? "Alquiler mensual" : "Precio de venta"}
                 </span>
-                <span style={{ fontSize: "0.72rem", fontWeight: 300, color: "#fff" }}>
+                <span style={{ fontSize: "0.85rem", fontWeight: 300, color: "#fff" }}>
                   {p.listing_type === "rent" && priceRent ? `${priceRent}/mes` : price}
                 </span>
               </div>
             )}
 
             {/* Formulario */}
-              <form onSubmit={(e) => e.preventDefault()} style={{ padding: "0 24px 24px", display: "flex", flexDirection: "column", gap: 10 }}>
+            <form onSubmit={(e) => e.preventDefault()} style={{ padding: "0 26px 26px", display: "flex", flexDirection: "column", gap: 12 }}>
               {[
                 { label: "Nombre completo", type: "text", id: "f-name" },
                 { label: "Correo electrónico", type: "email", id: "f-email" },
                 { label: "Teléfono", type: "tel", id: "f-phone" },
               ].map((field) => (
                 <div key={field.id}>
-                  <label htmlFor={field.id} style={{ display: "block", fontSize: 7, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", marginBottom: 3 }}>
+                  <label htmlFor={field.id} style={{ display: "block", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 4 }}>
                     {field.label}
                   </label>
                   <input
                     id={field.id}
                     type={field.type}
-                    style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.09)", padding: "5px 0", fontSize: "0.7rem", fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
+                    style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "7px 0", fontSize: "0.78rem", fontWeight: 300, color: "#fff", outline: "none", boxSizing: "border-box" }}
                   />
                 </div>
               ))}
               <div>
-                <label htmlFor="f-msg" style={{ display: "block", fontSize: 7, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)", marginBottom: 3 }}>Mensaje</label>
+                <label htmlFor="f-msg" style={{ display: "block", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 4 }}>Mensaje</label>
                 <textarea
                   id="f-msg"
-                  rows={2}
+                  rows={3}
                   defaultValue={`Me interesa: ${p.title_es}`}
-                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.09)", padding: "5px 0", fontSize: "0.7rem", fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
+                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "7px 0", fontSize: "0.78rem", fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
                 />
               </div>
               <button
                 type="submit"
-                style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "10px 0", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", marginTop: 4 }}
+                style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "13px 0", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", marginTop: 6 }}
                 onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#0038cc")}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#002FA7")}
               >
@@ -472,27 +461,25 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
       </div>
 
-      {/* ══ GALERÍA FULLWIDTH — fondo negro ══ */}
+      {/* ══ GALERÍA FULLWIDTH ══ */}
       {images.length > 0 && (
         <section style={{ background: "#0A0A0A", padding: "72px 52px 80px" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-              <p style={{ fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Galería completa</p>
-            {/* Primera foto — grande */}
+            <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.25em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Galería completa</p>
             {images[0] && (
               <div
                 onClick={() => setLightboxIdx(0)}
-                style={{ width: "100%", height: 580, overflow: "hidden", cursor: "pointer", marginBottom: 3 }}
+                style={{ width: "100%", height: 600, overflow: "hidden", cursor: "pointer", marginBottom: 3 }}
               >
                 <img
                   src={images[0]}
                   alt={p.title_es}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.8s ease" }}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.9s ease" }}
                   onMouseEnter={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.03)")}
                   onMouseLeave={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
                 />
               </div>
             )}
-            {/* Resto grid 3 col */}
             {images.length > 1 && (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 3 }}>
                 {images.slice(1).map((img, i) => (
@@ -504,7 +491,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                     <img
                       src={img}
                       alt={`${p.title_es} ${i + 2}`}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.8s ease" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.9s ease" }}
                       onMouseEnter={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)")}
                       onMouseLeave={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
                     />

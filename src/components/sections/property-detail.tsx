@@ -328,7 +328,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
             {/* ICONOS STATS — fila limpia sin cajas */}
             {stats.length > 0 && (
-              <div style={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: 0, marginBottom: 40, paddingBottom: 40, overflowX: "auto" }}>
+              <div style={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: 0, marginBottom: 0, paddingBottom: 0, overflowX: "auto" }}>
                 {stats.map((d, i) => (
                   <div
                     key={i}

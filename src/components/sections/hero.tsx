@@ -9,26 +9,15 @@ const HeroSection = () => {
 
   return (
     <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Video de fondo */}
-      <div className="absolute inset-0 z-0">
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="h-full w-full object-cover opacity-70"
-        >
-          <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-          <source src="https://videos.pexels.com/video-files/2169880/2169880-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-          {/* Fallback imagen */}
+        {/* Imagen de fondo */}
+        <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80"
+            src="https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1920&q=85"
             alt="Ibiza"
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover opacity-80"
           />
-        </video>
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
+          <div className="absolute inset-0 bg-black/45" />
+        </div>
 
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-6 text-center">

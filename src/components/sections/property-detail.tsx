@@ -57,62 +57,48 @@ function formatPrice(p: number | string | null | undefined, currency = "EUR") {
   }).format(n);
 }
 
-// SVG icons minimalistas
-const IconBed = () => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="13" width="22" height="10" rx="1" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
-    <rect x="3" y="9" width="9" height="6" rx="1" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
-    <rect x="16" y="9" width="9" height="6" rx="1" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
-    <line x1="3" y1="23" x2="3" y2="26" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="25" y1="23" x2="25" y2="26" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="3" y1="13" x2="3" y2="9" stroke="#0A0A0A" strokeWidth="1.2"/>
-    <line x1="25" y1="13" x2="25" y2="9" stroke="#0A0A0A" strokeWidth="1.2"/>
+const IconBed = ({ color = "#0A0A0A" }: { color?: string }) => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <rect x="4" y="15" width="24" height="11" rx="1" stroke={color} strokeWidth="1.2" />
+    <rect x="4" y="10" width="10" height="7" rx="1" stroke={color} strokeWidth="1.2" />
+    <rect x="18" y="10" width="10" height="7" rx="1" stroke={color} strokeWidth="1.2" />
+    <line x1="4" y1="26" x2="4" y2="29" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
+    <line x1="28" y1="26" x2="28" y2="29" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
   </svg>
 );
 
-const IconBath = () => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M5 14h18v4a6 6 0 01-6 6H11a6 6 0 01-6-6v-4z" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
-    <path d="M8 14V8a3 3 0 016 0v1" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round" fill="none"/>
-    <line x1="12" y1="24" x2="10" y2="27" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="16" y1="24" x2="18" y2="27" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
+const IconBath = ({ color = "#0A0A0A" }: { color?: string }) => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M6 16h20v5a7 7 0 01-7 7H13a7 7 0 01-7-7v-5z" stroke={color} strokeWidth="1.2" />
+    <path d="M9 16V9a3.5 3.5 0 017 0v1" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
+    <line x1="13" y1="28" x2="11" y2="31" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
+    <line x1="19" y1="28" x2="21" y2="31" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
   </svg>
 );
 
-const IconArea = () => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="4" width="20" height="20" rx="1" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
-    <path d="M4 10h4M4 16h4M10 4v4M16 4v4" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
-    <text x="10" y="21" fontSize="7" fill="#0A0A0A" fontWeight="400" fontFamily="sans-serif">m²</text>
+const IconArea = ({ color = "#0A0A0A" }: { color?: string }) => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <rect x="4" y="4" width="24" height="24" rx="1" stroke={color} strokeWidth="1.2" />
+    <path d="M4 11h5M4 19h5M11 4v5M19 4v5" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
+    <text x="11" y="25" fontSize="8" fill={color} fontWeight="400" fontFamily="sans-serif">m²</text>
   </svg>
 );
 
-const IconPlot = () => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="14,3 25,10 25,22 3,22 3,10" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
-    <line x1="3" y1="22" x2="25" y2="22" stroke="#0A0A0A" strokeWidth="1.2"/>
-    <line x1="3" y1="10" x2="3" y2="22" stroke="#0A0A0A" strokeWidth="1.2"/>
-    <line x1="25" y1="10" x2="25" y2="22" stroke="#0A0A0A" strokeWidth="1.2"/>
+const IconPlot = ({ color = "#0A0A0A" }: { color?: string }) => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <polygon points="16,3 29,12 29,26 3,26 3,12" stroke={color} strokeWidth="1.2" fill="none" />
   </svg>
 );
 
-const IconYear = () => (
-  <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="4" y="6" width="20" height="18" rx="1.5" stroke="#0A0A0A" strokeWidth="1.2" fill="none"/>
-    <line x1="4" y1="11" x2="24" y2="11" stroke="#0A0A0A" strokeWidth="1.2"/>
-    <line x1="9" y1="4" x2="9" y2="9" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
-    <line x1="19" y1="4" x2="19" y2="9" stroke="#0A0A0A" strokeWidth="1.2" strokeLinecap="round"/>
-    <circle cx="14" cy="17" r="1.5" fill="#002FA7"/>
+const IconYear = ({ color = "#0A0A0A" }: { color?: string }) => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <rect x="4" y="7" width="24" height="21" rx="1.5" stroke={color} strokeWidth="1.2" />
+    <line x1="4" y1="13" x2="28" y2="13" stroke={color} strokeWidth="1.2" />
+    <line x1="10" y1="4" x2="10" y2="10" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
+    <line x1="22" y1="4" x2="22" y2="10" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
+    <circle cx="16" cy="21" r="2" fill={color} />
   </svg>
 );
-
-const statIcons: Record<string, React.ReactNode> = {
-  Habitaciones: <IconBed />,
-  Baños: <IconBath />,
-  Superficie: <IconArea />,
-  Parcela: <IconPlot />,
-  Año: <IconYear />,
-};
 
 export default function PropertyDetail({ property: p }: { property: Property }) {
   const images = p.images?.filter(Boolean) ?? [];
@@ -127,11 +113,11 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
   const listingLabel = p.listing_type === "rent" ? "En Alquiler" : "En Venta";
 
   const stats = [
-    { label: "Habitaciones", value: p.bedrooms },
-    { label: "Baños", value: p.bathrooms },
-    { label: "Superficie", value: p.size_built ? `${p.size_built} m²` : null },
-    { label: "Parcela", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
-    { label: "Año", value: p.year_built },
+    { label: "Habitaciones", value: p.bedrooms, icon: <IconBed /> },
+    { label: "Baños", value: p.bathrooms, icon: <IconBath /> },
+    { label: "Superficie", value: p.size_built ? `${p.size_built}` : null, unit: "m²", icon: <IconArea /> },
+    { label: "Parcela", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot}` : null, unit: "m²", icon: <IconPlot /> },
+    { label: "Año", value: p.year_built, icon: <IconYear /> },
   ].filter((d) => d.value != null && d.value !== "");
 
   const basicInfo = [
@@ -168,28 +154,21 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
   return (
     <>
-      {/* ─── LIGHTBOX ─── */}
+      {/* ── LIGHTBOX ──────────────────────────────────────────────────────── */}
       {activeIdx !== null && (
         <div
           onClick={() => setActiveIdx(null)}
-          style={{
-            position: "fixed", inset: 0, zIndex: 9999,
-            background: "rgba(0,0,0,0.97)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-          }}
+          style={{ position: "fixed", inset: 0, zIndex: 9999, background: "rgba(0,0,0,0.97)", display: "flex", alignItems: "center", justifyContent: "center" }}
         >
-          <button
-            onClick={() => setActiveIdx(null)}
-            style={{ position: "absolute", top: 28, right: 36, background: "none", border: "none", color: "#fff", fontSize: 42, cursor: "pointer", fontWeight: 200, lineHeight: 1 }}
-          >×</button>
+          <button onClick={() => setActiveIdx(null)} style={{ position: "absolute", top: 28, right: 36, background: "none", border: "none", color: "#fff", fontSize: 44, cursor: "pointer", fontWeight: 200 }}>×</button>
           <button
             onClick={(e) => { e.stopPropagation(); setActiveIdx((activeIdx - 1 + images.length) % images.length); }}
-            style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", width: 54, height: 54, fontSize: 28, cursor: "pointer" }}
+            style={{ position: "absolute", left: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", width: 54, height: 54, fontSize: 30, cursor: "pointer" }}
           >‹</button>
           <img src={images[activeIdx]} alt="" style={{ maxWidth: "88vw", maxHeight: "86vh", objectFit: "contain" }} />
           <button
             onClick={(e) => { e.stopPropagation(); setActiveIdx((activeIdx + 1) % images.length); }}
-            style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", width: 54, height: 54, fontSize: 28, cursor: "pointer" }}
+            style={{ position: "absolute", right: 24, top: "50%", transform: "translateY(-50%)", background: "none", border: "1px solid rgba(255,255,255,0.2)", color: "#fff", width: 54, height: 54, fontSize: 30, cursor: "pointer" }}
           >›</button>
           <span style={{ position: "absolute", bottom: 28, left: "50%", transform: "translateX(-50%)", color: "rgba(255,255,255,0.35)", fontSize: 11, letterSpacing: "0.2em" }}>
             {activeIdx + 1} / {images.length}
@@ -197,7 +176,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
       )}
 
-      {/* ─── HERO BANNER fullscreen ─── */}
+      {/* ── HERO BANNER 100vh ─────────────────────────────────────────────── */}
       <section style={{ position: "relative", width: "100%", height: "100vh", minHeight: 640, background: "#0A0A0A", overflow: "hidden" }}>
         {mainImage && (
           <img
@@ -206,9 +185,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", display: "block" }}
           />
         )}
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 35%, rgba(0,0,0,0.82) 100%)" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.88) 100%)" }} />
 
-        {/* Badge + botón galería */}
+        {/* Badge + galería */}
         <div style={{ position: "absolute", top: 96, left: 52, right: 52, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ background: "#002FA7", color: "#fff", fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", padding: "7px 18px" }}>
             {listingLabel}
@@ -216,7 +195,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           {images.length > 1 && (
             <button
               onClick={() => setActiveIdx(0)}
-              style={{ background: "rgba(0,0,0,0.32)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.22)", color: "#fff", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", padding: "9px 22px", cursor: "pointer" }}
+              style={{ background: "rgba(0,0,0,0.3)", backdropFilter: "blur(14px)", border: "1px solid rgba(255,255,255,0.22)", color: "#fff", fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", padding: "9px 22px", cursor: "pointer" }}
             >
               Ver {images.length} fotos
             </button>
@@ -224,14 +203,14 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
 
         {/* Título + Precio */}
-        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 52px 72px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 52px 80px", display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
           <div style={{ flex: 1 }}>
             {location && (
-              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 16px" }}>
+              <p style={{ color: "rgba(255,255,255,0.5)", fontSize: 10, fontWeight: 500, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 18px" }}>
                 {location}
               </p>
             )}
-            <h1 style={{ color: "#fff", fontSize: "clamp(2.4rem, 5vw, 4.4rem)", fontWeight: 200, letterSpacing: "-0.03em", margin: 0, lineHeight: 1.0, maxWidth: 760 }}>
+            <h1 style={{ color: "#fff", fontSize: "clamp(2.4rem, 5vw, 4.6rem)", fontWeight: 200, letterSpacing: "-0.03em", margin: 0, lineHeight: 1.0, maxWidth: 780 }}>
               {p.title_es}
             </h1>
           </div>
@@ -244,49 +223,86 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
 
         {/* Scroll indicator */}
-        <div style={{ position: "absolute", bottom: 18, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 5 }}>
+        <div style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
           <span style={{ color: "rgba(255,255,255,0.25)", fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase" }}>scroll</span>
-          <div style={{ width: 1, height: 30, background: "linear-gradient(to bottom, rgba(255,255,255,0.38), transparent)" }} />
+          <div style={{ width: 1, height: 32, background: "linear-gradient(to bottom, rgba(255,255,255,0.4), transparent)" }} />
         </div>
       </section>
 
-      {/* ─── STATS BAR con iconos SVG ─── */}
-      {stats.length > 0 && (
-        <section style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
-          {stats.map((d, i) => (
-            <div
-              key={i}
-              style={{
-                display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                padding: "22px 56px",
-                borderRight: i < stats.length - 1 ? "1px solid #e8e8e8" : "none",
-                gap: 8,
-              }}
-            >
-              <div style={{ opacity: 0.85 }}>{statIcons[d.label]}</div>
-              <span style={{ color: "#0A0A0A", fontSize: "clamp(1.3rem, 2vw, 1.8rem)", fontWeight: 200, letterSpacing: "-0.03em", lineHeight: 1 }}>
-                {d.value}
-              </span>
-              <span style={{ color: "#002FA7", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase" }}>
-                {d.label}
-              </span>
-            </div>
-          ))}
-        </section>
-      )}
+      {/* ── NAV BAR DE SECCIONES — estilo Aaron Kirman ───────────────────── */}
+      <nav style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center" }}>
+        {[
+          { label: "Descripción de la propiedad", href: "#descripcion" },
+          { label: "Información básica", href: "#info-basica" },
+          { label: "Características y comodidades", href: "#caracteristicas" },
+          { label: "Póngase en contacto", href: "#contacto" },
+        ].map((item, i, arr) => (
+          <a
+            key={i}
+            href={item.href}
+            style={{
+              display: "inline-block",
+              padding: "20px 32px",
+              fontSize: 9,
+              fontWeight: 700,
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: "#0A0A0A",
+              textDecoration: "none",
+              borderRight: i < arr.length - 1 ? "1px solid #e8e8e8" : "none",
+            }}
+            onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#002FA7"; }}
+            onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.color = "#0A0A0A"; }}
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
 
-      {/* ─── LAYOUT 2 COLUMNAS ─── */}
+      {/* ── LAYOUT 2 COLUMNAS ────────────────────────────────────────────── */}
       <div style={{ display: "grid", gridTemplateColumns: "1fr 400px", alignItems: "start", background: "#fff" }}>
 
         {/* COLUMNA IZQUIERDA */}
         <div>
 
-          {/* Descripción */}
-          <section style={{ padding: "88px 72px 72px 64px", borderBottom: "1px solid #f0f0f0" }}>
-            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Descripción de la propiedad</p>
-            <h2 style={{ fontSize: "clamp(1.6rem, 2.4vw, 2.2rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 32px", letterSpacing: "-0.025em", lineHeight: 1.15 }}>
+          {/* ── Descripción + iconos stats debajo del título ─────────────── */}
+          <section id="descripcion" style={{ padding: "88px 72px 72px 64px", borderBottom: "1px solid #f0f0f0" }}>
+            <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>
+              Descripción de la propiedad
+            </p>
+            <h2 style={{ fontSize: "clamp(1.6rem, 2.4vw, 2.2rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 40px", letterSpacing: "-0.025em", lineHeight: 1.15 }}>
               {p.title_es}
             </h2>
+
+            {/* ── Iconos con números debajo del título ── */}
+            {stats.length > 0 && (
+              <div style={{ display: "flex", gap: 0, marginBottom: 48, border: "1px solid #ececec" }}>
+                {stats.map((d, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      flex: 1,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: "28px 12px",
+                      borderRight: i < stats.length - 1 ? "1px solid #ececec" : "none",
+                      gap: 10,
+                    }}
+                  >
+                    <div style={{ opacity: 0.8 }}>{d.icon}</div>
+                    <span style={{ color: "#0A0A0A", fontSize: "1.5rem", fontWeight: 200, letterSpacing: "-0.03em", lineHeight: 1 }}>
+                      {d.value}
+                    </span>
+                    <span style={{ color: "#002FA7", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase" }}>
+                      {d.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            )}
+
             {p.description_es && (
               <p style={{ fontSize: "clamp(0.9rem, 1.1vw, 1rem)", fontWeight: 300, lineHeight: 2, color: "#444", margin: 0 }}>
                 {p.description_es}
@@ -294,13 +310,22 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             )}
           </section>
 
-          {/* Información Básica */}
+          {/* ── Información Básica ──────────────────────────────────────── */}
           {basicInfo.length > 0 && (
-            <section style={{ padding: "64px 72px 64px 64px", borderBottom: "1px solid #f0f0f0" }}>
-              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>Información Básica</p>
+            <section id="info-basica" style={{ padding: "64px 72px 64px 64px", borderBottom: "1px solid #f0f0f0" }}>
+              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 32px" }}>
+                Información Básica
+              </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", border: "1px solid #ececec" }}>
                 {basicInfo.map((item, i) => (
-                  <div key={i} style={{ padding: "20px 24px", borderBottom: i < basicInfo.length - 2 ? "1px solid #ececec" : "none", borderRight: i % 2 === 0 ? "1px solid #ececec" : "none" }}>
+                  <div
+                    key={i}
+                    style={{
+                      padding: "20px 24px",
+                      borderBottom: i < basicInfo.length - 2 ? "1px solid #ececec" : "none",
+                      borderRight: i % 2 === 0 ? "1px solid #ececec" : "none",
+                    }}
+                  >
                     <p style={{ fontSize: 9, fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "#bbb", margin: "0 0 7px" }}>{item.label}</p>
                     <p style={{ fontSize: 13, fontWeight: 300, color: "#0A0A0A", margin: 0 }}>{String(item.value)}</p>
                   </div>
@@ -309,10 +334,12 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             </section>
           )}
 
-          {/* Características */}
+          {/* ── Características y Comodidades ─────────────────────────── */}
           {(areaFeatures.length > 0 || interiorFeatures.length > 0 || priceRent || (p.features && p.features.length > 0)) && (
-            <section style={{ padding: "64px 72px 64px 64px", borderBottom: "1px solid #f0f0f0" }}>
-              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>Características y Comodidades</p>
+            <section id="caracteristicas" style={{ padding: "64px 72px 64px 64px", borderBottom: "1px solid #f0f0f0" }}>
+              <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>
+                Características y Comodidades
+              </p>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 72px" }}>
                 <div>
                   {areaFeatures.length > 0 && (
@@ -366,7 +393,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             </section>
           )}
 
-          {/* Mapa */}
+          {/* ── Mapa ───────────────────────────────────────────────────── */}
           {mapSrc && (
             <section style={{ padding: "64px 72px 88px 64px" }}>
               <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 28px" }}>Ubicación</p>
@@ -377,9 +404,24 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           )}
         </div>
 
-        {/* COLUMNA DERECHA — formulario STICKY negro */}
-        <div style={{ position: "sticky", top: 0, height: "100vh", background: "#0A0A0A", display: "flex", flexDirection: "column", justifyContent: "center", padding: "56px 44px", overflowY: "auto" }}>
-          <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 10px" }}>Contacte con nosotros</p>
+        {/* ── COLUMNA DERECHA — sticky negro ────────────────────────────── */}
+        <div
+          id="contacto"
+          style={{
+            position: "sticky",
+            top: 0,
+            height: "100vh",
+            background: "#0A0A0A",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            padding: "56px 44px",
+            overflowY: "auto",
+          }}
+        >
+          <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 10px" }}>
+            Póngase en contacto
+          </p>
           <h3 style={{ fontSize: "1.5rem", fontWeight: 200, color: "#fff", margin: "0 0 8px", letterSpacing: "-0.025em", lineHeight: 1.15 }}>
             Solicitar información
           </h3>
@@ -432,17 +474,13 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
       </div>
 
-      {/* ─── GALERÍA FULLWIDTH ─── */}
+      {/* ── GALERÍA FULLWIDTH negra ───────────────────────────────────────── */}
       {images.length > 0 && (
         <section style={{ background: "#0A0A0A", padding: "88px 52px" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
             <p style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 36px" }}>Galería</p>
-
             {images[0] && (
-              <div
-                onClick={() => setActiveIdx(0)}
-                style={{ width: "100%", height: 640, overflow: "hidden", cursor: "pointer", marginBottom: 4 }}
-              >
+              <div onClick={() => setActiveIdx(0)} style={{ width: "100%", height: 640, overflow: "hidden", cursor: "pointer", marginBottom: 4 }}>
                 <img
                   src={images[0]}
                   alt={p.title_es}
@@ -452,15 +490,10 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                 />
               </div>
             )}
-
             {images.length > 1 && (
               <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 4 }}>
                 {images.slice(1).map((img, i) => (
-                  <div
-                    key={i}
-                    onClick={() => setActiveIdx(i + 1)}
-                    style={{ aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
-                  >
+                  <div key={i} onClick={() => setActiveIdx(i + 1)} style={{ aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}>
                     <img
                       src={img}
                       alt={`${p.title_es} ${i + 2}`}

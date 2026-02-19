@@ -26,53 +26,57 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-black/90 backdrop-blur-md border-b border-white/10 py-3"
-          : "bg-transparent py-6"
+          ? "bg-black/90 backdrop-blur-md border-b border-white/10 py-4"
+          : "bg-transparent py-7"
       }`}
     >
-      <div className="w-full flex items-center">
+      {/* Contenedor relativo para logo absolute centrado — igual que Aaron Kirman header-container--center */}
+      <div className="relative w-full flex items-center">
 
-        {/* LEFT — flex:1, links pegados al borde izquierdo */}
-        <nav className="hidden md:flex items-center gap-8 flex-1 pl-8">
+        {/* IZQUIERDA — flex-1, links pegados al borde izquierdo */}
+        <nav className="hidden md:flex items-center gap-10 flex-1 pl-10">
           {leftLinks.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="text-[10px] uppercase tracking-[0.25em] font-medium text-white/70 transition-colors duration-300 hover:text-white whitespace-nowrap"
+              className="text-[10px] uppercase tracking-[0.28em] font-light text-white/75 transition-colors duration-300 hover:text-white whitespace-nowrap"
             >
               {item.label}
             </a>
           ))}
         </nav>
 
-        {/* CENTER — Logo centrado, sin flex */}
-        <a href="/" className="flex-shrink-0 px-6">
+        {/* CENTRO — absoluto, centrado en la página */}
+        <a
+          href="/"
+          className="absolute left-1/2 -translate-x-1/2 flex-shrink-0"
+        >
           <Logo variant="light" size={scrolled ? "sm" : "md"} />
         </a>
 
-        {/* RIGHT — flex:1, elementos al borde derecho */}
-        <div className="hidden md:flex items-center gap-7 flex-1 justify-end pr-8">
+        {/* DERECHA — flex-1, elementos pegados al borde derecho */}
+        <div className="hidden md:flex items-center gap-8 flex-1 justify-end pr-10">
           <a
             href="#contacto"
-            className="text-[10px] uppercase tracking-[0.25em] font-medium text-white/70 hover:text-white transition-colors whitespace-nowrap"
+            className="text-[10px] uppercase tracking-[0.28em] font-light text-white/75 hover:text-white transition-colors whitespace-nowrap"
           >
             {t.nav.contact}
           </a>
 
           <button
             onClick={() => setLang(lang === "es" ? "en" : "es")}
-            className="flex items-center gap-1 text-[10px] uppercase tracking-[0.22em] font-medium text-white/70 hover:text-white transition-colors"
+            className="flex items-center gap-1 text-[10px] uppercase tracking-[0.22em] font-light text-white/75 hover:text-white transition-colors"
           >
-            <span className={lang === "es" ? "text-white" : "text-white/35"}>ES</span>
+            <span className={lang === "es" ? "text-white" : "text-white/30"}>ES</span>
             <span className="text-white/20 mx-0.5">/</span>
-            <span className={lang === "en" ? "text-white" : "text-white/35"}>EN</span>
+            <span className={lang === "en" ? "text-white" : "text-white/30"}>EN</span>
           </button>
 
           <button
-            className="flex items-center text-white/70 hover:text-white transition-colors"
+            className="flex items-center text-white/75 hover:text-white transition-colors"
             aria-label={t.nav.search}
           >
-            <Search size={15} strokeWidth={1.5} />
+            <Search size={14} strokeWidth={1.5} />
           </button>
         </div>
 
@@ -93,7 +97,7 @@ export default function Navbar() {
             <a
               key={item.href}
               href={item.href}
-              className="text-[10px] uppercase tracking-[0.22em] font-medium text-white/75 hover:text-white transition-colors"
+              className="text-[10px] uppercase tracking-[0.22em] font-light text-white/75 hover:text-white transition-colors"
               onClick={() => setMobileOpen(false)}
             >
               {item.label}

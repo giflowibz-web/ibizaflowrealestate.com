@@ -222,20 +222,34 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         )}
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0) 38%, rgba(0,0,0,0.72) 100%)" }} />
 
-        {/* badge + ver fotos */}
-        <div style={{ position: "absolute", top: 96, left: 52, right: 52, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span style={{ background: "#002FA7", color: "#fff", fontSize: 8, fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", padding: "6px 14px" }}>
-            {listingLabel}
-          </span>
+        {/* ver fotos — pequeño, esquina inferior derecha */}
           {images.length > 1 && (
             <button
               onClick={() => setLightboxIdx(0)}
-              style={{ background: "rgba(0,0,0,0.28)", backdropFilter: "blur(12px)", border: "1px solid rgba(255,255,255,0.16)", color: "#fff", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", padding: "8px 18px", cursor: "pointer" }}
+              style={{
+                position: "absolute",
+                bottom: 32,
+                right: 52,
+                background: "none",
+                border: "none",
+                color: "rgba(255,255,255,0.55)",
+                fontSize: 9,
+                fontWeight: 400,
+                letterSpacing: "0.22em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                padding: 0,
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+              }}
+              onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "#fff")}
+              onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.55)")}
             >
-              Ver todas las fotos ({images.length})
+              <span style={{ display: "inline-block", width: 18, height: 1, background: "rgba(255,255,255,0.4)" }} />
+              Ver fotos ({images.length})
             </button>
           )}
-        </div>
 
         {/* título + precio */}
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "0 52px 68px", display: "flex", justifyContent: "space-between", alignItems: "flex-end" }}>

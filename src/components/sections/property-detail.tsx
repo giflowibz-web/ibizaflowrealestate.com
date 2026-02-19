@@ -364,12 +364,12 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             {/* ── INFORMACIÓN BÁSICA ── */}
             <section id="info-basica" style={{ padding: "0 64px 64px" }}>
               <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 56 }}>
-                    <p style={{ fontSize: "1rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>
-                      Información Básica
-                    </p>
-                  <h3 style={{ fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 44px", letterSpacing: "-0.03em" }}>
-                    Detalles de la propiedad
-                  </h3>
+                      <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>
+                        Información Básica
+                      </p>
+                    <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#0A0A0A", margin: "0 0 44px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                      Detalles de la propiedad
+                    </h3>
                   {basicInfo.length > 0 ? (
                     <div>
                       {basicInfo.map((item, i) => (

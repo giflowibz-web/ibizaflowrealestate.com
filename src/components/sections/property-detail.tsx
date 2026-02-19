@@ -407,13 +407,13 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           id="contacto"
           style={{
             position: "sticky",
-            top: 49, /* altura del nav */
-            height: "calc(100vh - 49px)",
+            top: 117, /* navbar 68px + subnav 49px */
+            height: "calc(100vh - 117px)",
             background: "#0A0A0A",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
-            padding: "40px 36px",
+            padding: "32px 32px",
             overflowY: "auto",
           }}
         >

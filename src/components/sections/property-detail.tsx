@@ -314,17 +314,18 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
             {/* ICONOS STATS — fila limpia sin cajas */}
             {stats.length > 0 && (
-              <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 0, marginBottom: 40, paddingBottom: 40, borderBottom: "1px solid #ebebeb" }}>
+              <div style={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: 0, marginBottom: 40, paddingBottom: 40, borderBottom: "1px solid #ebebeb", overflowX: "auto" }}>
                 {stats.map((d, i) => (
                   <div
                     key={i}
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: 11,
-                      paddingRight: 32,
-                      marginRight: 32,
+                      gap: 10,
+                      paddingRight: 28,
+                      marginRight: 28,
                       borderRight: i < stats.length - 1 ? "1px solid #e0e0e0" : "none",
+                      flexShrink: 0,
                     }}
                   >
                     <div style={{ color: "#002FA7" }}>{d.icon}</div>

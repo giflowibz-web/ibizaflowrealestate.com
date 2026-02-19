@@ -9,7 +9,7 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=1920&q=85';
+const FALLBACK_IMAGE = 'https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/project-uploads/a6bda00f-9d85-4858-8c8d-a58f8ab1c935/13048209_1209163009095942_677535093064324347_o-1771510827890.jpg?width=1920&height=1080&resize=cover';
 
 const HeroSection = () => {
   const { lang } = useLang();

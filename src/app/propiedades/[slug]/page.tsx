@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { supabaseAdmin } from "@/lib/supabase";
-import { PropertyDetail } from "@/components/sections/property-detail";
+import { PropertyDetailClient } from "@/components/sections/property-detail";
 import Navbar from "@/components/sections/navbar";
 import Footer from "@/components/sections/footer";
 
@@ -25,7 +25,7 @@ export default async function PropertyPage({
   return (
     <>
       <Navbar />
-      <PropertyDetail property={data} />
+      <PropertyDetailClient property={data} />
       <Footer />
     </>
   );

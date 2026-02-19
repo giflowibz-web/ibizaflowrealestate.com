@@ -16,8 +16,8 @@ const InquiryCTA = () => {
         {/* Left: Image */}
         <div className="relative min-h-[400px] lg:min-h-[600px]">
           <Image
-            src="https://images.unsplash.com/photo-1468413253725-0d5181091126?w=1200&q=80"
-            alt="Ibiza luxury sunset"
+src="https://images.unsplash.com/photo-1558618047-f4e2f7f92090?w=1200&q=80"
+              alt="Ibiza infinity pool Es Vedra"
             fill
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"

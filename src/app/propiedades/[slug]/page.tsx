@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { supabaseAdmin } from "@/lib/supabase";
 import { PropertyDetail } from "@/components/sections/property-detail";
-import { properties as fallbackProperties } from "@/data/properties";
+import Navbar from "@/components/sections/navbar";
+import Footer from "@/components/sections/footer";
 
 export const dynamic = "force-dynamic";
 
@@ -12,24 +13,20 @@ export default async function PropertyPage({
 }) {
   const { slug } = await params;
 
-  // Try Supabase first
   const { data, error } = await supabaseAdmin
     .from("properties")
     .select("*")
     .eq("slug", slug)
     .maybeSingle();
 
-  if (error) {
-    console.error("[PropertyPage] Supabase error:", error);
-  }
+  if (error) console.error("[PropertyPage] error:", error);
+  if (!data) notFound();
 
-  if (data) {
-    return <PropertyDetail property={data} />;
-  }
-
-  // Fallback to local data
-  const local = fallbackProperties.find((p) => p.slug === slug);
-  if (!local) notFound();
-
-  return <PropertyDetail property={local as any} />;
+  return (
+    <>
+      <Navbar />
+      <PropertyDetail property={data} />
+      <Footer />
+    </>
+  );
 }

@@ -277,31 +277,32 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               {p.title_es}
             </h2>
 
-            {/* ICONOS STATS — debajo del título de descripción, como Aaron */}
-            {stats.length > 0 && (
-              <div style={{ display: "flex", flexWrap: "wrap", borderTop: "1px solid #ebebeb", borderLeft: "1px solid #ebebeb", marginBottom: 40 }}>
-                {stats.map((d, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 11,
-                      padding: "16px 24px",
-                      borderRight: "1px solid #ebebeb",
-                      borderBottom: "1px solid #ebebeb",
-                      color: "#0A0A0A",
-                    }}
-                  >
-                    <div style={{ color: "#0A0A0A", opacity: 0.55, flexShrink: 0 }}>{d.icon}</div>
-                    <div>
-                      <p style={{ margin: 0, fontSize: "0.92rem", fontWeight: 300, color: "#0A0A0A", lineHeight: 1 }}>{d.value}</p>
-                      <p style={{ margin: "4px 0 0", fontSize: 7, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#002FA7" }}>{d.label}</p>
+              {/* ICONOS STATS — debajo del título de descripción, como Aaron */}
+              {stats.length > 0 && (
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 0, marginBottom: 40, borderTop: "1px solid #ebebeb", paddingTop: 28 }}>
+                  {stats.map((d, i) => (
+                    <div
+                      key={i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                        paddingRight: 36,
+                        marginRight: 36,
+                        borderRight: i < stats.length - 1 ? "1px solid #e8e8e8" : "none",
+                        color: "#0A0A0A",
+                        marginBottom: 8,
+                      }}
+                    >
+                      <div style={{ color: "#002FA7", flexShrink: 0 }}>{d.icon}</div>
+                      <div>
+                        <p style={{ margin: 0, fontSize: "1.05rem", fontWeight: 300, color: "#0A0A0A", lineHeight: 1 }}>{d.value}</p>
+                        <p style={{ margin: "5px 0 0", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "#002FA7" }}>{d.label}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
 
             {p.description_es && (
               <p style={{ fontSize: "0.9375rem", fontWeight: 300, lineHeight: 1.95, color: "#4a4a4a", margin: 0 }}>

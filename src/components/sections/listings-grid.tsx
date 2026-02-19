@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Bed, Bath, Maximize2, MapPin, ArrowRight } from "lucide-react";
 import { useLang } from "@/lib/i18n";
 
 interface Property {
@@ -42,27 +41,30 @@ const ListingsGrid = () => {
   const getTitle = (p: Property) =>
     lang === "en" ? p.title_en || p.title_es : p.title_es || p.title_en;
 
-  const getAddress = (p: Property) =>
-    [p.area, p.municipality || "Ibiza"].filter(Boolean).join(", ");
+  const getLocation = (p: Property) =>
+    [p.area, p.municipality || "Ibiza"].filter(Boolean).join(" — ");
 
   const getPrice = (p: Property) =>
     p.price_on_request
-      ? lang === "en" ? "Price on request" : "Precio a consultar"
+      ? lang === "en"
+        ? "Price on request"
+        : "Precio a consultar"
       : p.price
       ? `€${p.price.toLocaleString()}`
       : "";
 
   if (loading) {
     return (
-      <section id="propiedades" className="bg-[#F9F8F6] py-32">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, i) => (
+      <section id="propiedades" className="bg-white py-32">
+        <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {[...Array(4)].map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="aspect-[4/3] bg-[#E8E4DC]" />
+                <div className="aspect-[3/4] bg-[#F0EDE8]" />
                 <div className="pt-5 space-y-3">
-                  <div className="h-5 bg-[#E8E4DC] rounded w-3/4" />
-                  <div className="h-4 bg-[#E8E4DC] rounded w-1/2" />
+                  <div className="h-4 bg-[#F0EDE8] rounded w-1/3" />
+                  <div className="h-6 bg-[#F0EDE8] rounded w-2/3" />
+                  <div className="h-4 bg-[#F0EDE8] rounded w-1/2" />
                 </div>
               </div>
             ))}
@@ -73,115 +75,110 @@ const ListingsGrid = () => {
   }
 
   return (
-    <section id="propiedades" className="bg-[#F9F8F6] py-28 md:py-36">
-      <div className="container">
+    <section id="propiedades" className="bg-white py-28 md:py-36">
+      <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
 
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
           <div>
-            <span className="text-[#002FA7] text-[11px] uppercase tracking-[0.3em] font-bold block mb-4">
+            <span className="text-[10px] uppercase tracking-[0.35em] text-[#888] font-medium block mb-4">
               {t.listings.tag}
             </span>
-            <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-[#0A0A0A] leading-none">
+            <h2 className="font-display text-4xl md:text-5xl text-[#0A0A0A] leading-none font-light">
               {t.listings.title}
             </h2>
           </div>
-          <p className="text-[#888] text-[14px] font-body leading-relaxed max-w-xs md:text-right">
-            {t.listings.subtitle}
-          </p>
+          <Link
+            href="/propiedades"
+            className="group inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-[#0A0A0A] hover:text-[#555] transition-colors font-medium"
+          >
+            {t.listings.view_all}
+            <span className="block w-8 h-px bg-current transition-all duration-300 group-hover:w-12" />
+          </Link>
         </div>
 
-        {/* Grid */}
+        {/* Grid 2 columnas estilo Aaron Kirman */}
         {properties.length === 0 ? (
-          <div className="text-center py-20 text-[#999] font-body">{t.listings.no_properties}</div>
+          <div className="text-center py-20 text-[#999] text-sm">{t.listings.no_properties}</div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-[#E5E0D8]">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
             {properties.map((property, index) => (
               <Link
                 key={property.id}
                 href={`/propiedades/${property.slug || property.id}`}
-                className="group block bg-white"
+                className="group block"
               >
-                {/* Image */}
-                <div className="relative overflow-hidden"
-                  style={{ paddingBottom: index === 0 ? '75%' : '65%' }}
+                {/* Imagen vertical */}
+                <div className="relative overflow-hidden bg-[#F0EDE8]"
+                  style={{ aspectRatio: index % 3 === 0 ? "3/4" : "4/5" }}
                 >
-                  <div className="absolute inset-0">
-                    {property.images?.[0] ? (
-                      <Image
-                        src={property.images[0]}
-                        alt={getTitle(property)}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        unoptimized
-                      />
-                    ) : (
-                      <div className="w-full h-full bg-[#E8E4DC] flex items-center justify-center">
-                        <span className="text-[#C5BDB0] text-[10px] uppercase tracking-[0.3em]">Ibiza Flow</span>
-                      </div>
-                    )}
-                    {/* Hover overlay */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-all duration-500" />
-                  </div>
+                  {property.images?.[0] ? (
+                    <Image
+                      src={property.images[0]}
+                      alt={getTitle(property)}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      unoptimized
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                      <span className="text-[#C5BDB0] text-[10px] uppercase tracking-[0.4em]">
+                        Ibiza Flow
+                      </span>
+                    </div>
+                  )}
 
-                  {/* Badges */}
-                  <div className="absolute top-4 left-4 flex flex-col gap-2">
-                    {property.featured && (
-                      <span className="inline-block px-3 py-1 bg-[#002FA7] text-white text-[9px] uppercase tracking-[0.2em] font-bold">
+                  {/* Badge exclusivo */}
+                  {property.featured && (
+                    <div className="absolute top-5 left-5">
+                      <span className="inline-block bg-white/90 backdrop-blur-sm text-[#0A0A0A] text-[9px] uppercase tracking-[0.3em] font-bold px-3 py-1.5">
                         {t.listings.exclusive}
                       </span>
-                    )}
-                    {property.property_type && (
-                      <span className="inline-block px-3 py-1 bg-black/50 backdrop-blur-sm text-white text-[9px] uppercase tracking-[0.2em] font-bold">
+                    </div>
+                  )}
+
+                  {/* Tipo de propiedad */}
+                  {property.property_type && (
+                    <div className="absolute top-5 right-5">
+                      <span className="inline-block bg-black/60 backdrop-blur-sm text-white text-[9px] uppercase tracking-[0.25em] px-3 py-1.5">
                         {property.property_type}
                       </span>
-                    )}
-                  </div>
-
-                  {/* Price overlay on hover */}
-                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-400 bg-gradient-to-t from-black/70 to-transparent">
-                    <p className="text-white font-display text-xl">{getPrice(property)}</p>
-                  </div>
+                    </div>
+                  )}
                 </div>
 
-                {/* Info */}
-                <div className="p-6">
-                  <div className="flex items-start justify-between gap-4 mb-4">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-display text-[1.2rem] text-[#0A0A0A] group-hover:text-[#002FA7] transition-colors duration-300 leading-tight mb-1.5 truncate">
-                        {getTitle(property)}
-                      </h3>
-                      <p className="text-[#999] text-[12px] font-body flex items-center gap-1.5">
-                        <MapPin className="w-3 h-3 flex-shrink-0" />
-                        <span className="truncate">{getAddress(property)}</span>
-                      </p>
-                    </div>
-                    <p className="text-[#0A0A0A] font-display text-lg whitespace-nowrap flex-shrink-0">{getPrice(property)}</p>
-                  </div>
+                {/* Info debajo */}
+                <div className="pt-5">
+                  {/* Localización */}
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-[#999] mb-2">
+                    {getLocation(property)}
+                  </p>
 
+                  {/* Título */}
+                  <h3 className="font-display text-xl md:text-2xl text-[#0A0A0A] font-light leading-snug mb-3 group-hover:opacity-60 transition-opacity duration-300">
+                    {getTitle(property)}
+                  </h3>
+
+                  {/* Separador */}
+                  <div className="w-8 h-px bg-[#CCC] mb-3 group-hover:w-16 transition-all duration-500" />
+
+                  {/* Stats + Precio en la misma línea */}
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-5 text-[11px] text-[#777] uppercase tracking-[0.2em]">
                       {property.bedrooms > 0 && (
-                        <div className="flex items-center gap-1.5 text-[#666] text-[12px] font-body">
-                          <Bed className="w-3.5 h-3.5 text-[#002FA7]" />
-                          {property.bedrooms}
-                        </div>
+                        <span>{property.bedrooms} {lang === "en" ? "BD" : "HAB"}</span>
                       )}
                       {property.bathrooms > 0 && (
-                        <div className="flex items-center gap-1.5 text-[#666] text-[12px] font-body">
-                          <Bath className="w-3.5 h-3.5 text-[#002FA7]" />
-                          {property.bathrooms}
-                        </div>
+                        <span>{property.bathrooms} {lang === "en" ? "BA" : "BA"}</span>
                       )}
                       {property.size_built > 0 && (
-                        <div className="flex items-center gap-1.5 text-[#666] text-[12px] font-body">
-                          <Maximize2 className="w-3.5 h-3.5 text-[#002FA7]" />
-                          {property.size_built} m²
-                        </div>
+                        <span>{property.size_built} m²</span>
                       )}
                     </div>
-                    <ArrowRight className="w-4 h-4 text-[#002FA7] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300" />
+                    <p className="font-display text-lg text-[#0A0A0A] font-light">
+                      {getPrice(property)}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -189,16 +186,17 @@ const ListingsGrid = () => {
           </div>
         )}
 
-        {/* CTA */}
-        <div className="flex justify-center mt-16">
+        {/* CTA centrado */}
+        <div className="flex justify-center mt-20 pt-8 border-t border-[#E8E4DC]">
           <Link
             href="/propiedades"
-            className="group inline-flex items-center gap-3 border border-[#0A0A0A] px-12 py-4 text-[12px] uppercase tracking-[0.25em] font-bold text-[#0A0A0A] hover:bg-[#0A0A0A] hover:text-white transition-all duration-400 font-body"
+            className="group inline-flex items-center gap-4 text-[11px] uppercase tracking-[0.3em] text-[#0A0A0A] hover:text-[#555] transition-colors font-medium"
           >
             {t.listings.view_all}
-            <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
+            <span className="block w-10 h-px bg-current transition-all duration-300 group-hover:w-16" />
           </Link>
         </div>
+
       </div>
     </section>
   );

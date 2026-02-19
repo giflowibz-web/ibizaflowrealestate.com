@@ -10,60 +10,87 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const light = variant === "light";
 
   const sizes = {
-    sm: { main: 15, sub: 6, lineHeight: 20 },
-    md: { main: 19, sub: 7, lineHeight: 26 },
-    lg: { main: 26, sub: 9, lineHeight: 34 },
+    sm: { ibiza: 10, flow: 18, sub: 5.5, gap: 2 },
+    md: { ibiza: 12, flow: 22, sub: 6.5, gap: 3 },
+    lg: { ibiza: 16, flow: 30, sub: 8, gap: 4 },
   };
   const s = sizes[size];
 
-  const textColor = light ? "#ffffff" : "#111111";
-  const subColor  = light ? "rgba(255,255,255,0.45)" : "rgba(17,17,17,0.4)";
+  const textColor = light ? "#ffffff" : "#0a0a0a";
+  const subColor  = light ? "rgba(255,255,255,0.38)" : "rgba(0,0,0,0.32)";
 
   return (
     <div
-      className={`flex items-center select-none ${className}`}
+      className={`flex flex-col select-none ${className}`}
       translate="no"
-      style={{ gap: "0.75em" }}
+      style={{ gap: s.gap, lineHeight: 1 }}
     >
-      {/* Barra azul Klein vertical */}
-      <div
+      {/* IBIZA — pequeño, muy espaciado, sobre FLOW */}
+      <span
         style={{
-          width: 2,
-          height: s.lineHeight * 1.6,
-          backgroundColor: "#002FA7",
-          flexShrink: 0,
+          fontFamily: "'Montserrat', 'Inter', sans-serif",
+          fontSize: s.ibiza,
+          fontWeight: 400,
+          letterSpacing: "0.55em",
+          color: subColor,
+          textTransform: "uppercase",
+          paddingLeft: 2,
         }}
-      />
+      >
+        IBIZA
+      </span>
 
-      {/* Texto en dos líneas */}
-      <div className="flex flex-col" style={{ gap: 1 }}>
+      {/* FLOW — grande, con la O en azul Klein */}
+      <span
+        style={{
+          fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
+          fontSize: s.flow,
+          fontWeight: 600,
+          letterSpacing: "0.12em",
+          textTransform: "uppercase",
+          color: textColor,
+          lineHeight: 1,
+        }}
+      >
+        FL
+        <span style={{ color: "#002FA7" }}>O</span>
+        W
+      </span>
+
+      {/* REAL ESTATE — línea con puntos */}
+      <div style={{ display: "flex", alignItems: "center", gap: "0.4em", paddingLeft: 2 }}>
         <span
           style={{
-            fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
-            fontSize: s.main,
-            fontWeight: 300,
-            letterSpacing: "0.3em",
-            color: textColor,
-            textTransform: "uppercase",
-            lineHeight: 1,
+            display: "inline-block",
+            width: 12,
+            height: 1,
+            backgroundColor: "#002FA7",
+            flexShrink: 0,
+            opacity: 0.7,
           }}
-        >
-            IBIZA
-            <span style={{ color: "#002FA7", fontWeight: 300, marginLeft: "0.2em" }}>FLOW</span>
-        </span>
+        />
         <span
           style={{
             fontFamily: "'Montserrat', 'Inter', sans-serif",
             fontWeight: 300,
             fontSize: s.sub,
-            letterSpacing: "0.5em",
+            letterSpacing: "0.45em",
             textTransform: "uppercase",
             color: subColor,
-            lineHeight: 1,
           }}
         >
           REAL ESTATE
         </span>
+        <span
+          style={{
+            display: "inline-block",
+            width: 12,
+            height: 1,
+            backgroundColor: "#002FA7",
+            flexShrink: 0,
+            opacity: 0.7,
+          }}
+        />
       </div>
     </div>
   );

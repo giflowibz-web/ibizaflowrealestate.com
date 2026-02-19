@@ -407,17 +407,14 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             padding: "40px 28px 28px 24px",
           }}
         >
-          {/* Tarjeta negra — más compacta */}
-          <div style={{ background: "#0A0A0A" }}>
+          {/* Tarjeta negra */}
+          <div style={{ background: "#0A0A0A", marginTop: 32 }}>
             {/* Header */}
-            <div style={{ padding: "22px 22px 0" }}>
-              <p style={{ fontSize: 7, fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 4px" }}>
-                Póngase en contacto
-              </p>
-              <h3 style={{ fontSize: "0.88rem", fontWeight: 200, color: "#fff", margin: "0 0 3px", letterSpacing: "-0.01em" }}>
-                Solicitar información
+            <div style={{ padding: "28px 24px 0" }}>
+              <h3 style={{ fontSize: "1.55rem", fontWeight: 700, color: "#002FA7", margin: "0 0 6px", letterSpacing: "-0.01em", lineHeight: 1.15 }}>
+                Contacte con nosotros
               </h3>
-              <p style={{ fontSize: 8, fontWeight: 300, color: "rgba(255,255,255,0.28)", margin: "0 0 14px", lineHeight: 1.55 }}>
+              <p style={{ fontSize: 8, fontWeight: 300, color: "rgba(255,255,255,0.35)", margin: "0 0 16px", lineHeight: 1.6 }}>
                 Un asesor exclusivo le atenderá en menos de 24h.
               </p>
             </div>

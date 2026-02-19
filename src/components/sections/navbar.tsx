@@ -66,9 +66,7 @@ export default function Navbar() {
 
           {/* Search */}
           <button
-            className={`hidden md:flex items-center transition-colors duration-300 hover:text-accent ${
-              scrolled ? "text-foreground" : "text-white/90"
-            }`}
+              className={`hidden md:flex items-center transition-colors duration-300 hover:text-accent text-white/90`}
             aria-label={t.nav.search}
           >
             <Search size={17} strokeWidth={1.5} />

@@ -18,7 +18,8 @@ const HeroSection = () => {
           playsInline
           className="h-full w-full object-cover opacity-70"
         >
-          <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-ibiza-coastline-4047/1080p.mp4" type="video/mp4" />
+          <source src="https://videos.pexels.com/video-files/3571264/3571264-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+          <source src="https://videos.pexels.com/video-files/2169880/2169880-uhd_2560_1440_25fps.mp4" type="video/mp4" />
           {/* Fallback imagen */}
           <img
             src="https://images.unsplash.com/photo-1559827291-72fec5e96f4d?w=1920&q=80"

@@ -1,15 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Image from "next/image";
+import { useState } from "react";
 
 type Property = {
   id: string;
   slug: string;
   title_es: string;
-  title_en: string;
   description_es: string;
-  description_en: string;
   price: string;
   price_rent: string | null;
   currency: string;
@@ -58,7 +55,7 @@ function formatPrice(price: string | null | undefined, currency: string) {
   }).format(num);
 }
 
-const sans = "var(--font-geist-sans), 'Helvetica Neue', Arial, sans-serif";
+const sans = "'Helvetica Neue', Arial, sans-serif";
 const serif = "'Cormorant Garamond', 'Garamond', Georgia, serif";
 
 export default function PropertyDetail({ property }: { property: Property }) {
@@ -67,12 +64,7 @@ export default function PropertyDetail({ property }: { property: Property }) {
   const [formData, setFormData] = useState({ name: "", email: "", phone: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
 
-  const images = property.images || [];
-
-  useEffect(() => {
-    document.body.style.overflow = lightboxOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [lightboxOpen]);
+  const images = property.images?.length ? property.images : [];
 
   const priceDisplay = property.price_on_request
     ? "Precio bajo consulta"
@@ -81,25 +73,22 @@ export default function PropertyDetail({ property }: { property: Property }) {
     : formatPrice(property.price, property.currency);
 
   const location = [property.area, property.municipality, property.island, property.country]
-    .filter(Boolean)
-    .join(", ");
+    .filter(Boolean).join(", ");
 
   const basicInfo = [
-    { label: "Dirección de correo electrónico", value: property.contact_email },
+    property.contact_email ? { label: "Dirección de correo electrónico", value: property.contact_email } : null,
     {
       label: "Estado de la propiedad",
-      value: property.listing_type === "rent" ? "En alquiler" : property.listing_type === "sale" ? "En venta" : "Disponible",
+      value: property.listing_type === "rent" ? "En alquiler" : "En venta",
     },
-    {
-      label: "Tamaño del lote",
-      value: property.lot_size || (property.size_plot && property.size_plot !== "0" ? `${property.size_plot} m²` : null),
-    },
-    { label: "Identificación de la MLS", value: property.mls_id },
+    property.lot_size ? { label: "Tamaño del lote", value: property.lot_size } :
+    (property.size_plot && property.size_plot !== "0") ? { label: "Tamaño del lote", value: `${property.size_plot} m²` } : null,
+    property.mls_id ? { label: "Identificación de la MLS", value: property.mls_id } : null,
     {
       label: "Tipo de propiedad",
-      value: { villa: "Residencial", apartment: "Residencial", finca: "Residencial", penthouse: "Residencial", house: "Residencial", land: "Terreno", commercial: "Comercial" }[property.property_type] || "Residencial",
+      value: property.property_type === "land" ? "Terreno" : property.property_type === "commercial" ? "Comercial" : "Residencial",
     },
-  ].filter((i) => i.value) as { label: string; value: string }[];
+  ].filter(Boolean) as { label: string; value: string }[];
 
   const areaItems = [
     property.architectural_style ? { label: "Estilos arquitectónicos", value: property.architectural_style } : null,
@@ -125,233 +114,439 @@ export default function PropertyDetail({ property }: { property: Property }) {
       : null,
   ].filter(Boolean) as { label: string; value: string }[];
 
+  const hasAmenities = areaItems.length > 0 || interiorItems.length > 0 || financialItems.length > 0;
+
   const mapQuery = property.latitude && property.longitude
     ? `${property.latitude},${property.longitude}`
-    : encodeURIComponent(location);
+    : encodeURIComponent(location || "Ibiza, Spain");
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: serif }}>
 
-      {/* ── GALERÍA ─────────────────────────────────────────────── */}
-      <div className="w-full bg-white pt-20">
-        <div className="max-w-[1380px] mx-auto px-4 md:px-8">
+      {/* ── HERO GALLERY ─────────────────────────────────────── */}
+      <div style={{ paddingTop: "72px" }}>
 
-          {/* Título + precio */}
-          <div className="flex items-end justify-between mb-5">
-            <div>
-              <p className="text-[11px] tracking-[0.28em] uppercase text-gray-400 mb-1.5" style={{ fontFamily: sans }}>
-                {location}
-              </p>
-              <h1 className="text-[2.6rem] md:text-[3.4rem] font-extralight text-gray-900 leading-[1.1]">
-                {property.title_es}
-              </h1>
-            </div>
-            <div className="hidden md:block text-right">
-              <p className="text-[2rem] font-extralight text-gray-900">{priceDisplay}</p>
-            </div>
+        {/* Title row */}
+        <div style={{
+          maxWidth: 1380,
+          margin: "0 auto",
+          padding: "32px 40px 20px",
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "space-between",
+          gap: 24,
+        }}>
+          <div>
+            <p style={{
+              fontFamily: sans,
+              fontSize: 10,
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "#999",
+              marginBottom: 10,
+            }}>
+              {location}
+            </p>
+            <h1 style={{
+              fontFamily: serif,
+              fontSize: "clamp(2rem, 4vw, 3.5rem)",
+              fontWeight: 300,
+              color: "#111",
+              lineHeight: 1.08,
+              margin: 0,
+            }}>
+              {property.title_es}
+            </h1>
           </div>
+          <div style={{ textAlign: "right", flexShrink: 0 }}>
+            <p style={{
+              fontFamily: serif,
+              fontSize: "clamp(1.4rem, 2.5vw, 2.2rem)",
+              fontWeight: 300,
+              color: "#111",
+              whiteSpace: "nowrap",
+            }}>
+              {priceDisplay}
+            </p>
+          </div>
+        </div>
 
-          {/* Grid fotos: 1 grande + 4 pequeñas */}
-          {images.length > 0 && (
-            <div className="grid grid-cols-4 grid-rows-2 gap-[3px] h-[540px] md:h-[640px]">
+        {/* Photo grid — 1 big left + 4 right */}
+        {images.length > 0 && (
+          <div style={{
+            maxWidth: 1380,
+            margin: "0 auto",
+            padding: "0 40px",
+          }}>
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gridTemplateRows: "1fr 1fr",
+              gap: 3,
+              height: "clamp(400px, 55vw, 660px)",
+            }}>
+              {/* Big photo */}
               <div
-                className="col-span-2 row-span-2 relative overflow-hidden cursor-pointer group"
+                style={{
+                  gridColumn: "1",
+                  gridRow: "1 / 3",
+                  position: "relative",
+                  overflow: "hidden",
+                  cursor: "pointer",
+                  background: "#f0f0f0",
+                }}
                 onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
               >
-                <Image
+                <img
                   src={images[0]}
                   alt={property.title_es}
-                  fill
-                  className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                  priority
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    display: "block",
+                    transition: "transform 0.7s ease",
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.03)")}
+                  onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
                 />
               </div>
+
+              {/* 4 thumbnails right */}
               {[1, 2, 3, 4].map((i) => (
                 <div
                   key={i}
-                  className="relative overflow-hidden cursor-pointer group"
+                  style={{
+                    position: "relative",
+                    overflow: "hidden",
+                    cursor: "pointer",
+                    background: "#f0f0f0",
+                  }}
                   onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
                 >
                   {images[i] ? (
-                    <Image
-                      src={images[i]}
-                      alt={`${property.title_es} ${i + 1}`}
-                      fill
-                      className="object-cover group-hover:scale-[1.03] transition-transform duration-700"
-                    />
+                    <>
+                      <img
+                        src={images[i]}
+                        alt={`${property.title_es} ${i + 1}`}
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          display: "block",
+                          transition: "transform 0.7s ease",
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.03)")}
+                        onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
+                      />
+                      {i === 4 && images.length > 5 && (
+                        <div style={{
+                          position: "absolute",
+                          inset: 0,
+                          background: "rgba(0,0,0,0.45)",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}>
+                          <span style={{ fontFamily: sans, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", color: "#fff" }}>
+                            +{images.length - 5} fotos
+                          </span>
+                        </div>
+                      )}
+                    </>
                   ) : (
-                    <div className="w-full h-full bg-gray-100" />
-                  )}
-                  {i === 4 && images.length > 5 && (
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                      <span className="text-white text-[11px] tracking-[0.25em] uppercase" style={{ fontFamily: sans }}>
-                        +{images.length - 5} fotos
-                      </span>
-                    </div>
+                    <div style={{ width: "100%", height: "100%", background: "#e8e8e8" }} />
                   )}
                 </div>
               ))}
             </div>
-          )}
 
-          {/* Precio móvil */}
-          <div className="md:hidden mt-4">
-            <p className="text-2xl font-extralight text-gray-900">{priceDisplay}</p>
+            {/* View all photos button */}
+            {images.length > 5 && (
+              <div style={{ textAlign: "right", marginTop: 12 }}>
+                <button
+                  onClick={() => { setLightboxIndex(0); setLightboxOpen(true); }}
+                  style={{
+                    fontFamily: sans,
+                    fontSize: 10,
+                    letterSpacing: "0.3em",
+                    textTransform: "uppercase",
+                    color: "#555",
+                    background: "none",
+                    border: "1px solid #ddd",
+                    padding: "8px 20px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Ver todas las fotos ({images.length})
+                </button>
+              </div>
+            )}
           </div>
-        </div>
+        )}
       </div>
 
-      {/* ── CONTENIDO ───────────────────────────────────────────── */}
-      <div className="max-w-[1380px] mx-auto px-4 md:px-8 py-14">
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-16">
+      {/* ── MAIN CONTENT ─────────────────────────────────────── */}
+      <div style={{ maxWidth: 1380, margin: "0 auto", padding: "52px 40px 80px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 380px", gap: 72, alignItems: "start" }}>
 
-          {/* COLUMNA IZQUIERDA */}
+          {/* LEFT COLUMN */}
           <div>
 
-            {/* Stats */}
-            <div className="flex gap-10 pb-10 border-b border-gray-100 mb-12">
+            {/* Stats bar */}
+            <div style={{
+              display: "flex",
+              gap: 48,
+              paddingBottom: 40,
+              borderBottom: "1px solid #ebebeb",
+              marginBottom: 52,
+            }}>
               {property.bedrooms > 0 && (
                 <div>
-                  <p className="text-[2rem] font-extralight text-gray-900 leading-none">{property.bedrooms}</p>
-                  <p className="text-[10px] tracking-[0.25em] uppercase text-gray-400 mt-1.5" style={{ fontFamily: sans }}>Habitaciones</p>
+                  <p style={{ fontFamily: serif, fontSize: 38, fontWeight: 300, color: "#111", lineHeight: 1, margin: 0 }}>{property.bedrooms}</p>
+                  <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "#999", marginTop: 8 }}>Habitaciones</p>
                 </div>
               )}
               {property.bathrooms > 0 && (
                 <div>
-                  <p className="text-[2rem] font-extralight text-gray-900 leading-none">{property.bathrooms}</p>
-                  <p className="text-[10px] tracking-[0.25em] uppercase text-gray-400 mt-1.5" style={{ fontFamily: sans }}>Baños</p>
+                  <p style={{ fontFamily: serif, fontSize: 38, fontWeight: 300, color: "#111", lineHeight: 1, margin: 0 }}>{property.bathrooms}</p>
+                  <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "#999", marginTop: 8 }}>Baños</p>
                 </div>
               )}
               {property.size_built && property.size_built !== "0" && (
                 <div>
-                  <p className="text-[2rem] font-extralight text-gray-900 leading-none">{property.size_built}<span className="text-base ml-1">m²</span></p>
-                  <p className="text-[10px] tracking-[0.25em] uppercase text-gray-400 mt-1.5" style={{ fontFamily: sans }}>Construidos</p>
+                  <p style={{ fontFamily: serif, fontSize: 38, fontWeight: 300, color: "#111", lineHeight: 1, margin: 0 }}>
+                    {property.size_built}<span style={{ fontSize: 16, marginLeft: 3 }}>m²</span>
+                  </p>
+                  <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "#999", marginTop: 8 }}>Construidos</p>
                 </div>
               )}
               {property.size_plot && property.size_plot !== "0" && (
                 <div>
-                  <p className="text-[2rem] font-extralight text-gray-900 leading-none">{property.size_plot}<span className="text-base ml-1">m²</span></p>
-                  <p className="text-[10px] tracking-[0.25em] uppercase text-gray-400 mt-1.5" style={{ fontFamily: sans }}>Parcela</p>
+                  <p style={{ fontFamily: serif, fontSize: 38, fontWeight: 300, color: "#111", lineHeight: 1, margin: 0 }}>
+                    {property.size_plot}<span style={{ fontSize: 16, marginLeft: 3 }}>m²</span>
+                  </p>
+                  <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "#999", marginTop: 8 }}>Parcela</p>
+                </div>
+              )}
+              {property.year_built && (
+                <div>
+                  <p style={{ fontFamily: serif, fontSize: 38, fontWeight: 300, color: "#111", lineHeight: 1, margin: 0 }}>{property.year_built}</p>
+                  <p style={{ fontFamily: sans, fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "#999", marginTop: 8 }}>Año</p>
                 </div>
               )}
             </div>
 
-            {/* Descripción */}
-            <div className="mb-14">
-              <p className="text-[1.1rem] font-extralight text-gray-600 leading-[1.85]">
+            {/* Description */}
+            <div style={{ marginBottom: 56 }}>
+              <p style={{
+                fontFamily: serif,
+                fontSize: 18,
+                fontWeight: 300,
+                color: "#444",
+                lineHeight: 1.9,
+                margin: 0,
+              }}>
                 {property.description_es}
               </p>
             </div>
 
-            {/* ── INFORMACIÓN BÁSICA ── */}
-            <section className="mb-14">
-              <h2 className="text-[10px] tracking-[0.35em] uppercase text-gray-400 mb-7" style={{ fontFamily: sans }}>
+            {/* INFORMACIÓN BÁSICA */}
+            <section style={{ marginBottom: 52 }}>
+              <h2 style={{
+                fontFamily: sans,
+                fontSize: 10,
+                letterSpacing: "0.38em",
+                textTransform: "uppercase",
+                color: "#aaa",
+                marginBottom: 24,
+                fontWeight: 400,
+              }}>
                 Información Básica
               </h2>
-              <div className="divide-y divide-gray-100">
-                {basicInfo.map((item) => (
-                  <div key={item.label} className="flex justify-between items-start py-[14px]">
-                    <span className="text-[13px] text-gray-500 leading-relaxed" style={{ fontFamily: sans }}>{item.label}</span>
-                    <span className="text-[13px] text-gray-900 text-right max-w-[52%] leading-relaxed" style={{ fontFamily: sans }}>{item.value}</span>
+              <div>
+                {basicInfo.map((item, idx) => (
+                  <div key={idx} style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "flex-start",
+                    padding: "14px 0",
+                    borderBottom: "1px solid #f0f0f0",
+                  }}>
+                    <span style={{ fontFamily: sans, fontSize: 13, color: "#888" }}>{item.label}</span>
+                    <span style={{ fontFamily: sans, fontSize: 13, color: "#111", textAlign: "right", maxWidth: "55%" }}>{item.value}</span>
                   </div>
                 ))}
               </div>
             </section>
 
-            {/* ── CARACTERÍSTICAS Y COMODIDADES ── */}
-            {(areaItems.length > 0 || interiorItems.length > 0 || financialItems.length > 0) && (
-              <section className="mb-14">
-                <h2 className="text-[10px] tracking-[0.35em] uppercase text-gray-400 mb-8" style={{ fontFamily: sans }}>
+            {/* CARACTERÍSTICAS Y COMODIDADES */}
+            {hasAmenities && (
+              <section style={{ marginBottom: 52 }}>
+                <h2 style={{
+                  fontFamily: sans,
+                  fontSize: 10,
+                  letterSpacing: "0.38em",
+                  textTransform: "uppercase",
+                  color: "#aaa",
+                  marginBottom: 28,
+                  fontWeight: 400,
+                }}>
                   Características y Comodidades
                 </h2>
 
                 {areaItems.length > 0 && (
-                  <div className="mb-10">
-                    <h3 className="text-[11px] tracking-[0.22em] uppercase text-gray-800 font-medium mb-4" style={{ fontFamily: sans }}>
+                  <div style={{ marginBottom: 32 }}>
+                    <h3 style={{
+                      fontFamily: sans,
+                      fontSize: 11,
+                      letterSpacing: "0.22em",
+                      textTransform: "uppercase",
+                      color: "#333",
+                      fontWeight: 500,
+                      marginBottom: 12,
+                    }}>
                       Área y lote
                     </h3>
-                    <div className="divide-y divide-gray-100">
-                      {areaItems.map((item) => (
-                        <div key={item.label} className="flex justify-between items-start py-[13px]">
-                          <span className="text-[13px] text-gray-500" style={{ fontFamily: sans }}>{item.label}</span>
-                          <span className="text-[13px] text-gray-900 text-right max-w-[52%]" style={{ fontFamily: sans }}>{item.value}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {areaItems.map((item, idx) => (
+                      <div key={idx} style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "13px 0",
+                        borderBottom: "1px solid #f0f0f0",
+                      }}>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#888" }}>{item.label}</span>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#111", textAlign: "right", maxWidth: "55%" }}>{item.value}</span>
+                      </div>
+                    ))}
                   </div>
                 )}
 
                 {interiorItems.length > 0 && (
-                  <div className="mb-10">
-                    <h3 className="text-[11px] tracking-[0.22em] uppercase text-gray-800 font-medium mb-4" style={{ fontFamily: sans }}>
+                  <div style={{ marginBottom: 32 }}>
+                    <h3 style={{
+                      fontFamily: sans,
+                      fontSize: 11,
+                      letterSpacing: "0.22em",
+                      textTransform: "uppercase",
+                      color: "#333",
+                      fontWeight: 500,
+                      marginBottom: 12,
+                    }}>
                       Interior y exterior
                     </h3>
-                    <div className="divide-y divide-gray-100">
-                      {interiorItems.map((item) => (
-                        <div key={item.label} className="flex justify-between items-start py-[13px]">
-                          <span className="text-[13px] text-gray-500" style={{ fontFamily: sans }}>{item.label}</span>
-                          <span className="text-[13px] text-gray-900 text-right max-w-[52%]" style={{ fontFamily: sans }}>{item.value}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {interiorItems.map((item, idx) => (
+                      <div key={idx} style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "13px 0",
+                        borderBottom: "1px solid #f0f0f0",
+                      }}>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#888" }}>{item.label}</span>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#111", textAlign: "right", maxWidth: "55%" }}>{item.value}</span>
+                      </div>
+                    ))}
                   </div>
                 )}
 
                 {financialItems.length > 0 && (
-                  <div className="mb-10">
-                    <h3 className="text-[11px] tracking-[0.22em] uppercase text-gray-800 font-medium mb-4" style={{ fontFamily: sans }}>
+                  <div style={{ marginBottom: 32 }}>
+                    <h3 style={{
+                      fontFamily: sans,
+                      fontSize: 11,
+                      letterSpacing: "0.22em",
+                      textTransform: "uppercase",
+                      color: "#333",
+                      fontWeight: 500,
+                      marginBottom: 12,
+                    }}>
                       Financiero
                     </h3>
-                    <div className="divide-y divide-gray-100">
-                      {financialItems.map((item) => (
-                        <div key={item.label} className="flex justify-between items-start py-[13px]">
-                          <span className="text-[13px] text-gray-500" style={{ fontFamily: sans }}>{item.label}</span>
-                          <span className="text-[13px] text-gray-900 text-right max-w-[52%]" style={{ fontFamily: sans }}>{item.value}</span>
-                        </div>
-                      ))}
-                    </div>
+                    {financialItems.map((item, idx) => (
+                      <div key={idx} style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        padding: "13px 0",
+                        borderBottom: "1px solid #f0f0f0",
+                      }}>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#888" }}>{item.label}</span>
+                        <span style={{ fontFamily: sans, fontSize: 13, color: "#111", textAlign: "right", maxWidth: "55%" }}>{item.value}</span>
+                      </div>
+                    ))}
                   </div>
                 )}
               </section>
             )}
 
-            {/* ── MAPA ── */}
-            <section className="mb-14">
-              <h2 className="text-[10px] tracking-[0.35em] uppercase text-gray-400 mb-6" style={{ fontFamily: sans }}>
+            {/* MAPA */}
+            <section style={{ marginBottom: 52 }}>
+              <h2 style={{
+                fontFamily: sans,
+                fontSize: 10,
+                letterSpacing: "0.38em",
+                textTransform: "uppercase",
+                color: "#aaa",
+                marginBottom: 20,
+                fontWeight: 400,
+              }}>
                 Ubicación
               </h2>
-              <div className="w-full h-[360px] overflow-hidden bg-gray-100">
+              <div style={{ width: "100%", height: 380, overflow: "hidden", background: "#f4f4f4" }}>
                 <iframe
                   src={`https://maps.google.com/maps?q=${mapQuery}&z=14&output=embed`}
                   width="100%"
                   height="100%"
-                  style={{ border: 0 }}
+                  style={{ border: 0, display: "block" }}
                   loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  title="Ubicación de la propiedad"
+                  title="Ubicación"
                 />
               </div>
-              <p className="mt-3 text-[12px] text-gray-400" style={{ fontFamily: sans }}>{location}</p>
+              <p style={{ fontFamily: sans, fontSize: 12, color: "#aaa", marginTop: 10 }}>{location}</p>
             </section>
 
-            {/* ── GALERÍA COMPLETA ── */}
+            {/* GALERÍA COMPLETA */}
             {images.length > 1 && (
               <section>
-                <h2 className="text-[10px] tracking-[0.35em] uppercase text-gray-400 mb-6" style={{ fontFamily: sans }}>
+                <h2 style={{
+                  fontFamily: sans,
+                  fontSize: 10,
+                  letterSpacing: "0.38em",
+                  textTransform: "uppercase",
+                  color: "#aaa",
+                  marginBottom: 20,
+                  fontWeight: 400,
+                }}>
                   Galería
                 </h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-[3px]">
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(3, 1fr)",
+                  gap: 3,
+                }}>
                   {images.map((img, i) => (
                     <div
                       key={i}
-                      className="relative aspect-[4/3] overflow-hidden cursor-pointer group"
+                      style={{
+                        position: "relative",
+                        aspectRatio: "4/3",
+                        overflow: "hidden",
+                        cursor: "pointer",
+                        background: "#f0f0f0",
+                      }}
                       onClick={() => { setLightboxIndex(i); setLightboxOpen(true); }}
                     >
-                      <Image
+                      <img
                         src={img}
                         alt={`Foto ${i + 1}`}
-                        fill
-                        className="object-cover group-hover:scale-[1.04] transition-transform duration-500"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          display: "block",
+                          transition: "transform 0.5s ease",
+                        }}
+                        onMouseEnter={e => (e.currentTarget.style.transform = "scale(1.04)")}
+                        onMouseLeave={e => (e.currentTarget.style.transform = "scale(1)")}
                       />
                     </div>
                   ))}
@@ -360,118 +555,247 @@ export default function PropertyDetail({ property }: { property: Property }) {
             )}
           </div>
 
-          {/* COLUMNA DERECHA — Formulario sticky */}
+          {/* RIGHT COLUMN — sticky sidebar */}
           <div>
-            <div className="sticky top-24">
-              <div className="border border-gray-200 p-8">
-                <p className="text-[10px] tracking-[0.32em] uppercase text-gray-400 mb-1" style={{ fontFamily: sans }}>
+            <div style={{ position: "sticky", top: 100 }}>
+
+              {/* Contact form */}
+              <div style={{
+                border: "1px solid #e8e8e8",
+                padding: 32,
+                background: "#fff",
+              }}>
+                <p style={{
+                  fontFamily: sans,
+                  fontSize: 10,
+                  letterSpacing: "0.32em",
+                  textTransform: "uppercase",
+                  color: "#aaa",
+                  marginBottom: 6,
+                }}>
                   Solicitar información
                 </p>
-                <p className="text-[1.6rem] font-extralight text-gray-900 mb-8">{priceDisplay}</p>
+                <p style={{
+                  fontFamily: serif,
+                  fontSize: 26,
+                  fontWeight: 300,
+                  color: "#111",
+                  marginBottom: 28,
+                }}>
+                  {priceDisplay}
+                </p>
 
                 {submitted ? (
-                  <div className="py-8 text-center">
-                    <p className="text-sm text-gray-600" style={{ fontFamily: sans }}>Gracias por su interés. Nos pondremos en contacto pronto.</p>
+                  <div style={{ padding: "24px 0", textAlign: "center" }}>
+                    <p style={{ fontFamily: sans, fontSize: 13, color: "#666" }}>
+                      Gracias por su interés. Nos pondremos en contacto pronto.
+                    </p>
                   </div>
                 ) : (
-                  <form
-                    className="space-y-7"
-                    onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}
-                  >
-                    {[
-                      { name: "name", placeholder: "Nombre completo", type: "text" },
-                      { name: "email", placeholder: "Correo electrónico", type: "email" },
-                      { name: "phone", placeholder: "Teléfono", type: "tel" },
-                    ].map((field) => (
-                      <input
-                        key={field.name}
-                        type={field.type}
-                        placeholder={field.placeholder}
-                        value={formData[field.name as keyof typeof formData]}
-                        onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
-                        className="w-full border-0 border-b border-gray-200 pb-2.5 text-[13px] text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-800 bg-transparent transition-colors"
-                        style={{ fontFamily: sans }}
+                  <form onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+                      {[
+                        { name: "name", placeholder: "Nombre completo", type: "text" },
+                        { name: "email", placeholder: "Correo electrónico", type: "email" },
+                        { name: "phone", placeholder: "Teléfono", type: "tel" },
+                      ].map((field) => (
+                        <input
+                          key={field.name}
+                          type={field.type}
+                          placeholder={field.placeholder}
+                          value={formData[field.name as keyof typeof formData]}
+                          onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
+                          style={{
+                            fontFamily: sans,
+                            fontSize: 13,
+                            color: "#111",
+                            border: "none",
+                            borderBottom: "1px solid #ddd",
+                            padding: "6px 0 10px",
+                            outline: "none",
+                            background: "transparent",
+                            width: "100%",
+                          }}
+                        />
+                      ))}
+                      <textarea
+                        placeholder="Mensaje"
+                        rows={4}
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        style={{
+                          fontFamily: sans,
+                          fontSize: 13,
+                          color: "#111",
+                          border: "none",
+                          borderBottom: "1px solid #ddd",
+                          padding: "6px 0 10px",
+                          outline: "none",
+                          background: "transparent",
+                          width: "100%",
+                          resize: "none",
+                        }}
                       />
-                    ))}
-                    <textarea
-                      placeholder="Mensaje"
-                      rows={4}
-                      value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="w-full border-0 border-b border-gray-200 pb-2.5 text-[13px] text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-800 bg-transparent transition-colors resize-none"
-                      style={{ fontFamily: sans }}
-                    />
-                    <button
-                      type="submit"
-                      className="w-full bg-gray-900 text-white text-[10px] tracking-[0.35em] uppercase py-4 hover:bg-gray-700 transition-colors"
-                      style={{ fontFamily: sans }}
-                    >
-                      Enviar consulta
-                    </button>
+                      <button
+                        type="submit"
+                        style={{
+                          fontFamily: sans,
+                          fontSize: 10,
+                          letterSpacing: "0.35em",
+                          textTransform: "uppercase",
+                          background: "#111",
+                          color: "#fff",
+                          border: "none",
+                          padding: "16px",
+                          cursor: "pointer",
+                          width: "100%",
+                        }}
+                      >
+                        Enviar consulta
+                      </button>
+                    </div>
                   </form>
                 )}
 
-                <div className="mt-8 pt-7 border-t border-gray-100 text-center">
-                  <p className="text-[11px] text-gray-400 mb-2" style={{ fontFamily: sans }}>O llámanos directamente</p>
-                  <a href="tel:+34971000000" className="text-[13px] font-light text-gray-800 hover:text-gray-500 transition-colors" style={{ fontFamily: sans }}>
+                <div style={{
+                  marginTop: 28,
+                  paddingTop: 24,
+                  borderTop: "1px solid #f0f0f0",
+                  textAlign: "center",
+                }}>
+                  <p style={{ fontFamily: sans, fontSize: 11, color: "#aaa", marginBottom: 6 }}>
+                    O llámanos directamente
+                  </p>
+                  <a
+                    href="tel:+34971000000"
+                    style={{ fontFamily: sans, fontSize: 14, fontWeight: 300, color: "#333", textDecoration: "none" }}
+                  >
                     +34 971 000 000
                   </a>
                 </div>
               </div>
 
-              {/* Acciones */}
-              <div className="mt-3 grid grid-cols-2 gap-2">
+              {/* Share / Print */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 4, marginTop: 4 }}>
                 <button
-                  className="border border-gray-200 py-3 text-[10px] tracking-[0.25em] uppercase text-gray-500 hover:border-gray-800 hover:text-gray-800 transition-colors"
-                  style={{ fontFamily: sans }}
                   onClick={() => navigator.share?.({ title: property.title_es, url: window.location.href })}
+                  style={{
+                    fontFamily: sans,
+                    fontSize: 10,
+                    letterSpacing: "0.25em",
+                    textTransform: "uppercase",
+                    color: "#777",
+                    background: "none",
+                    border: "1px solid #e8e8e8",
+                    padding: "12px",
+                    cursor: "pointer",
+                  }}
                 >
                   Compartir
                 </button>
                 <button
-                  className="border border-gray-200 py-3 text-[10px] tracking-[0.25em] uppercase text-gray-500 hover:border-gray-800 hover:text-gray-800 transition-colors"
-                  style={{ fontFamily: sans }}
                   onClick={() => window.print()}
+                  style={{
+                    fontFamily: sans,
+                    fontSize: 10,
+                    letterSpacing: "0.25em",
+                    textTransform: "uppercase",
+                    color: "#777",
+                    background: "none",
+                    border: "1px solid #e8e8e8",
+                    padding: "12px",
+                    cursor: "pointer",
+                  }}
                 >
                   Imprimir
                 </button>
               </div>
             </div>
           </div>
+
         </div>
       </div>
 
-      {/* ── LIGHTBOX ────────────────────────────────────────────── */}
+      {/* ── LIGHTBOX ─────────────────────────────────────────── */}
       {lightboxOpen && (
         <div
-          className="fixed inset-0 bg-black/96 z-50 flex items-center justify-center"
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.96)",
+            zIndex: 9999,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
           onClick={() => setLightboxOpen(false)}
         >
           <button
-            className="absolute top-6 right-8 text-white/70 text-[11px] tracking-[0.3em] uppercase hover:text-white transition-colors"
-            style={{ fontFamily: sans }}
+            onClick={() => setLightboxOpen(false)}
+            style={{
+              position: "absolute",
+              top: 24,
+              right: 32,
+              fontFamily: sans,
+              fontSize: 11,
+              letterSpacing: "0.3em",
+              textTransform: "uppercase",
+              color: "rgba(255,255,255,0.6)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+            }}
           >
             Cerrar ✕
           </button>
           <button
-            className="absolute left-6 text-white/60 text-4xl hover:text-white transition-colors"
+            style={{
+              position: "absolute",
+              left: 24,
+              fontSize: 48,
+              color: "rgba(255,255,255,0.5)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              lineHeight: 1,
+            }}
             onClick={(e) => { e.stopPropagation(); setLightboxIndex((p) => (p - 1 + images.length) % images.length); }}
           >
             ‹
           </button>
           <div
-            className="relative w-[88vw] h-[88vh]"
+            style={{ width: "85vw", height: "85vh", position: "relative" }}
             onClick={(e) => e.stopPropagation()}
           >
-            <Image src={images[lightboxIndex]} alt="" fill className="object-contain" />
+            <img
+              src={images[lightboxIndex]}
+              alt=""
+              style={{ width: "100%", height: "100%", objectFit: "contain", display: "block" }}
+            />
           </div>
           <button
-            className="absolute right-6 text-white/60 text-4xl hover:text-white transition-colors"
+            style={{
+              position: "absolute",
+              right: 24,
+              fontSize: 48,
+              color: "rgba(255,255,255,0.5)",
+              background: "none",
+              border: "none",
+              cursor: "pointer",
+              lineHeight: 1,
+            }}
             onClick={(e) => { e.stopPropagation(); setLightboxIndex((p) => (p + 1) % images.length); }}
           >
             ›
           </button>
-          <p className="absolute bottom-6 text-white/40 text-[11px] tracking-widest" style={{ fontFamily: sans }}>
+          <p style={{
+            position: "absolute",
+            bottom: 24,
+            fontFamily: sans,
+            fontSize: 11,
+            letterSpacing: "0.3em",
+            color: "rgba(255,255,255,0.35)",
+          }}>
             {lightboxIndex + 1} / {images.length}
           </p>
         </div>

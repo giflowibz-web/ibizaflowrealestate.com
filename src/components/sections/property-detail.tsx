@@ -132,8 +132,8 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
   const stats = [
     { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null, icon: <IconBed /> },
     { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null, icon: <IconBath /> },
-    { label: "Construidos", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null, icon: <IconArea /> },
-    { label: "Parcela", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null, icon: <IconPlot /> },
+    { label: "m² construidos", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null, icon: <IconArea /> },
+    { label: "m² terreno", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null, icon: <IconPlot /> },
     { label: "Año", value: p.year_built ? String(p.year_built) : null, icon: <IconYear /> },
   ].filter((d) => d.value);
 

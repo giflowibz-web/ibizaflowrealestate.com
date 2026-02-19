@@ -229,8 +229,30 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </div>
       </section>
 
-      {/* ── NAV BAR DE SECCIONES — estilo Aaron Kirman ───────────────────── */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center" }}>
+      {/* ── STATS BAR — iconos minimalistas debajo del banner ───────────── */}
+      <div style={{ background: "#fff", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center", alignItems: "stretch" }}>
+        {stats.map((d, i) => (
+          <div
+            key={i}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "22px 48px",
+              gap: 8,
+              borderRight: i < stats.length - 1 ? "1px solid #e8e8e8" : "none",
+            }}
+          >
+            <div style={{ opacity: 0.7 }}>{d.icon}</div>
+            <span style={{ fontSize: "1.25rem", fontWeight: 200, color: "#0A0A0A", letterSpacing: "-0.03em", lineHeight: 1 }}>{d.value}{d.unit ? <span style={{ fontSize: "0.7rem", marginLeft: 3 }}>{d.unit}</span> : null}</span>
+            <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "#002FA7" }}>{d.label}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* ── NAV DE SECCIONES — como Aaron Kirman ─────────────────────────── */}
+      <nav style={{ background: "#f8f8f8", borderBottom: "1px solid #e8e8e8", display: "flex", justifyContent: "center" }}>
         {[
           { label: "Descripción de la propiedad", href: "#descripcion" },
           { label: "Información básica", href: "#info-basica" },
@@ -242,7 +264,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             href={item.href}
             style={{
               display: "inline-block",
-              padding: "20px 32px",
+              padding: "18px 32px",
               fontSize: 9,
               fontWeight: 700,
               letterSpacing: "0.18em",
@@ -273,35 +295,6 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             <h2 style={{ fontSize: "clamp(1.6rem, 2.4vw, 2.2rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 40px", letterSpacing: "-0.025em", lineHeight: 1.15 }}>
               {p.title_es}
             </h2>
-
-            {/* ── Iconos con números debajo del título ── */}
-            {stats.length > 0 && (
-              <div style={{ display: "flex", gap: 0, marginBottom: 48, border: "1px solid #ececec" }}>
-                {stats.map((d, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      flex: 1,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      padding: "28px 12px",
-                      borderRight: i < stats.length - 1 ? "1px solid #ececec" : "none",
-                      gap: 10,
-                    }}
-                  >
-                    <div style={{ opacity: 0.8 }}>{d.icon}</div>
-                    <span style={{ color: "#0A0A0A", fontSize: "1.5rem", fontWeight: 200, letterSpacing: "-0.03em", lineHeight: 1 }}>
-                      {d.value}
-                    </span>
-                    <span style={{ color: "#002FA7", fontSize: 8, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase" }}>
-                      {d.label}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            )}
 
             {p.description_es && (
               <p style={{ fontSize: "clamp(0.9rem, 1.1vw, 1rem)", fontWeight: 300, lineHeight: 2, color: "#444", margin: 0 }}>

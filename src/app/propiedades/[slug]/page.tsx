@@ -11,11 +11,15 @@ export default async function PropertyPage({
   const { slug } = await params;
 
   // Try Supabase first
-  const { data } = await supabaseAdmin
+  const { data, error } = await supabaseAdmin
     .from("properties")
     .select("*")
     .eq("slug", slug)
     .maybeSingle();
+
+  if (error) {
+    console.error("[PropertyPage] Supabase error:", error);
+  }
 
   if (data) {
     return <PropertyDetail property={data} />;

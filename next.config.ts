@@ -11,10 +11,10 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com;",
-          },
+            {
+              key: 'Content-Security-Policy',
+              value: "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com https://www.google.com https://maps.google.com; img-src 'self' data: blob: https: http:;",
+            },
         ],
       },
     ];

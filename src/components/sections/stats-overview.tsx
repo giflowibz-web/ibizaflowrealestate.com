@@ -30,7 +30,7 @@ const StatsOverview: React.FC = () => {
           </div>
 
           {/* Right: stats */}
-          <div className="grid grid-cols-3 gap-0 border border-[#E5E0D8]">
+            <div className="grid grid-cols-2 gap-0 border border-[#E5E0D8]">
             {stats.map((stat, i) => (
               <div
                 key={i}

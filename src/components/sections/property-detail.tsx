@@ -364,7 +364,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             {/* ── INFORMACIÓN BÁSICA ── */}
             <section id="info-basica" style={{ padding: "0 64px 64px" }}>
               <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 56 }}>
-                  <p style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>
+                  <p style={{ fontSize: "0.82rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 8px" }}>
                     Información Básica
                   </p>
                   <h3 style={{ fontSize: "clamp(1.6rem, 2.5vw, 2.4rem)", fontWeight: 200, color: "#0A0A0A", margin: "0 0 44px", letterSpacing: "-0.03em" }}>

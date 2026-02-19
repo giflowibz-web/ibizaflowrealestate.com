@@ -14,8 +14,8 @@ export default async function PropertyPage({
   const { data } = await supabaseAdmin
     .from("properties")
     .select("*")
-    .or(`slug.eq.${slug},id.eq.${slug}`)
-    .single();
+    .eq("slug", slug)
+    .maybeSingle();
 
   if (data) {
     return <PropertyDetail property={data} />;

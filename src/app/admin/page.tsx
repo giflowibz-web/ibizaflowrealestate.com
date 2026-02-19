@@ -18,6 +18,32 @@ interface Stats {
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<Stats>({ total: 0, available: 0, reserved: 0, sold: 0, contacts: 0, new_leads: 0 })
+  const [heroVideoUrl, setHeroVideoUrl] = useState('')
+  const [uploading, setUploading] = useState(false)
+  const [uploadMsg, setUploadMsg] = useState('')
+  const fileRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    supabase.from('site_settings').select('value').eq('key', 'hero_video_url').single()
+      .then(({ data }) => { if (data?.value) setHeroVideoUrl(data.value) })
+  }, [])
+
+  async function handleVideoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0]
+    if (!file) return
+    setUploading(true)
+    setUploadMsg('')
+    const ext = file.name.split('.').pop()
+    const path = `hero.${ext}`
+    const { error: upErr } = await supabase.storage.from('hero-video').upload(path, file, { upsert: true })
+    if (upErr) { setUploadMsg('Error: ' + upErr.message); setUploading(false); return }
+    const { data: urlData } = supabase.storage.from('hero-video').getPublicUrl(path)
+    const url = urlData.publicUrl
+    await supabase.from('site_settings').upsert({ key: 'hero_video_url', value: url, updated_at: new Date().toISOString() })
+    setHeroVideoUrl(url)
+    setUploadMsg('¡Video subido correctamente!')
+    setUploading(false)
+  }
 
   useEffect(() => {
     Promise.all([

@@ -145,29 +145,37 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       return "En venta";
     })();
 
-    // Información básica — solo los que tienen valor real
-    const basicInfo = [
-      { label: "Estado", value: statusLabel },
+  // helper: returns null for empty/zero/null values
+  const val = (v: string | number | null | undefined) => {
+    if (v === null || v === undefined) return null;
+    if (typeof v === "string" && v.trim() === "") return null;
+    if (typeof v === "number" && v === 0) return null;
+    return String(v);
+  };
+
+      // Información básica — solo los que tienen valor real
+      const basicInfo = [
+        { label: "Estado", value: statusLabel },
         { label: "Tipo de propiedad", value: p.property_type ? (PROPERTY_TYPE_ES[p.property_type.toLowerCase()] ?? p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1)) : null },
-      { label: "Superficie construida", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null },
-      { label: "Tamaño terreno", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
-      { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null },
-      { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null },
-      { label: "Año de construcción", value: p.year_built ? String(p.year_built) : null },
-      { label: "Referencia MLS", value: p.mls_id || null },
-      { label: "Zona", value: p.area || null },
-      { label: "Municipio", value: p.municipality || null },
-      { label: "Isla", value: p.island || null },
-      { label: "País", value: p.country || null },
-      { label: "Plantas", value: p.stories ? String(p.stories) : null },
-      { label: "Orientación / Vistas", value: p.view || null },
-      { label: "Estilo arquitectónico", value: p.architectural_style || null },
-      { label: "Piscina", value: p.pool || null },
-      { label: "Parking", value: p.parking || null },
-      { label: "Calefacción", value: p.heating || null },
-      { label: "Aire acondicionado", value: p.cooling || null },
-      { label: "Electrodomésticos", value: p.appliances || null },
-    ].filter((d) => d.value);
+        { label: "Superficie construida", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null },
+        { label: "Tamaño terreno", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
+        { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null },
+        { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null },
+        { label: "Año de construcción", value: p.year_built ? String(p.year_built) : null },
+        { label: "Referencia MLS", value: val(p.mls_id) },
+        { label: "Zona", value: val(p.area) },
+        { label: "Municipio", value: val(p.municipality) },
+        { label: "Isla", value: val(p.island) },
+        { label: "País", value: val(p.country) },
+        { label: "Plantas", value: p.stories ? String(p.stories) : null },
+        { label: "Orientación / Vistas", value: val(p.view) },
+        { label: "Estilo arquitectónico", value: val(p.architectural_style) },
+        { label: "Piscina", value: val(p.pool) },
+        { label: "Parking", value: val(p.parking) },
+        { label: "Calefacción", value: val(p.heating) },
+        { label: "Aire acondicionado", value: val(p.cooling) },
+        { label: "Electrodomésticos", value: val(p.appliances) },
+      ].filter((d) => d.value);
 
   const mapSrc =
     p.latitude && p.longitude

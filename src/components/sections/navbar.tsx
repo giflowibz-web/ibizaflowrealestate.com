@@ -34,7 +34,7 @@ export default function Navbar() {
       <div className="relative w-full flex items-center">
 
         {/* IZQUIERDA — flex-1, links pegados al borde izquierdo */}
-        <nav className="hidden md:flex items-center gap-10 flex-1 pl-10">
+          <nav className="hidden md:flex items-center gap-10 flex-1 pl-6">
           {leftLinks.map((item) => (
             <a
               key={item.href}

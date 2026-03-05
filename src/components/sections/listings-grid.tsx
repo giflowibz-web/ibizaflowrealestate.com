@@ -152,7 +152,7 @@ const ListingsGrid = () => {
                   padding: "5px 12px",
                   backdropFilter: "blur(6px)",
                 }}>
-                  {lang === "en" ? "FOR SALE" : "EN VENTA"}
+                  {lang === "en" ? "EXCLUSIVE PROPERTIES · IBIZA" : "PROPIEDADES EXCLUSIVAS · IBIZA"}
                 </span>
 
                 {/* Info overlay bottom */}

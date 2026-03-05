@@ -198,7 +198,7 @@ export default function PropertiesListingPage({
                 margin: "0 0 20px",
               }}
             >
-              {isRent ? "Luxury Rentals · Ibiza" : "Exclusive Properties · Ibiza"}
+              {isRent ? lp.tag_rent : lp.tag_sale}
             </p>
             <h1
               style={{

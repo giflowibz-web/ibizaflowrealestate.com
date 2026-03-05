@@ -148,21 +148,26 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-b border-white/10 py-6 px-8 flex flex-col gap-5">
-          {[...leftLinks, { label: t.nav.contact, href: "#contacto" }].map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="text-[10px] uppercase tracking-[0.22em] font-light text-white/75 hover:text-white transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
-      )}
+        {/* Mobile menu */}
+        {mobileOpen && (
+          <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-b border-white/10 py-6 px-8 flex flex-col gap-5">
+            {[
+              { label: lang === "es" ? "Venta" : "For Sale", href: "/propiedades/venta" },
+              { label: lang === "es" ? "Alquiler" : "For Rent", href: "/propiedades/alquiler" },
+              ...leftLinks,
+              { label: t.nav.contact, href: "#contacto" },
+            ].map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                className="text-[10px] uppercase tracking-[0.22em] font-light text-white/75 hover:text-white transition-colors"
+                onClick={() => setMobileOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        )}
     </header>
   );
 }

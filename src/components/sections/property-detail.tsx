@@ -586,9 +586,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             {/* Formulario */}
             <form onSubmit={(e) => e.preventDefault()} style={{ padding: "0 26px 26px", display: "flex", flexDirection: "column", gap: 12 }}>
               {[
-                { label: "Nombre completo", type: "text", id: "f-name" },
-                { label: "Correo electrónico", type: "email", id: "f-email" },
-                { label: "Teléfono", type: "tel", id: "f-phone" },
+                { label: t.fullName, type: "text",  id: "f-name" },
+                { label: t.email,    type: "email", id: "f-email" },
+                { label: t.phone,    type: "tel",   id: "f-phone" },
               ].map((field) => (
                 <div key={field.id}>
                   <label htmlFor={field.id} style={{ display: "block", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 4 }}>

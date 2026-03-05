@@ -697,7 +697,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               {images[0] && (
                 <div
                   onClick={() => setLightboxIdx(0)}
-                  style={{ width: "100%", height: 600, overflow: "hidden", cursor: "pointer", marginBottom: 3 }}
+                  style={{ width: "100%", height: 600, overflow: "hidden", cursor: "pointer", marginBottom: 16 }}
                 >
                   <img
                     src={images[0]}

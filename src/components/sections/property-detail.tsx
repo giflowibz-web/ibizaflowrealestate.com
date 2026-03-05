@@ -345,37 +345,37 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       </section>
 
       {/* ══ NAV TABS ══ */}
-      <nav style={{ background: "#fff", borderBottom: "1px solid #e5e5e5", position: "sticky", top: 68, zIndex: 40 }}>
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex" }}>
-          {[
-            { label: t.propDesc,   href: "#descripcion" },
-            { label: t.basicInfo,  href: "#info-basica" },
-            { label: t.amenities,  href: "#caracteristicas" },
-            { label: t.contact,    href: "#contacto" },
-          ].map((item, i, arr) => (
-            <a
-              key={i}
-              href={item.href}
-              style={{
-                display: "inline-block",
-                padding: "15px 28px",
-                fontSize: 10,
-                fontWeight: 700,
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                color: "#0A0A0A",
-                textDecoration: "none",
-                borderRight: i < arr.length - 1 ? "1px solid #e5e5e5" : "none",
-                whiteSpace: "nowrap",
-              }}
-              onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#002FA7")}
-              onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#0A0A0A")}
-            >
-              {item.label}
-            </a>
-          ))}
-        </div>
-      </nav>
+        <nav style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(255,255,255,0.1)", position: "sticky", top: 68, zIndex: 40 }}>
+          <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex" }}>
+            {[
+              { label: t.propDesc,   href: "#descripcion" },
+              { label: t.basicInfo,  href: "#info-basica" },
+              { label: t.amenities,  href: "#caracteristicas" },
+              { label: t.contact,    href: "#contacto" },
+            ].map((item, i, arr) => (
+              <a
+                key={i}
+                href={item.href}
+                style={{
+                  display: "inline-block",
+                  padding: "15px 28px",
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.7)",
+                  textDecoration: "none",
+                  borderRight: i < arr.length - 1 ? "1px solid rgba(255,255,255,0.1)" : "none",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "#fff")}
+                onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.7)")}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </nav>
 
       {/* ══ LAYOUT PRINCIPAL 2 COLUMNAS ══ */}
       <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 360px", alignItems: "start", background: "#fff" }}>

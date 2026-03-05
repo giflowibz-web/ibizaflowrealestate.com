@@ -694,9 +694,7 @@ export default function PropertiesListingPage({
             letterSpacing: "-0.03em",
           }}
         >
-          {isRent
-            ? "Looking for something specific?"
-            : "Can't find what you're looking for?"}
+          {isRent ? lp.cta_title_rent : lp.cta_title_sale}
         </h2>
         <p
           style={{

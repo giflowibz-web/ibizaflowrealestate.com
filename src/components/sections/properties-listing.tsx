@@ -725,7 +725,7 @@ export default function PropertiesListingPage({
             transition: "filter 0.3s",
           }}
         >
-          Contact Us
+          {lp.cta_btn}
         </Link>
       </div>
     </>

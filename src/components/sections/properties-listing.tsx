@@ -380,10 +380,10 @@ export default function PropertiesListingPage({
                 height: "100%",
               }}
             >
-              <option value="featured">Featured</option>
-              <option value="price_asc">Price ↑</option>
-              <option value="price_desc">Price ↓</option>
-              <option value="newest">Newest</option>
+                <option value="featured">{lp.sort_featured}</option>
+                <option value="price_asc">{lp.sort_price_asc}</option>
+                <option value="price_desc">{lp.sort_price_desc}</option>
+                <option value="newest">{lp.sort_newest}</option>
             </select>
           </div>
 

@@ -621,22 +621,46 @@ export default function PropertiesListingPage({
                           <div
                             style={{
                               display: "flex",
-                              gap: 16,
+                              gap: 14,
                               fontSize: "0.65rem",
-                              fontWeight: 600,
-                              letterSpacing: "0.2em",
-                              textTransform: "uppercase",
+                              fontWeight: 500,
+                              letterSpacing: "0.05em",
                               color: "#888",
+                              alignItems: "center",
                             }}
                           >
-                              {(property.bedrooms ?? 0) > 0 && (
-                                <span>{property.bedrooms} {lp.bd}</span>
-                              )}
-                              {(property.bathrooms ?? 0) > 0 && (
-                                <span>{property.bathrooms} {lp.ba}</span>
-                              )}
+                            {(property.bedrooms ?? 0) > 0 && (
+                              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M3 20v-8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8"/>
+                                  <path d="M3 14h18"/>
+                                  <path d="M5 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+                                  <path d="M13 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+                                  <path d="M1 20h22"/>
+                                </svg>
+                                {property.bedrooms}
+                              </span>
+                            )}
+                            {(property.bathrooms ?? 0) > 0 && (
+                              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
+                                  <line x1="10" y1="5" x2="8" y2="7"/>
+                                  <line x1="2" y1="12" x2="22" y2="12"/>
+                                </svg>
+                                {property.bathrooms}
+                              </span>
+                            )}
                             {property.size_built && Number(property.size_built) > 0 && (
-                              <span>{property.size_built} m²</span>
+                              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M3 3h7v7H3z"/>
+                                  <path d="M14 3h7v7h-7z"/>
+                                  <path d="M3 14h7v7H3z"/>
+                                  <path d="M14 14h7v7h-7z"/>
+                                </svg>
+                                {property.size_built} m²
+                              </span>
                             )}
                           </div>
 

@@ -630,12 +630,12 @@ export default function PropertiesListingPage({
                               color: "#888",
                             }}
                           >
-                            {(property.bedrooms ?? 0) > 0 && (
-                              <span>{property.bedrooms} BD</span>
-                            )}
-                            {(property.bathrooms ?? 0) > 0 && (
-                              <span>{property.bathrooms} BA</span>
-                            )}
+                              {(property.bedrooms ?? 0) > 0 && (
+                                <span>{property.bedrooms} {lp.bd}</span>
+                              )}
+                              {(property.bathrooms ?? 0) > 0 && (
+                                <span>{property.bathrooms} {lp.ba}</span>
+                              )}
                             {property.size_built && Number(property.size_built) > 0 && (
                               <span>{property.size_built} m²</span>
                             )}

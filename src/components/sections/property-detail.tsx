@@ -386,7 +386,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </nav>
 
         {/* ══ LAYOUT PRINCIPAL 2 COLUMNAS ══ */}
-        <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 360px", alignItems: "start", background: C.bg }}>
+          <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 420px", alignItems: "start", background: C.bg }}>
 
           {/* ── COLUMNA IZQUIERDA ── */}
           <div style={{ borderRight: `1px solid ${C.border}` }}>

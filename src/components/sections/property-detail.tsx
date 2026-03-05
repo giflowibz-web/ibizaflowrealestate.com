@@ -564,10 +564,10 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             {/* Header */}
             <div style={{ padding: "26px 26px 0" }}>
               <h3 style={{ fontSize: "1.75rem", fontWeight: 700, color: "#002FA7", margin: "0 0 10px", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                Contacte con nosotros
+                {t.contact}
               </h3>
               <p style={{ fontSize: "0.72rem", fontWeight: 300, color: "rgba(255,255,255,0.3)", margin: "0 0 18px", lineHeight: 1.7 }}>
-                Un asesor exclusivo le atenderá en menos de 24h.
+                {t.advisor}
               </p>
             </div>
 

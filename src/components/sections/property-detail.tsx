@@ -597,7 +597,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               {!formSubmitted ? (
                 <form
                   onSubmit={(e) => { e.preventDefault(); setFormSubmitted(true); }}
-                  style={{ padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: 3 }}
+                    style={{ padding: "16px 28px 24px", display: "flex", flexDirection: "column", gap: 3 }}
                 >
                   {[
                     { label: t.fullName, type: "text",  id: "f-name" },

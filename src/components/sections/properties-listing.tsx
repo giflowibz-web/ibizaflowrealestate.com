@@ -235,7 +235,7 @@ export default function PropertiesListingPage({
                   margin: 0,
                 }}
               >
-                {filtered.length} {filtered.length === 1 ? "property" : "properties"} available
+                {filtered.length} {filtered.length === 1 ? lp.available_one : lp.available_many}
               </p>
             </div>
           </div>

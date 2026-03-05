@@ -109,9 +109,9 @@ const ListingsGrid = () => {
                   className="group block"
                 >
                 {/* Imagen vertical */}
-                <div className="relative overflow-hidden bg-[#F0EDE8]"
-                  style={{ aspectRatio: index % 3 === 0 ? "3/4" : "4/5" }}
-                >
+                  <div className="relative overflow-hidden bg-[#F0EDE8]"
+                    style={{ aspectRatio: "4/3" }}
+                  >
                   {property.images?.[0] ? (
                     <Image
                       src={property.images[0]}

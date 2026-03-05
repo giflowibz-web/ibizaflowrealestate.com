@@ -601,23 +601,23 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                   />
                 </div>
               ))}
-              <div>
-                <label htmlFor="f-msg" style={{ display: "block", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 4 }}>Mensaje</label>
-                <textarea
-                  id="f-msg"
-                  rows={3}
-                  defaultValue={`Me interesa: ${p.title_es}`}
-                  style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "7px 0", fontSize: "0.78rem", fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
-                />
-              </div>
-              <button
-                type="submit"
-                style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "13px 0", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", marginTop: 6 }}
-                onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#0038cc")}
-                onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#002FA7")}
-              >
-                Enviar solicitud
-              </button>
+                <div>
+                  <label htmlFor="f-msg" style={{ display: "block", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.22)", marginBottom: 4 }}>{t.message}</label>
+                  <textarea
+                    id="f-msg"
+                    rows={3}
+                    defaultValue={`${isEs ? "Me interesa" : "I'm interested in"}: ${title}`}
+                    style={{ width: "100%", background: "transparent", border: "none", borderBottom: "1px solid rgba(255,255,255,0.1)", padding: "7px 0", fontSize: "0.78rem", fontWeight: 300, color: "#fff", outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
+                  />
+                </div>
+                <button
+                  type="submit"
+                  style={{ width: "100%", background: "#002FA7", color: "#fff", border: "none", padding: "13px 0", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", marginTop: 6 }}
+                  onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#0038cc")}
+                  onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#002FA7")}
+                >
+                  {t.send}
+                </button>
             </form>
           </div>
         </div>

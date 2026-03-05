@@ -481,19 +481,19 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                 if (p.features && p.features.length > 0) {
                   p.features.forEach(f => interiorGroups.push({ label: f, value: "" }));
                 }
-                if (val(p.heating)) interiorGroups.push({ label: "Calefacción", value: val(p.heating)! });
-                if (val(p.cooling)) interiorGroups.push({ label: "Aire acondicionado", value: val(p.cooling)! });
-                if (val(p.laundry)) interiorGroups.push({ label: "Lavandería", value: val(p.laundry)! });
-                if (val(p.fireplace)) interiorGroups.push({ label: "Chimenea", value: val(p.fireplace)! });
-                if (val(p.appliances)) interiorGroups.push({ label: "Electrodomésticos", value: val(p.appliances)! });
+                if (val(p.heating)) interiorGroups.push({ label: t.heating, value: val(p.heating)! });
+                if (val(p.cooling)) interiorGroups.push({ label: t.ac, value: val(p.cooling)! });
+                if (val(p.laundry)) interiorGroups.push({ label: t.laundry, value: val(p.laundry)! });
+                if (val(p.fireplace)) interiorGroups.push({ label: t.fireplace, value: val(p.fireplace)! });
+                if (val(p.appliances)) interiorGroups.push({ label: t.appliances, value: val(p.appliances)! });
 
-                if (val(p.pool)) exteriorGroups.push({ label: "Piscina", value: val(p.pool)! });
-                if (val(p.architectural_style)) exteriorGroups.push({ label: "Estilo arquitectónico", value: val(p.architectural_style)! });
-                if (p.size_plot && Number(p.size_plot) > 0) exteriorGroups.push({ label: "Tamaño parcela", value: `${p.size_plot} m²` });
+                if (val(p.pool)) exteriorGroups.push({ label: t.pool, value: val(p.pool)! });
+                if (val(p.architectural_style)) exteriorGroups.push({ label: t.archStyle, value: val(p.architectural_style)! });
+                if (p.size_plot && Number(p.size_plot) > 0) exteriorGroups.push({ label: t.plotSize, value: `${p.size_plot} m²` });
 
-                if (val(p.parking)) otherGroups.push({ label: "Parking", value: val(p.parking)! });
-                if (val(p.view)) otherGroups.push({ label: "Vistas", value: val(p.view)! });
-                if (val(p.mls_id)) otherGroups.push({ label: "Referencia MLS", value: val(p.mls_id)! });
+                if (val(p.parking)) otherGroups.push({ label: t.parking, value: val(p.parking)! });
+                if (val(p.view)) otherGroups.push({ label: t.views, value: val(p.view)! });
+                if (val(p.mls_id)) otherGroups.push({ label: t.mlsRef, value: val(p.mls_id)! });
 
                 const renderGroup = (title: string, items: { label: string; value: string }[]) => (
                   items.length > 0 && (

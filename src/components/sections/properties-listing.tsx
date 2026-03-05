@@ -592,10 +592,10 @@ export default function PropertiesListingPage({
         {/* ── CONTACT CTA ── */}
         <div
           style={{
-            background: "#f7f7f7",
+            background: "#fff",
             padding: "100px 6%",
             textAlign: "center",
-            borderTop: "1px solid #e8e8e8",
+            borderTop: "1px solid #f0f0f0",
           }}
         >
           <p

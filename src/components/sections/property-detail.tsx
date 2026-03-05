@@ -326,7 +326,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               </p>
             )}
             <h1 style={{ color: "#fff", fontSize: "clamp(2rem, 4vw, 4.2rem)", fontWeight: 200, letterSpacing: "-0.03em", margin: 0, lineHeight: 1.05 }}>
-              {p.title_es}
+              {title}
             </h1>
           </div>
           {price && (

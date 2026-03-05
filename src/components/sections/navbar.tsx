@@ -76,14 +76,14 @@ export default function Navbar() {
                           borderBottom: "1px solid rgba(255,255,255,0.05)",
                           transition: "color 0.2s, background 0.2s",
                         }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLAnchorElement).style.color = "#fff";
-                          (e.currentTarget as HTMLAnchorElement).style.background = "rgba(24,71,232,0.3)";
-                        }}
-                        onMouseLeave={(e) => {
-                          (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.65)";
-                          (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
-                        }}
+                          onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLAnchorElement).style.color = "#fff";
+                            (e.currentTarget as HTMLAnchorElement).style.background = "#1847E8";
+                          }}
+                          onMouseLeave={(e) => {
+                            (e.currentTarget as HTMLAnchorElement).style.color = "rgba(255,255,255,0.65)";
+                            (e.currentTarget as HTMLAnchorElement).style.background = "transparent";
+                          }}
                       >
                         {item.label}
                       </a>

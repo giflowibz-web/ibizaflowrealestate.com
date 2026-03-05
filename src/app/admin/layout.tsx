@@ -64,11 +64,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 )
               })}
             </nav>
-            <div style={{ padding: 16, borderTop: '1px solid #222' }}>
-              <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#555', textDecoration: 'none', fontSize: 13 }}>
-                <span>↗</span>{!collapsed && 'View Website'}
-              </Link>
-            </div>
+              <div style={{ padding: 16, borderTop: '1px solid #222', display: 'flex', flexDirection: 'column', gap: 8 }}>
+                <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#555', textDecoration: 'none', fontSize: 13 }}>
+                  <span>↗</span>{!collapsed && 'View Website'}
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#555', background: 'none', border: 'none', cursor: 'pointer', fontSize: 13, padding: 0, textAlign: 'left' }}
+                >
+                  <span>⏻</span>{!collapsed && 'Cerrar sesión'}
+                </button>
+              </div>
           </aside>
 
           {/* Main */}

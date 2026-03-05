@@ -578,7 +578,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                   {p.listing_type === "rent" ? t.rentPrice : t.salePrice}
                 </span>
                 <span style={{ fontSize: "0.85rem", fontWeight: 300, color: "#fff" }}>
-                  {p.listing_type === "rent" && priceRent ? `${priceRent}/mes` : price}
+                  {p.listing_type === "rent" && priceRent ? `${priceRent}/${isEs ? "mes" : "month"}` : price}
                 </span>
               </div>
             )}

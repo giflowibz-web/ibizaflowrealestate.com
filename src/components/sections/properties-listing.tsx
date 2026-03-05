@@ -446,11 +446,11 @@ export default function PropertiesListingPage({
                   const href = `/propiedades/${property.slug || property.id}`;
                   const typeLabel = lp.property_types.find(pt => pt.value.toLowerCase() === property.property_type?.toLowerCase())?.label ?? property.property_type;
 
-                  return (
-                    <Link key={property.id} href={href} style={{ textDecoration: "none", display: "block", background: "#fff" }}>
-                      {/* Image */}
-                      <div
-                        style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
+                    return (
+                      <Link
+                        key={property.id}
+                        href={href}
+                        style={{ textDecoration: "none", display: "block", position: "relative", overflow: "hidden", aspectRatio: "4/3", cursor: "pointer" }}
                         onMouseEnter={(e) => {
                           const img = e.currentTarget.querySelector("img") as HTMLImageElement | null;
                           if (img) img.style.transform = "scale(1.06)";
@@ -460,6 +460,7 @@ export default function PropertiesListingPage({
                           if (img) img.style.transform = "scale(1)";
                         }}
                       >
+                        {/* Image */}
                         {property.images?.[0] ? (
                           <img
                             src={property.images[0]}
@@ -473,36 +474,50 @@ export default function PropertiesListingPage({
                             }}
                           />
                         ) : (
-                          <div style={{ width: "100%", height: "100%", background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                            <span style={{ color: "#bbb", fontSize: "0.6rem", letterSpacing: "0.4em", textTransform: "uppercase" }}>Ibiza Flow</span>
+                          <div style={{ width: "100%", height: "100%", background: "#1a1a1a", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <span style={{ color: "#555", fontSize: "0.6rem", letterSpacing: "0.4em", textTransform: "uppercase" }}>Ibiza Flow</span>
                           </div>
                         )}
 
-                        {/* Type badge top-left */}
+                        {/* Dark gradient at bottom */}
+                        <div style={{
+                          position: "absolute",
+                          inset: 0,
+                          background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.3) 45%, rgba(0,0,0,0) 70%)",
+                          pointerEvents: "none",
+                        }} />
+
+                        {/* FOR SALE badge top-left */}
                         {typeLabel && (
                           <span style={{
-                            position: "absolute", top: 16, left: 16,
-                            background: "#002FA7",
+                            position: "absolute", top: 18, left: 18,
+                            border: "1px solid rgba(255,255,255,0.7)",
                             color: "#fff",
-                            fontSize: "0.52rem",
-                            fontWeight: 700,
-                            letterSpacing: "0.22em",
+                            fontSize: "0.55rem",
+                            fontWeight: 600,
+                            letterSpacing: "0.18em",
                             textTransform: "uppercase",
-                            padding: "6px 13px",
+                            padding: "5px 12px",
+                            backdropFilter: "blur(4px)",
                           }}>
-                            {typeLabel}
+                            {isRent ? lp.tag_rent : lp.tag_sale}
                           </span>
                         )}
-                      </div>
 
-                        {/* Info below image */}
-                        <div style={{ padding: "18px 20px 22px", background: "#fff" }}>
+                        {/* Info overlay bottom */}
+                        <div style={{
+                          position: "absolute",
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          padding: "24px 24px 20px",
+                        }}>
                           {/* Price */}
                           <p style={{
                             fontFamily: "'Playfair Display', serif",
-                            fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)",
-                            fontWeight: 300,
-                            color: "#0A0A0A",
+                            fontSize: "clamp(1.4rem, 2vw, 2rem)",
+                            fontWeight: 400,
+                            color: "#fff",
                             margin: "0 0 4px",
                             letterSpacing: "-0.02em",
                             lineHeight: 1.1,
@@ -513,28 +528,28 @@ export default function PropertiesListingPage({
                           {/* Location */}
                           <p style={{
                             fontSize: "0.72rem",
-                            fontWeight: 400,
-                            color: "#555",
+                            fontWeight: 300,
+                            color: "rgba(255,255,255,0.75)",
                             margin: "0 0 14px",
                             letterSpacing: "0.04em",
                           }}>
                             {location}
                           </p>
 
-                          {/* Stats row */}
+                          {/* Stats badges */}
                           <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
                             {(property.bedrooms ?? 0) > 0 && (
                               <span style={{
-                                display: "flex", alignItems: "center", gap: 6,
-                                border: "1px solid #111",
-                                color: "#111",
-                                fontSize: "0.65rem",
+                                display: "flex", alignItems: "center", gap: 7,
+                                border: "1px solid rgba(255,255,255,0.55)",
+                                color: "#fff",
+                                fontSize: "0.62rem",
                                 fontWeight: 400,
-                                padding: "5px 12px",
+                                padding: "5px 13px",
                                 letterSpacing: "0.04em",
-                                background: "#fff",
+                                backdropFilter: "blur(4px)",
                               }}>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M3 20v-8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8"/>
                                   <path d="M3 14h18"/>
                                   <path d="M5 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
@@ -546,16 +561,16 @@ export default function PropertiesListingPage({
                             )}
                             {(property.bathrooms ?? 0) > 0 && (
                               <span style={{
-                                display: "flex", alignItems: "center", gap: 6,
-                                border: "1px solid #111",
-                                color: "#111",
-                                fontSize: "0.65rem",
+                                display: "flex", alignItems: "center", gap: 7,
+                                border: "1px solid rgba(255,255,255,0.55)",
+                                color: "#fff",
+                                fontSize: "0.62rem",
                                 fontWeight: 400,
-                                padding: "5px 12px",
+                                padding: "5px 13px",
                                 letterSpacing: "0.04em",
-                                background: "#fff",
+                                backdropFilter: "blur(4px)",
                               }}>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
                                   <line x1="10" y1="5" x2="8" y2="7"/>
                                   <line x1="2" y1="12" x2="22" y2="12"/>
@@ -565,16 +580,16 @@ export default function PropertiesListingPage({
                             )}
                             {property.size_built && Number(property.size_built) > 0 && (
                               <span style={{
-                                display: "flex", alignItems: "center", gap: 6,
-                                border: "1px solid #111",
-                                color: "#111",
-                                fontSize: "0.65rem",
+                                display: "flex", alignItems: "center", gap: 7,
+                                border: "1px solid rgba(255,255,255,0.55)",
+                                color: "#fff",
+                                fontSize: "0.62rem",
                                 fontWeight: 400,
-                                padding: "5px 12px",
+                                padding: "5px 13px",
                                 letterSpacing: "0.04em",
-                                background: "#fff",
+                                backdropFilter: "blur(4px)",
                               }}>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                   <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M3 14h7v7H3z"/><path d="M14 14h7v7h-7z"/>
                                 </svg>
                                 {property.size_built} m²
@@ -582,8 +597,8 @@ export default function PropertiesListingPage({
                             )}
                           </div>
                         </div>
-                    </Link>
-                  );
+                      </Link>
+                    );
                 })}
               </div>
             )}

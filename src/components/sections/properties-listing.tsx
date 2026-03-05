@@ -50,6 +50,8 @@ export default function PropertiesListingPage({
   listingType: "sale" | "rent";
 }) {
   const isRent = listingType === "rent";
+  const { t } = useLang();
+  const lp = t.listing_page;
 
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState<string>("");

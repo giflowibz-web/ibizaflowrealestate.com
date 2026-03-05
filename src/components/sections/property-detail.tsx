@@ -581,7 +581,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
                 {/* Precio */}
                 {price && (
-                  <div style={{ margin: "18px 30px", background: "rgba(0,47,167,0.07)", border: `1px solid rgba(0,47,167,0.2)`, borderRadius: 2, padding: "13px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <div style={{ margin: "12px 30px", background: "rgba(0,47,167,0.07)", border: `1px solid rgba(0,47,167,0.2)`, borderRadius: 2, padding: "10px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                     <span style={{ fontSize: "0.6rem", letterSpacing: "0.22em", textTransform: "uppercase", color: D.textFaint }}>
                       {p.listing_type === "rent" ? t.rentPrice : t.salePrice}
                     </span>

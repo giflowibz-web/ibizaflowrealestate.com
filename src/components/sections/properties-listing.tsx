@@ -490,7 +490,7 @@ export default function PropertiesListingPage({
                           {/* FOR SALE badge top-left */}
                           <span style={{
                             position: "absolute", top: 18, left: 18,
-                            background: "rgba(0,0,0,0.45)",
+                              background: "rgba(0,0,0,0.22)",
                             color: "#fff",
                             fontSize: "0.55rem",
                             fontWeight: 600,

@@ -6,7 +6,6 @@ export type Lang = "es" | "en";
 
 export const translations = {
   es: {
-    // Navbar
     nav: {
       properties: "Propiedades",
       services: "Servicios",
@@ -14,7 +13,6 @@ export const translations = {
       contact: "Contacto",
       search: "Buscar",
     },
-    // Hero
     hero: {
       tag: "Inmobiliaria de Lujo en Ibiza",
       title1: "Tu Vida",
@@ -24,7 +22,6 @@ export const translations = {
       cta_secondary: "Contactar",
       scroll: "Descubrir",
     },
-    // Stats
     stats: {
       tag: "Nuestros Números",
       title: "Líderes del Mercado en Ibiza",
@@ -35,7 +32,6 @@ export const translations = {
       volume: "Volumen de Ventas",
       cta: "Conocer el Equipo",
     },
-    // Listings
     listings: {
       tag: "Portfolio",
       title: "Propiedades Destacadas",
@@ -49,7 +45,6 @@ export const translations = {
       new: "Nuevo",
       exclusive: "Exclusiva",
     },
-    // Christies blocks
     christies: {
       tag: "Nuestros Servicios",
       title: "Experiencia Inmobiliaria Completa",
@@ -63,7 +58,6 @@ export const translations = {
       manage_desc: "Servicio integral de gestión de propiedades para optimizar tu inversión y garantizar una experiencia sin preocupaciones.",
       cta: "Más Información",
     },
-    // Press
     press: {
       tag: "En los Medios",
       title: "Prensa y Noticias",
@@ -76,7 +70,6 @@ export const translations = {
         { publication: "El País", date: "Noviembre 2024", headline: "Ibiza se consolida como destino premium para inversores internacionales" },
       ],
     },
-    // Newsletter
     newsletter: {
       tag: "Únete",
       title: "Lista Exclusiva",
@@ -88,7 +81,6 @@ export const translations = {
       privacy: "Política de Privacidad",
       submit: "ENVIAR",
     },
-    // CTA Inquiry
     cta: {
       tag: "Contacto",
       title: "¿Listo para Encontrar tu Propiedad Ideal?",
@@ -102,7 +94,6 @@ export const translations = {
       sending: "Enviando...",
       success: "Mensaje enviado con éxito. Nos pondremos en contacto contigo pronto.",
     },
-    // Footer
     footer: {
       tagline: "Propiedades exclusivas en la isla más deseada del Mediterráneo",
       properties: "Propiedades",
@@ -125,7 +116,6 @@ export const translations = {
       terms: "Términos",
       cookies: "Cookies",
     },
-    // Property detail
     property: {
       back: "← Volver",
       exclusive: "Exclusiva",
@@ -144,48 +134,45 @@ export const translations = {
       description: "Descripción",
       location: "Ubicación",
     },
-      // Properties listing page
-      listing_page: {
-        tag_sale: "Propiedades Exclusivas · Ibiza",
-        tag_rent: "Alquileres de Lujo · Ibiza",
-        title_sale: "Villas & Propiedades",
-        title_sale_em: "en Venta",
-        title_rent: "Villas & Propiedades",
-        title_rent_em: "en Alquiler",
-        available_one: "propiedad disponible",
-        available_many: "propiedades disponibles",
-        search_placeholder: "Buscar por ubicación o nombre...",
-        type_label: "Tipo de Propiedad",
-        area_label: "Zona",
-        bedrooms_label: "Dormitorios",
-        beds_suffix: "dorm.",
-        sort_featured: "Destacadas",
-        sort_price_asc: "Precio ↑",
-        sort_price_desc: "Precio ↓",
-        sort_newest: "Más recientes",
-        clear: "Limpiar ×",
-        no_results: "Sin resultados",
-        no_results_sub: "Prueba a cambiar los filtros",
-        clear_filters: "Quitar Filtros",
-        price_on_request: "Precio a consultar",
-        per_month: "/mes",
-        cta_tag: "Colección Privada",
-        cta_title_sale: "¿No encuentras lo que buscas?",
-        cta_title_rent: "¿Buscas algo en concreto?",
-        cta_sub: "Tenemos acceso a propiedades off-market no publicadas. Contacta con nuestro equipo para una consulta privada.",
-        cta_btn: "Contactar",
-        bd: "HD",
-        ba: "BA",
-      },
-      // Common
-      common: {
-        loading: "Cargando...",
-        error: "Error",
-        close: "Cerrar",
-      },
+    listing_page: {
+      tag_sale: "Propiedades Exclusivas · Ibiza",
+      tag_rent: "Alquileres de Lujo · Ibiza",
+      title_sale: "Villas & Propiedades",
+      title_sale_em: "en Venta",
+      title_rent: "Villas & Propiedades",
+      title_rent_em: "en Alquiler",
+      available_one: "propiedad disponible",
+      available_many: "propiedades disponibles",
+      search_placeholder: "Buscar por ubicación o nombre...",
+      type_label: "Tipo de Propiedad",
+      area_label: "Zona",
+      bedrooms_label: "Dormitorios",
+      beds_suffix: "dorm.",
+      sort_featured: "Destacadas",
+      sort_price_asc: "Precio ↑",
+      sort_price_desc: "Precio ↓",
+      sort_newest: "Más recientes",
+      clear: "Limpiar ×",
+      no_results: "Sin resultados",
+      no_results_sub: "Prueba a cambiar los filtros",
+      clear_filters: "Quitar Filtros",
+      price_on_request: "Precio a consultar",
+      per_month: "/mes",
+      cta_tag: "Colección Privada",
+      cta_title_sale: "¿No encuentras lo que buscas?",
+      cta_title_rent: "¿Buscas algo en concreto?",
+      cta_sub: "Tenemos acceso a propiedades off-market no publicadas. Contacta con nuestro equipo para una consulta privada.",
+      cta_btn: "Contactar",
+      bd: "HD",
+      ba: "BA",
     },
-    en: {
-    // Navbar
+    common: {
+      loading: "Cargando...",
+      error: "Error",
+      close: "Cerrar",
+    },
+  },
+  en: {
     nav: {
       properties: "Properties",
       services: "Services",
@@ -193,7 +180,6 @@ export const translations = {
       contact: "Contact",
       search: "Search",
     },
-    // Hero
     hero: {
       tag: "Luxury Real Estate in Ibiza",
       title1: "Your Life",
@@ -203,7 +189,6 @@ export const translations = {
       cta_secondary: "Contact Us",
       scroll: "Discover",
     },
-    // Stats
     stats: {
       tag: "Our Numbers",
       title: "Market Leaders in Ibiza",
@@ -214,7 +199,6 @@ export const translations = {
       volume: "Sales Volume",
       cta: "Meet the Team",
     },
-    // Listings
     listings: {
       tag: "Portfolio",
       title: "Featured Properties",
@@ -228,7 +212,6 @@ export const translations = {
       new: "New",
       exclusive: "Exclusive",
     },
-    // Christies blocks
     christies: {
       tag: "Our Services",
       title: "Complete Real Estate Experience",
@@ -242,7 +225,6 @@ export const translations = {
       manage_desc: "Comprehensive property management service to optimise your investment and guarantee a hassle-free experience.",
       cta: "Learn More",
     },
-    // Press
     press: {
       tag: "In the Media",
       title: "Press & News",
@@ -255,7 +237,6 @@ export const translations = {
         { publication: "El País", date: "November 2024", headline: "Ibiza consolidates as a premium destination for international investors" },
       ],
     },
-    // Newsletter
     newsletter: {
       tag: "Join Us",
       title: "Exclusive List",
@@ -267,7 +248,6 @@ export const translations = {
       privacy: "Privacy Policy",
       submit: "SUBMIT",
     },
-    // CTA Inquiry
     cta: {
       tag: "Contact",
       title: "Ready to Find Your Ideal Property?",
@@ -281,7 +261,6 @@ export const translations = {
       sending: "Sending...",
       success: "Message sent successfully. We will be in touch with you soon.",
     },
-    // Footer
     footer: {
       tagline: "Exclusive properties on the most desired island in the Mediterranean",
       properties: "Properties",
@@ -304,7 +283,6 @@ export const translations = {
       terms: "Terms",
       cookies: "Cookies",
     },
-    // Property detail
     property: {
       back: "← Back",
       exclusive: "Exclusive",
@@ -323,7 +301,38 @@ export const translations = {
       description: "Description",
       location: "Location",
     },
-    // Common
+    listing_page: {
+      tag_sale: "Exclusive Properties · Ibiza",
+      tag_rent: "Luxury Rentals · Ibiza",
+      title_sale: "Villas & Properties",
+      title_sale_em: "for Sale",
+      title_rent: "Villas & Properties",
+      title_rent_em: "for Rent",
+      available_one: "property available",
+      available_many: "properties available",
+      search_placeholder: "Search by location or name...",
+      type_label: "Property Type",
+      area_label: "Area",
+      bedrooms_label: "Bedrooms",
+      beds_suffix: "beds",
+      sort_featured: "Featured",
+      sort_price_asc: "Price ↑",
+      sort_price_desc: "Price ↓",
+      sort_newest: "Newest",
+      clear: "Clear ×",
+      no_results: "No properties found",
+      no_results_sub: "Try adjusting your filters",
+      clear_filters: "Clear Filters",
+      price_on_request: "Price on request",
+      per_month: "/month",
+      cta_tag: "Private Collection",
+      cta_title_sale: "Can't find what you're looking for?",
+      cta_title_rent: "Looking for something specific?",
+      cta_sub: "We have access to off-market properties not listed publicly. Contact our team for a private consultation.",
+      cta_btn: "Contact Us",
+      bd: "BD",
+      ba: "BA",
+    },
     common: {
       loading: "Loading...",
       error: "Error",
@@ -361,7 +370,6 @@ export function LangProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("ibizaflow-lang", l);
   };
 
-  // Suppress hydration mismatch: always render with "es" on first paint
   const effectiveLang = mounted ? lang : "es";
 
   return (

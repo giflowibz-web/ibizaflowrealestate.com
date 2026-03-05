@@ -540,8 +540,8 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           {mapSrc && (
             <section style={{ padding: "0 64px 80px" }}>
               <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
-                      <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>Ubicación</p>
-                      <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#0A0A0A", margin: "0 0 36px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>Dónde está</h3>
+                      <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>{t.location}</p>
+                      <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#0A0A0A", margin: "0 0 36px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>{t.whereIs}</h3>
                 <div style={{ overflow: "hidden", border: "1px solid #ebebeb" }}>
                   <iframe src={mapSrc} width="100%" height="400" style={{ border: 0, display: "block" }} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
                 </div>

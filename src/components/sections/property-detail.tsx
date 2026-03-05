@@ -331,7 +331,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           </div>
           {price && (
             <div style={{ textAlign: "right", flexShrink: 0, marginLeft: 48 }}>
-              <p style={{ color: "rgba(255,255,255,0.28)", fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 8px" }}>Precio</p>
+              <p style={{ color: "rgba(255,255,255,0.28)", fontSize: 8, letterSpacing: "0.22em", textTransform: "uppercase", margin: "0 0 8px" }}>{isEs ? "Precio" : "Price"}</p>
               <p style={{ color: "#fff", fontSize: "clamp(1.3rem, 2vw, 2rem)", fontWeight: 200, margin: 0, letterSpacing: "-0.02em" }}>{price}</p>
             </div>
           )}

@@ -87,6 +87,20 @@
     border-color: var(--color-border);
   }
 
+  /* Remove browser default gold/yellow outline on focus */
+  *:focus {
+    outline: none;
+  }
+
+  *:focus-visible {
+    outline: 2px solid #002FA7;
+    outline-offset: 2px;
+  }
+
+  input, textarea, select, button {
+    outline: none;
+  }
+
   :root {
     --background: #FFFFFF;
     --foreground: #0A0A0A;

@@ -555,69 +555,139 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             id="contacto"
             style={{
               position: "sticky", top: 117, alignSelf: "start",
-              padding: "52px 28px 28px 28px",
+              padding: "40px 24px 24px 24px",
               background: C.bg,
             }}
           >
-            <div style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
+            {/* Dark premium card */}
+            <div style={{ background: D.bg, overflow: "hidden" }}>
+
+              {/* Top accent stripe */}
+              <div style={{ height: 3, background: `linear-gradient(to right, ${D.accent}, #0038cc 60%, transparent)` }} />
+
               {/* Header */}
-              <div style={{ padding: "26px 26px 0" }}>
-                <h3 style={{ fontSize: "1.75rem", fontWeight: 700, color: C.text, margin: "0 0 10px", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+              <div style={{ padding: "28px 28px 0" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                  <div style={{ width: 20, height: 1, background: D.accent }} />
+                  <span style={{ fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.32em", textTransform: "uppercase", color: D.accent }}>
+                    {isEs ? "Contacto exclusivo" : "Exclusive contact"}
+                  </span>
+                </div>
+                <h3 style={{ fontSize: "1.55rem", fontWeight: 300, color: D.text, margin: "0 0 8px", letterSpacing: "-0.03em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif" }}>
                   {t.contact}
                 </h3>
-                <p style={{ fontSize: "0.72rem", fontWeight: 300, color: C.textMid, margin: "0 0 18px", lineHeight: 1.7 }}>
+                <p style={{ fontSize: "0.7rem", fontWeight: 300, color: D.textFaint, margin: "0", lineHeight: 1.75 }}>
                   {t.advisor}
                 </p>
               </div>
 
               {/* Precio */}
               {price && (
-                <div style={{ margin: "0 26px 16px", borderTop: `1px solid ${C.border}`, borderBottom: `1px solid ${C.border}`, padding: "10px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: C.textFaint }}>
+                <div style={{ margin: "20px 28px 0", border: `1px solid ${D.border}`, padding: "12px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "0.58rem", letterSpacing: "0.22em", textTransform: "uppercase", color: D.textFaint }}>
                     {p.listing_type === "rent" ? t.rentPrice : t.salePrice}
                   </span>
-                  <span style={{ fontSize: "0.85rem", fontWeight: 300, color: C.text }}>
-                    {p.listing_type === "rent" && priceRent ? `${priceRent}/${isEs ? "mes" : "month"}` : price}
+                  <span style={{ fontSize: "0.9rem", fontWeight: 300, color: D.text, fontFamily: "'Playfair Display', serif", letterSpacing: "-0.01em" }}>
+                    {p.listing_type === "rent" && priceRent ? `${priceRent}/${isEs ? "mes" : "mo"}` : price}
                   </span>
                 </div>
               )}
 
               {/* Formulario */}
-              <form onSubmit={(e) => e.preventDefault()} style={{ padding: "0 26px 26px", display: "flex", flexDirection: "column", gap: 12 }}>
-                {[
-                  { label: t.fullName, type: "text",  id: "f-name" },
-                  { label: t.email,    type: "email", id: "f-email" },
-                  { label: t.phone,    type: "tel",   id: "f-phone" },
-                ].map((field) => (
-                  <div key={field.id}>
-                    <label htmlFor={field.id} style={{ display: "block", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: C.textFaint, marginBottom: 4 }}>
-                      {field.label}
+              {!formSubmitted ? (
+                <form
+                  onSubmit={(e) => { e.preventDefault(); setFormSubmitted(true); }}
+                  style={{ padding: "20px 28px 28px", display: "flex", flexDirection: "column", gap: 3 }}
+                >
+                  {[
+                    { label: t.fullName, type: "text",  id: "f-name" },
+                    { label: t.email,    type: "email", id: "f-email" },
+                    { label: t.phone,    type: "tel",   id: "f-phone" },
+                  ].map((field) => (
+                    <div
+                      key={field.id}
+                      style={{
+                        border: `1px solid ${formFocused === field.id ? D.borderAct : D.border}`,
+                        transition: "border-color 0.2s",
+                        background: formFocused === field.id ? "rgba(0,47,167,0.04)" : "transparent",
+                      }}
+                    >
+                      <label
+                        htmlFor={field.id}
+                        style={{ display: "block", paddingTop: 10, paddingLeft: 12, paddingRight: 12, fontSize: "0.56rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: D.textFaint }}
+                      >
+                        {field.label}
+                      </label>
+                      <input
+                        id={field.id}
+                        type={field.type}
+                        onFocus={() => setFormFocused(field.id)}
+                        onBlur={() => setFormFocused(null)}
+                        style={{ width: "100%", background: "transparent", border: "none", padding: "4px 12px 10px", fontSize: "0.78rem", fontWeight: 300, color: D.text, outline: "none", boxSizing: "border-box" }}
+                      />
+                    </div>
+                  ))}
+                  <div
+                    style={{
+                      border: `1px solid ${formFocused === "f-msg" ? D.borderAct : D.border}`,
+                      transition: "border-color 0.2s",
+                      background: formFocused === "f-msg" ? "rgba(0,47,167,0.04)" : "transparent",
+                    }}
+                  >
+                    <label
+                      htmlFor="f-msg"
+                      style={{ display: "block", paddingTop: 10, paddingLeft: 12, paddingRight: 12, fontSize: "0.56rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", color: D.textFaint }}
+                    >
+                      {t.message}
                     </label>
-                    <input
-                      id={field.id}
-                      type={field.type}
-                      style={{ width: "100%", background: "transparent", border: "none", borderBottom: `1px solid ${C.border}`, padding: "7px 0", fontSize: "0.78rem", fontWeight: 300, color: C.text, outline: "none", boxSizing: "border-box" }}
+                    <textarea
+                      id="f-msg"
+                      rows={3}
+                      defaultValue={`${isEs ? "Me interesa" : "I'm interested in"}: ${title}`}
+                      onFocus={() => setFormFocused("f-msg")}
+                      onBlur={() => setFormFocused(null)}
+                      style={{ width: "100%", background: "transparent", border: "none", padding: "4px 12px 10px", fontSize: "0.78rem", fontWeight: 300, color: D.text, outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
                     />
                   </div>
-                ))}
-                <div>
-                  <label htmlFor="f-msg" style={{ display: "block", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: C.textFaint, marginBottom: 4 }}>{t.message}</label>
-                  <textarea
-                    id="f-msg"
-                    rows={3}
-                    defaultValue={`${isEs ? "Me interesa" : "I'm interested in"}: ${title}`}
-                    style={{ width: "100%", background: "transparent", border: "none", borderBottom: `1px solid ${C.border}`, padding: "7px 0", fontSize: "0.78rem", fontWeight: 300, color: C.text, outline: "none", resize: "none", boxSizing: "border-box", fontFamily: "inherit" }}
-                  />
+                  <button
+                    type="submit"
+                    style={{ width: "100%", background: D.accent, color: "#fff", border: "none", padding: "14px 0", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.24em", textTransform: "uppercase", cursor: "pointer", marginTop: 8, display: "flex", alignItems: "center", justifyContent: "center", gap: 10, transition: "background 0.2s" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#0038cc")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = D.accent)}
+                  >
+                    {t.send}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+                    </svg>
+                  </button>
+                </form>
+              ) : (
+                <div style={{ padding: "32px 28px 36px", textAlign: "center" }}>
+                  <div style={{ width: 40, height: 40, background: "rgba(0,47,167,0.12)", border: "1px solid rgba(0,47,167,0.25)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px" }}>
+                    <svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="#002FA7" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                      <polyline points="2,9 7,14 16,4" />
+                    </svg>
+                  </div>
+                  <p style={{ fontSize: "1.1rem", fontWeight: 300, color: D.text, margin: "0 0 8px", fontFamily: "'Playfair Display', serif", letterSpacing: "-0.02em" }}>
+                    {isEs ? "Mensaje enviado" : "Message sent"}
+                  </p>
+                  <p style={{ fontSize: "0.68rem", color: D.textFaint, margin: 0, lineHeight: 1.7 }}>
+                    {isEs ? "Un asesor le contactará en menos de 24h." : "An advisor will contact you within 24h."}
+                  </p>
                 </div>
-                <button
-                  type="submit"
-                  style={{ width: "100%", background: C.accent, color: "#fff", border: "none", padding: "13px 0", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.22em", textTransform: "uppercase", cursor: "pointer", marginTop: 6 }}
-                  onMouseEnter={(e) => ((e.currentTarget as HTMLButtonElement).style.background = "#0038cc")}
-                  onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.background = C.accent)}
-                >
-                  {t.send}
-                </button>
-              </form>
+              )}
+
+              {/* Footer hint */}
+              {!formSubmitted && (
+                <div style={{ borderTop: `1px solid ${D.border}`, padding: "14px 28px", display: "flex", alignItems: "center", gap: 8 }}>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" /><path d="M7 11V7a5 5 0 0110 0v4" />
+                  </svg>
+                  <span style={{ fontSize: "0.58rem", color: D.textFaint, letterSpacing: "0.06em" }}>
+                    {isEs ? "Información confidencial y protegida" : "Confidential & protected information"}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
         </div>

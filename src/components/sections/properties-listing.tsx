@@ -487,22 +487,20 @@ export default function PropertiesListingPage({
                           pointerEvents: "none",
                         }} />
 
-                        {/* FOR SALE badge top-left */}
-                        {typeLabel && (
+                          {/* FOR SALE badge top-left */}
                           <span style={{
                             position: "absolute", top: 18, left: 18,
-                            border: "1px solid rgba(255,255,255,0.7)",
+                            background: "rgba(0,0,0,0.45)",
                             color: "#fff",
                             fontSize: "0.55rem",
                             fontWeight: 600,
                             letterSpacing: "0.18em",
                             textTransform: "uppercase",
                             padding: "5px 12px",
-                            backdropFilter: "blur(4px)",
+                            backdropFilter: "blur(6px)",
                           }}>
                             {isRent ? lp.tag_rent : lp.tag_sale}
                           </span>
-                        )}
 
                         {/* Info overlay bottom */}
                         <div style={{

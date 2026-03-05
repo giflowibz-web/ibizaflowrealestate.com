@@ -25,11 +25,11 @@ export default function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-black/90 backdrop-blur-md border-b border-white/10 py-4"
-          : "bg-transparent py-7"
-      }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-black/90 backdrop-blur-md border-b border-white/10 py-5"
+            : "bg-transparent py-9"
+        }`}
     >
       {/* Contenedor relativo para logo absolute centrado — igual que Aaron Kirman header-container--center */}
       <div className="relative w-full flex items-center">

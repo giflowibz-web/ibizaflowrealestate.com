@@ -378,17 +378,17 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </nav>
 
       {/* ══ LAYOUT PRINCIPAL 2 COLUMNAS ══ */}
-      <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 360px", alignItems: "start", background: "#fff" }}>
+      <div style={{ maxWidth: 1400, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 360px", alignItems: "start", background: "#0A0A0A" }}>
 
         {/* ── COLUMNA IZQUIERDA ── */}
-        <div style={{ borderRight: "1px solid #ebebeb" }}>
+        <div style={{ borderRight: "1px solid rgba(255,255,255,0.08)" }}>
 
               {/* ── DESCRIPCIÓN ── */}
             <section id="descripcion" style={{ padding: "64px 64px 48px" }}>
                 <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>
                   {t.propDesc}
                 </p>
-              <h2 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#0A0A0A", margin: "0 0 40px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+              <h2 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#fff", margin: "0 0 40px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                 {title}
               </h2>
 
@@ -404,13 +404,13 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                       gap: 10,
                       paddingRight: 28,
                       marginRight: 28,
-                      borderRight: i < stats.length - 1 ? "1px solid #e0e0e0" : "none",
+                      borderRight: i < stats.length - 1 ? "1px solid rgba(255,255,255,0.1)" : "none",
                       flexShrink: 0,
                     }}
                   >
                     <div style={{ color: "#002FA7" }}>{d.icon}</div>
                     <div>
-                      <p style={{ margin: 0, fontSize: "1.1rem", fontWeight: 300, color: "#0A0A0A", lineHeight: 1 }}>{d.value}</p>
+                      <p style={{ margin: 0, fontSize: "1.1rem", fontWeight: 300, color: "#fff", lineHeight: 1 }}>{d.value}</p>
                       <p style={{ margin: "5px 0 0", fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.16em", textTransform: "uppercase", color: "#002FA7" }}>{d.label}</p>
                     </div>
                   </div>
@@ -419,8 +419,8 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             )}
 
               {description && (
-                <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 40, marginTop: 8 }}>
-                  <p style={{ fontSize: "1.15rem", fontWeight: 300, lineHeight: 2.1, color: "#3a3a3a", margin: 0, letterSpacing: "0.01em" }}>
+                <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 40, marginTop: 8 }}>
+                  <p style={{ fontSize: "1.15rem", fontWeight: 300, lineHeight: 2.1, color: "rgba(255,255,255,0.6)", margin: 0, letterSpacing: "0.01em" }}>
                     {description}
                   </p>
                 </div>
@@ -429,11 +429,11 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
             {/* ── INFORMACIÓN BÁSICA ── */}
             <section id="info-basica" style={{ padding: "0 64px 64px" }}>
-              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 56 }}>
+              <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 56 }}>
                       <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>
                         {t.basicInfo}
                       </p>
-                    <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#0A0A0A", margin: "0 0 44px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                    <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#fff", margin: "0 0 44px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                       {t.propDetails}
                     </h3>
                   {basicInfo.length > 0 ? (
@@ -444,32 +444,32 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                           style={{
                             display: "grid",
                             gridTemplateColumns: "1fr 1fr",
-                            borderBottom: "1px solid #f0f0f0",
+                            borderBottom: "1px solid rgba(255,255,255,0.06)",
                             padding: "0",
                           }}
                         >
-                          <div style={{ padding: "20px 0", borderRight: "1px solid #f0f0f0" }}>
-                            <p style={{ margin: 0, fontSize: "0.78rem", fontWeight: 600, color: "#b0b0b0", letterSpacing: "0.12em", textTransform: "uppercase" }}>{item.label}</p>
+                          <div style={{ padding: "20px 0", borderRight: "1px solid rgba(255,255,255,0.06)" }}>
+                            <p style={{ margin: 0, fontSize: "0.78rem", fontWeight: 600, color: "rgba(255,255,255,0.3)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{item.label}</p>
                           </div>
                           <div style={{ padding: "20px 0 20px 24px" }}>
-                            <p style={{ margin: 0, fontSize: "1rem", fontWeight: 400, color: "#0A0A0A", letterSpacing: "0.01em" }}>{String(item.value)}</p>
+                            <p style={{ margin: 0, fontSize: "1rem", fontWeight: 400, color: "#fff", letterSpacing: "0.01em" }}>{String(item.value)}</p>
                           </div>
                         </div>
                       ))}
                   </div>
                 ) : (
-                  <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>{t.noInfo}</p>
+                  <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.3)", fontWeight: 300 }}>{t.noInfo}</p>
                 )}
               </div>
             </section>
 
           {/* ── CARACTERÍSTICAS Y COMODIDADES ── */}
           <section id="caracteristicas" style={{ padding: "0 64px 64px" }}>
-            <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 52 }}>
                     <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>
                       {t.amenities}
                     </p>
-                    <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#0A0A0A", margin: "0 0 44px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>
+                    <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#fff", margin: "0 0 44px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>
                       {t.includes}
                     </h3>
 
@@ -498,21 +498,21 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                 const renderGroup = (title: string, items: { label: string; value: string }[]) => (
                   items.length > 0 && (
                     <div key={title} style={{ marginBottom: 40 }}>
-                      <h4 style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "#0A0A0A", margin: "0 0 20px", paddingBottom: 10, borderBottom: "1px solid #ebebeb" }}>
+                      <h4 style={{ fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", margin: "0 0 20px", paddingBottom: 10, borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
                         {title}
                       </h4>
                       <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0 24px" }}>
                         {items.map((item, i) => (
-                          <div key={i} style={{ padding: "12px 0", borderBottom: "1px solid #f5f5f5" }}>
+                          <div key={i} style={{ padding: "12px 0", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
                             {item.value ? (
                               <>
-                                <p style={{ margin: "0 0 4px", fontSize: "0.68rem", color: "#999", fontWeight: 400, textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</p>
-                                <p style={{ margin: 0, fontSize: "0.86rem", color: "#0A0A0A", fontWeight: 400 }}>{item.value}</p>
+                                <p style={{ margin: "0 0 4px", fontSize: "0.68rem", color: "rgba(255,255,255,0.3)", fontWeight: 400, textTransform: "uppercase", letterSpacing: "0.04em" }}>{item.label}</p>
+                                <p style={{ margin: 0, fontSize: "0.86rem", color: "#fff", fontWeight: 400 }}>{item.value}</p>
                               </>
                             ) : (
                               <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                                 <IconCheck />
-                                <p style={{ margin: 0, fontSize: "0.86rem", color: "#333", fontWeight: 300 }}>{item.label}</p>
+                                <p style={{ margin: 0, fontSize: "0.86rem", color: "rgba(255,255,255,0.7)", fontWeight: 300 }}>{item.label}</p>
                               </div>
                             )}
                           </div>
@@ -523,7 +523,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                 );
 
                 const total = interiorGroups.length + exteriorGroups.length + otherGroups.length;
-                  if (total === 0) return <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>{t.noFeatures}</p>;
+                  if (total === 0) return <p style={{ fontSize: "0.84rem", color: "rgba(255,255,255,0.3)", fontWeight: 300 }}>{t.noFeatures}</p>;
 
                   return (
                     <>
@@ -539,10 +539,10 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           {/* ── MAPA ── */}
           {mapSrc && (
             <section style={{ padding: "0 64px 80px" }}>
-              <div style={{ borderTop: "1px solid #ebebeb", paddingTop: 52 }}>
+              <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: 52 }}>
                       <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>{t.location}</p>
-                      <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#0A0A0A", margin: "0 0 36px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>{t.whereIs}</h3>
-                <div style={{ overflow: "hidden", border: "1px solid #ebebeb" }}>
+                      <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#fff", margin: "0 0 36px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>{t.whereIs}</h3>
+                <div style={{ overflow: "hidden", border: "1px solid rgba(255,255,255,0.1)" }}>
                   <iframe src={mapSrc} width="100%" height="400" style={{ border: 0, display: "block" }} loading="lazy" allowFullScreen referrerPolicy="no-referrer-when-downgrade" />
                 </div>
               </div>

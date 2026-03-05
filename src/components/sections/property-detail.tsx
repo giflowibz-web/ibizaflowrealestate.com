@@ -563,9 +563,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
           <div style={{ background: "#0A0A0A" }}>
             {/* Header */}
             <div style={{ padding: "26px 26px 0" }}>
-              <h3 style={{ fontSize: "1.75rem", fontWeight: 700, color: "#002FA7", margin: "0 0 10px", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
-                {t.contact}
-              </h3>
+              <h3 style={{ fontSize: "1.75rem", fontWeight: 700, color: "#fff", margin: "0 0 10px", letterSpacing: "-0.02em", lineHeight: 1.1 }}>
+                  {t.contact}
+                </h3>
               <p style={{ fontSize: "0.72rem", fontWeight: 300, color: "rgba(255,255,255,0.3)", margin: "0 0 18px", lineHeight: 1.7 }}>
                 {t.advisor}
               </p>

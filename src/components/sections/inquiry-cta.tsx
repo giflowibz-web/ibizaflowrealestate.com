@@ -11,9 +11,9 @@ const InquiryCTA = () => {
   const [submitted, setSubmitted] = useState(false);
 
   const fields = [
-    { id: "cta-name",  label: t.cta.name  ?? "Nombre completo", type: "text",  placeholder: "John Smith" },
-    { id: "cta-email", label: "Email",                           type: "email", placeholder: "john@example.com" },
-    { id: "cta-phone", label: t.cta.phone ?? "Teléfono",        type: "tel",   placeholder: "+34 600 000 000" },
+    { id: "cta-name",  label: t.cta.name,  type: "text",  placeholder: "John Smith" },
+    { id: "cta-email", label: t.cta.email, type: "email", placeholder: "john@example.com" },
+    { id: "cta-phone", label: t.cta.phone, type: "tel",   placeholder: "+34 600 000 000" },
   ];
 
   return (

@@ -566,7 +566,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               <div style={{ height: 3, background: `linear-gradient(to right, ${D.accent}, #0038cc 60%, transparent)` }} />
 
               {/* Header */}
-              <div style={{ padding: "28px 28px 0" }}>
+                <div style={{ padding: "22px 28px 0" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
                   <div style={{ width: 20, height: 1, background: D.accent }} />
                   <span style={{ fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.32em", textTransform: "uppercase", color: D.accent }}>

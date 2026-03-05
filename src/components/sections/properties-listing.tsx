@@ -32,14 +32,14 @@ const PROPERTY_TYPES = ["Villa", "Apartment", "Penthouse", "Finca", "House", "La
 const AREAS = ["Ibiza Town", "Santa Eulalia", "San José", "San Antonio", "North Ibiza", "Es Canar"];
 const BEDROOMS_OPTIONS = ["1+", "2+", "3+", "4+", "5+"];
 
-function formatPrice(p: number | null | undefined, currency = "EUR", isRent = false) {
+function formatPrice(p: number | null | undefined, currency = "EUR", isRent = false, perMonth = "/month") {
   if (!p) return null;
   const formatted = new Intl.NumberFormat("en-GB", {
     style: "currency",
     currency,
     maximumFractionDigits: 0,
   }).format(p);
-  return isRent ? `${formatted}/month` : formatted;
+  return isRent ? `${formatted}${perMonth}` : formatted;
 }
 
 export default function PropertiesListingPage({

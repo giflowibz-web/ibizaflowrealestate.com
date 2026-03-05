@@ -427,7 +427,7 @@ export default function PropertiesListingPage({
               )}
             </div>
           ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "3px", padding: "3px" }}>
               {filtered.map((property) => {
                 const price = property.price_on_request
                   ? lp.price_on_request

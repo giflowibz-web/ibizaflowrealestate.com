@@ -627,41 +627,41 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       {images.length > 0 && (
         <section style={{ background: "#0A0A0A", padding: "72px 52px 80px" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-                  <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>Galería completa</p>
-                  <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#fff", margin: "0 0 40px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>Todas las imágenes</h3>
-            {images[0] && (
-              <div
-                onClick={() => setLightboxIdx(0)}
-                style={{ width: "100%", height: 600, overflow: "hidden", cursor: "pointer", marginBottom: 3 }}
-              >
-                <img
-                  src={images[0]}
-                  alt={p.title_es}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.9s ease" }}
-                  onMouseEnter={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.03)")}
-                  onMouseLeave={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
-                />
-              </div>
-            )}
-            {images.length > 1 && (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 3 }}>
-                {images.slice(1).map((img, i) => (
-                  <div
-                    key={i}
-                    onClick={() => setLightboxIdx(i + 1)}
-                    style={{ aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
-                  >
-                    <img
-                      src={img}
-                      alt={`${p.title_es} ${i + 2}`}
-                      style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.9s ease" }}
-                      onMouseEnter={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)")}
-                      onMouseLeave={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+                    <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>{t.gallery}</p>
+                    <h3 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#fff", margin: "0 0 40px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>{t.allImages}</h3>
+              {images[0] && (
+                <div
+                  onClick={() => setLightboxIdx(0)}
+                  style={{ width: "100%", height: 600, overflow: "hidden", cursor: "pointer", marginBottom: 3 }}
+                >
+                  <img
+                    src={images[0]}
+                    alt={title}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.9s ease" }}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.03)")}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
+                  />
+                </div>
+              )}
+              {images.length > 1 && (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 3 }}>
+                  {images.slice(1).map((img, i) => (
+                    <div
+                      key={i}
+                      onClick={() => setLightboxIdx(i + 1)}
+                      style={{ aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
+                    >
+                      <img
+                        src={img}
+                        alt={`${title} ${i + 2}`}
+                        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.9s ease" }}
+                        onMouseEnter={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1.06)")}
+                        onMouseLeave={(e) => ((e.currentTarget as HTMLImageElement).style.transform = "scale(1)")}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
           </div>
         </section>
       )}

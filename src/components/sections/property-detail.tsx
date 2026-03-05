@@ -567,7 +567,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                     <h3 style={{ fontSize: "1.35rem", fontWeight: 400, color: D.text, margin: "0 0 10px", letterSpacing: "0.12em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif", textTransform: "uppercase" }}>
                         {t.contact}
                       </h3>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 10 }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 4 }}>
                       <div style={{ width: 32, height: 1, background: D.accent }} />
                       <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: D.accent }}>
                         {isEs ? "Contacto exclusivo" : "Exclusive contact"}

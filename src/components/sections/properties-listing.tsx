@@ -405,7 +405,7 @@ export default function PropertiesListingPage({
                 whiteSpace: "nowrap",
               }}
             >
-              Clear ×
+              {lp.clear}
             </button>
           )}
         </div>

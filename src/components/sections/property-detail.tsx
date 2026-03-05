@@ -144,7 +144,7 @@ const D = {
 };
 
 export default function PropertyDetail({ property: p }: { property: Property }) {
-  const { lang, t } = useLang();
+  const { lang } = useLang();
   const isEs = lang === "es";
 
   const images = p.images?.filter(Boolean) ?? [];

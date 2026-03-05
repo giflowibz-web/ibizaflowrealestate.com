@@ -573,9 +573,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                       {isEs ? "Contacto exclusivo" : "Exclusive contact"}
                     </span>
                   </div>
-                  <h3 style={{ fontSize: "1.65rem", fontWeight: 300, color: D.text, margin: "0 0 10px", letterSpacing: "-0.03em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif" }}>
-                    {t.contact}
-                  </h3>
+                    <h3 style={{ fontSize: "1.9rem", fontWeight: 300, color: D.text, margin: "0 0 10px", letterSpacing: "-0.03em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif", textAlign: "center", width: "100%" }}>
+                      {t.contact}
+                    </h3>
                   <p style={{ fontSize: "0.72rem", fontWeight: 300, color: D.textFaint, margin: 0, lineHeight: 1.8, letterSpacing: "0.01em" }}>
                     {t.advisor}
                   </p>

@@ -682,7 +682,7 @@ export default function PropertiesListingPage({
             margin: "0 0 20px",
           }}
         >
-          Private Collection
+          {lp.cta_tag}
         </p>
         <h2
           style={{

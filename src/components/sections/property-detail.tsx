@@ -118,6 +118,20 @@ const IconCheck = () => (
   </svg>
 );
 
+// Design tokens — white/light theme (matches listings grid)
+const C = {
+  bg:          "#ffffff",
+  bgAlt:       "#f7f7f5",
+  text:        "#0A0A0A",
+  textMid:     "rgba(10,10,10,0.55)",
+  textFaint:   "rgba(10,10,10,0.35)",
+  border:      "rgba(10,10,10,0.09)",
+  borderLight: "rgba(10,10,10,0.05)",
+  accent:      "#002FA7",
+  navBg:       "#ffffff",
+  navBorder:   "rgba(10,10,10,0.1)",
+};
+
 export default function PropertyDetail({ property: p }: { property: Property }) {
   const { language } = useLang();
   const lang = language === "es" ? "es" : "en";

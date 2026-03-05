@@ -212,14 +212,6 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
     { label: t.year,      value: p.year_built ? String(p.year_built) : null, icon: <IconYear /> },
   ].filter((d) => d.value);
 
-    // Estado legible
-    const statusLabel = (() => {
-      if (p.listing_type === "rent" && p.price_rent) return "En alquiler";
-      if (p.listing_type === "sale" && p.price_rent) return "En venta y alquiler";
-      if (p.listing_type === "rent") return "En alquiler";
-      return "En venta";
-    })();
-
   // helper: returns null for empty/zero/null values
   const val = (v: string | number | null | undefined) => {
     if (v === null || v === undefined) return null;
@@ -228,29 +220,28 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
     return String(v);
   };
 
-      // Información básica — solo los que tienen valor real
-      const basicInfo = [
-        { label: "Estado", value: statusLabel },
-        { label: "Tipo de propiedad", value: p.property_type ? (PROPERTY_TYPE_ES[p.property_type.toLowerCase()] ?? p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1)) : null },
-        { label: "Superficie construida", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null },
-        { label: "Tamaño terreno", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
-        { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null },
-        { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null },
-        { label: "Año de construcción", value: p.year_built ? String(p.year_built) : null },
-        { label: "Referencia MLS", value: val(p.mls_id) },
-        { label: "Zona", value: val(p.area) },
-        { label: "Municipio", value: val(p.municipality) },
-        { label: "Isla", value: val(p.island) },
-        { label: "País", value: val(p.country) },
-        { label: "Plantas", value: p.stories ? String(p.stories) : null },
-        { label: "Orientación / Vistas", value: val(p.view) },
-        { label: "Estilo arquitectónico", value: val(p.architectural_style) },
-        { label: "Piscina", value: val(p.pool) },
-        { label: "Parking", value: val(p.parking) },
-        { label: "Calefacción", value: val(p.heating) },
-        { label: "Aire acondicionado", value: val(p.cooling) },
-        { label: "Electrodomésticos", value: val(p.appliances) },
-      ].filter((d) => d.value);
+  const basicInfo = [
+    { label: t.status,       value: t.statusLabel },
+    { label: t.propType,     value: propTypeLabel },
+    { label: t.builtSurface, value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null },
+    { label: t.plotSize,     value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null },
+    { label: t.bedrooms,     value: p.bedrooms != null ? String(p.bedrooms) : null },
+    { label: t.bathrooms,    value: p.bathrooms != null ? String(p.bathrooms) : null },
+    { label: t.builtYear,    value: p.year_built ? String(p.year_built) : null },
+    { label: t.mlsRef,       value: val(p.mls_id) },
+    { label: t.zone,         value: val(p.area) },
+    { label: t.municipality, value: val(p.municipality) },
+    { label: t.island,       value: val(p.island) },
+    { label: t.country,      value: val(p.country) },
+    { label: t.floors,       value: p.stories ? String(p.stories) : null },
+    { label: t.views,        value: val(p.view) },
+    { label: t.archStyle,    value: val(p.architectural_style) },
+    { label: t.pool,         value: val(p.pool) },
+    { label: t.parking,      value: val(p.parking) },
+    { label: t.heating,      value: val(p.heating) },
+    { label: t.ac,           value: val(p.cooling) },
+    { label: t.appliances,   value: val(p.appliances) },
+  ].filter((d) => d.value);
 
   const mapSrc =
     p.latitude && p.longitude

@@ -642,7 +642,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                     </label>
                     <textarea
                       id="f-msg"
-                      rows={3}
+                      rows={2}
                       defaultValue={`${isEs ? "Me interesa" : "I'm interested in"}: ${title}`}
                       onFocus={() => setFormFocused("f-msg")}
                       onBlur={() => setFormFocused(null)}

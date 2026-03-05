@@ -266,7 +266,7 @@ export default function PropertiesListingPage({
           <div style={{ flex: 1, borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
             <input
               type="text"
-              placeholder="Search by location or name..."
+                placeholder={lp.search_placeholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               style={{

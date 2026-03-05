@@ -563,7 +563,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               <div style={{ background: D.bg, borderRadius: 2, overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.12)" }}>
 
                   {/* Header */}
-                  <div style={{ padding: "28px 30px 20px", textAlign: "center" }}>
+                  <div style={{ padding: "18px 30px 14px", textAlign: "center" }}>
                     <h3 style={{ fontSize: "1.35rem", fontWeight: 400, color: D.text, margin: "0 0 14px", letterSpacing: "0.12em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif", textTransform: "uppercase" }}>
                         {t.contact}
                       </h3>

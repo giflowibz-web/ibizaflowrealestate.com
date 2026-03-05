@@ -302,7 +302,7 @@ export default function PropertiesListingPage({
                 height: "100%",
               }}
             >
-              <option value="">Property Type</option>
+                <option value="">{lp.type_label}</option>
               {PROPERTY_TYPES.map((t) => (
                 <option key={t} value={t}>{t}</option>
               ))}

@@ -29,7 +29,6 @@ type Property = {
 };
 
 const AREAS = ["Ibiza Town", "Santa Eulalia", "San José", "San Antonio", "North Ibiza", "Es Canar"];
-const AREAS = ["Ibiza Town", "Santa Eulalia", "San José", "San Antonio", "North Ibiza", "Es Canar"];
 const BEDROOMS_OPTIONS = ["1+", "2+", "3+", "4+", "5+"];
 
 function formatPrice(p: number | null | undefined, currency = "EUR", isRent = false, perMonth = "/month") {

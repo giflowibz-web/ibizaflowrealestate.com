@@ -410,272 +410,196 @@ export default function PropertiesListingPage({
         </div>
       </div>
 
-      {/* ── GRID ── */}
-      <div
-        style={{
-          background: "#fff",
-          padding: "80px 6% 120px",
-          minHeight: "60vh",
-        }}
-      >
-        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
+        {/* ── GRID ── */}
+        <div style={{ background: "#0A0A0A", minHeight: "60vh" }}>
           {filtered.length === 0 ? (
-            <div
-              style={{
-                textAlign: "center",
-                padding: "120px 0",
-                color: "#999",
-              }}
-            >
-                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", fontWeight: 300, color: "#ccc", margin: "0 0 16px", letterSpacing: "-0.03em" }}>
-                  {lp.no_results}
-                </p>
-                <p style={{ fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                  {lp.no_results_sub}
-                </p>
-                {hasActiveFilters && (
-                  <button onClick={resetFilters} style={{ marginTop: 24, background: "#002FA7", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
-                    {lp.clear_filters}
-                  </button>
-                )}
+            <div style={{ textAlign: "center", padding: "120px 6%", color: "#999" }}>
+              <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", fontWeight: 300, color: "#444", margin: "0 0 16px", letterSpacing: "-0.03em" }}>
+                {lp.no_results}
+              </p>
+              <p style={{ fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#666" }}>
+                {lp.no_results_sub}
+              </p>
+              {hasActiveFilters && (
+                <button onClick={resetFilters} style={{ marginTop: 24, background: "#002FA7", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
+                  {lp.clear_filters}
+                </button>
+              )}
             </div>
           ) : (
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(3, 1fr)",
-                gap: "60px 32px",
-              }}
-            >
-              {filtered.map((property, index) => {
-                  const price = property.price_on_request
-                    ? lp.price_on_request
-                    : formatPrice(
-                        isRent ? property.price_rent : property.price,
-                        property.currency ?? "EUR",
-                        isRent,
-                        lp.per_month,
-                      ) ?? lp.price_on_request;
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
+              {filtered.map((property) => {
+                const price = property.price_on_request
+                  ? lp.price_on_request
+                  : formatPrice(
+                      isRent ? property.price_rent : property.price,
+                      property.currency ?? "EUR",
+                      isRent,
+                      lp.per_month,
+                    ) ?? lp.price_on_request;
 
                 const location = [property.area, property.municipality ?? "Ibiza"]
                   .filter(Boolean)
-                  .join(" — ");
+                  .join(", ");
 
                 const title = property.title_en || property.title_es;
                 const href = `/propiedades/${property.slug || property.id}`;
-
-                // Alternate aspect ratios for visual interest
-                const aspectRatio = index % 5 === 0 ? "3/4" : index % 3 === 1 ? "4/5" : "3/4";
+                const typeLabel = lp.property_types.find(pt => pt.value.toLowerCase() === property.property_type?.toLowerCase())?.label ?? property.property_type;
 
                 return (
                   <Link key={property.id} href={href} style={{ textDecoration: "none", display: "block" }}>
                     <div
-                      className="group"
-                      style={{ cursor: "pointer" }}
+                      style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
                       onMouseEnter={(e) => {
-                        const img = e.currentTarget.querySelector("img");
-                        if (img) img.style.transform = "scale(1.05)";
+                        const img = e.currentTarget.querySelector("img") as HTMLImageElement | null;
+                        if (img) img.style.transform = "scale(1.06)";
                       }}
                       onMouseLeave={(e) => {
-                        const img = e.currentTarget.querySelector("img");
+                        const img = e.currentTarget.querySelector("img") as HTMLImageElement | null;
                         if (img) img.style.transform = "scale(1)";
                       }}
                     >
                       {/* Image */}
-                      <div
-                        style={{
-                          position: "relative",
-                          aspectRatio,
-                          overflow: "hidden",
-                          background: "#F0EDE8",
-                        }}
-                      >
-                        {property.images?.[0] ? (
-                          <img
-                            src={property.images[0]}
-                            alt={title}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "cover",
-                              display: "block",
-                              transition: "transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                            }}
-                          />
-                        ) : (
-                          <div
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <span
-                              style={{
-                                color: "#C5BDB0",
-                                fontSize: "0.6rem",
-                                letterSpacing: "0.4em",
-                                textTransform: "uppercase",
-                              }}
-                            >
-                              Ibiza Flow
-                            </span>
-                          </div>
-                        )}
-
-                        {/* Badges */}
-                        <div
+                      {property.images?.[0] ? (
+                        <img
+                          src={property.images[0]}
+                          alt={title}
                           style={{
-                            position: "absolute",
-                            top: 16,
-                            left: 16,
-                            right: 16,
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "flex-start",
+                            width: "100%",
+                            height: "100%",
+                            objectFit: "cover",
+                            display: "block",
+                            transition: "transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                           }}
-                        >
-                          {property.featured && (
-                            <span
-                              style={{
-                                background: "rgba(255,255,255,0.92)",
-                                color: "#0A0A0A",
-                                fontSize: "0.55rem",
-                                fontWeight: 700,
-                                letterSpacing: "0.3em",
-                                textTransform: "uppercase",
-                                padding: "6px 12px",
-                              }}
-                            >
-                              Exclusive
-                            </span>
-                          )}
-                          {property.property_type && (
-                              <span
-                                style={{
-                                  marginLeft: "auto",
-                                  background: "rgba(0,0,0,0.55)",
-                                  color: "#fff",
-                                  fontSize: "0.55rem",
-                                  fontWeight: 600,
-                                  letterSpacing: "0.2em",
-                                  textTransform: "uppercase",
-                                  padding: "6px 12px",
-                                }}
-                              >
-                                {lp.property_types.find(pt => pt.value.toLowerCase() === property.property_type?.toLowerCase())?.label ?? property.property_type}
-                              </span>
-                            )}
+                        />
+                      ) : (
+                        <div style={{ width: "100%", height: "100%", background: "#1a1a1a", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <span style={{ color: "#444", fontSize: "0.6rem", letterSpacing: "0.4em", textTransform: "uppercase" }}>Ibiza Flow</span>
                         </div>
+                      )}
+
+                      {/* Gradient overlay */}
+                      <div style={{
+                        position: "absolute",
+                        inset: 0,
+                        background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.0) 100%)",
+                      }} />
+
+                      {/* Top badges */}
+                      <div style={{ position: "absolute", top: 20, left: 20, right: 20, display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+                        <span style={{
+                          background: "rgba(255,255,255,0.15)",
+                          backdropFilter: "blur(6px)",
+                          color: "#fff",
+                          fontSize: "0.55rem",
+                          fontWeight: 700,
+                          letterSpacing: "0.28em",
+                          textTransform: "uppercase",
+                          padding: "7px 14px",
+                          border: "1px solid rgba(255,255,255,0.2)",
+                        }}>
+                          {isRent ? lp.tag_rent : lp.tag_sale}
+                        </span>
+                        {typeLabel && (
+                          <span style={{
+                            background: "rgba(0,47,167,0.85)",
+                            color: "#fff",
+                            fontSize: "0.55rem",
+                            fontWeight: 600,
+                            letterSpacing: "0.2em",
+                            textTransform: "uppercase",
+                            padding: "7px 14px",
+                          }}>
+                            {typeLabel}
+                          </span>
+                        )}
                       </div>
 
-                      {/* Info */}
-                      <div style={{ paddingTop: 20 }}>
-                        <p
-                          style={{
-                            fontSize: "0.6rem",
-                            fontWeight: 600,
-                            letterSpacing: "0.3em",
-                            textTransform: "uppercase",
-                            color: "#999",
-                            margin: "0 0 8px",
-                          }}
-                        >
+                      {/* Bottom info overlay */}
+                      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "32px 28px 28px" }}>
+                        {/* Price */}
+                        <p style={{
+                          fontFamily: "'Playfair Display', serif",
+                          fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)",
+                          fontWeight: 300,
+                          color: "#fff",
+                          margin: "0 0 6px",
+                          letterSpacing: "-0.02em",
+                          lineHeight: 1,
+                        }}>
+                          {price}
+                        </p>
+
+                        {/* Location */}
+                        <p style={{
+                          fontSize: "0.72rem",
+                          fontWeight: 400,
+                          color: "rgba(255,255,255,0.7)",
+                          margin: "0 0 16px",
+                          letterSpacing: "0.06em",
+                        }}>
                           {location}
                         </p>
 
-                        <h3
-                          style={{
-                            fontFamily: "'Playfair Display', serif",
-                            fontSize: "clamp(1.1rem, 1.8vw, 1.5rem)",
-                            fontWeight: 300,
-                            color: "#0A0A0A",
-                            margin: "0 0 12px",
-                            letterSpacing: "-0.02em",
-                            lineHeight: 1.2,
-                            transition: "opacity 0.3s",
-                          }}
-                        >
-                          {title}
-                        </h3>
-
-                        <div
-                          style={{
-                            width: 28,
-                            height: 1,
-                            background: "#CCC",
-                            marginBottom: 12,
-                            transition: "width 0.5s",
-                          }}
-                        />
-
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: 14,
-                              fontSize: "0.65rem",
+                        {/* Stats row */}
+                        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                          {(property.bedrooms ?? 0) > 0 && (
+                            <span style={{
+                              display: "flex", alignItems: "center", gap: 7,
+                              background: "rgba(255,255,255,0.12)",
+                              border: "1px solid rgba(255,255,255,0.2)",
+                              color: "#fff",
+                              fontSize: "0.68rem",
                               fontWeight: 500,
-                              letterSpacing: "0.05em",
-                              color: "#888",
-                              alignItems: "center",
-                            }}
-                          >
-                            {(property.bedrooms ?? 0) > 0 && (
-                              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M3 20v-8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8"/>
-                                  <path d="M3 14h18"/>
-                                  <path d="M5 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
-                                  <path d="M13 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
-                                  <path d="M1 20h22"/>
-                                </svg>
-                                {property.bedrooms}
-                              </span>
-                            )}
-                            {(property.bathrooms ?? 0) > 0 && (
-                              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
-                                  <line x1="10" y1="5" x2="8" y2="7"/>
-                                  <line x1="2" y1="12" x2="22" y2="12"/>
-                                </svg>
-                                {property.bathrooms}
-                              </span>
-                            )}
-                            {property.size_built && Number(property.size_built) > 0 && (
-                              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M3 3h7v7H3z"/>
-                                  <path d="M14 3h7v7h-7z"/>
-                                  <path d="M3 14h7v7H3z"/>
-                                  <path d="M14 14h7v7h-7z"/>
-                                </svg>
-                                {property.size_built} m²
-                              </span>
-                            )}
-                          </div>
-
-                          <p
-                            style={{
-                              fontFamily: "'Playfair Display', serif",
-                              fontSize: "1rem",
-                              fontWeight: 300,
-                              color: "#0A0A0A",
-                              margin: 0,
-                              letterSpacing: "-0.01em",
-                            }}
-                          >
-                            {price}
-                          </p>
+                              padding: "6px 12px",
+                              letterSpacing: "0.04em",
+                            }}>
+                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 20v-8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8"/>
+                                <path d="M3 14h18"/>
+                                <path d="M5 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+                                <path d="M13 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+                                <path d="M1 20h22"/>
+                              </svg>
+                              {property.bedrooms} {lp.beds_suffix}
+                            </span>
+                          )}
+                          {(property.bathrooms ?? 0) > 0 && (
+                            <span style={{
+                              display: "flex", alignItems: "center", gap: 7,
+                              background: "rgba(255,255,255,0.12)",
+                              border: "1px solid rgba(255,255,255,0.2)",
+                              color: "#fff",
+                              fontSize: "0.68rem",
+                              fontWeight: 500,
+                              padding: "6px 12px",
+                              letterSpacing: "0.04em",
+                            }}>
+                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
+                                <line x1="10" y1="5" x2="8" y2="7"/>
+                                <line x1="2" y1="12" x2="22" y2="12"/>
+                              </svg>
+                              {property.bathrooms} {lp.baths_suffix}
+                            </span>
+                          )}
+                          {property.size_built && Number(property.size_built) > 0 && (
+                            <span style={{
+                              display: "flex", alignItems: "center", gap: 7,
+                              background: "rgba(255,255,255,0.12)",
+                              border: "1px solid rgba(255,255,255,0.2)",
+                              color: "#fff",
+                              fontSize: "0.68rem",
+                              fontWeight: 500,
+                              padding: "6px 12px",
+                              letterSpacing: "0.04em",
+                            }}>
+                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M3 14h7v7H3z"/><path d="M14 14h7v7h-7z"/>
+                              </svg>
+                              {property.size_built} m²
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -685,7 +609,6 @@ export default function PropertiesListingPage({
             </div>
           )}
         </div>
-      </div>
 
       {/* ── CONTACT CTA ── */}
       <div

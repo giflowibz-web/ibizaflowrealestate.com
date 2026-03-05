@@ -449,13 +449,14 @@ export default function PropertiesListingPage({
               }}
             >
               {filtered.map((property, index) => {
-                const price = property.price_on_request
-                  ? "Price on request"
-                  : formatPrice(
-                      isRent ? property.price_rent : property.price,
-                      property.currency ?? "EUR",
-                      isRent
-                    ) ?? "Price on request";
+                  const price = property.price_on_request
+                    ? lp.price_on_request
+                    : formatPrice(
+                        isRent ? property.price_rent : property.price,
+                        property.currency ?? "EUR",
+                        isRent,
+                        lp.per_month,
+                      ) ?? lp.price_on_request;
 
                 const location = [property.area, property.municipality ?? "Ibiza"]
                   .filter(Boolean)

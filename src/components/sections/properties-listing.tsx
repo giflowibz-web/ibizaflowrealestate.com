@@ -328,7 +328,7 @@ export default function PropertiesListingPage({
                 height: "100%",
               }}
             >
-              <option value="">Area</option>
+                <option value="">{lp.area_label}</option>
               {AREAS.map((a) => (
                 <option key={a} value={a}>{a}</option>
               ))}

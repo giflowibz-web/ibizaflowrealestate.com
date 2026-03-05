@@ -386,10 +386,10 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               {/* ── DESCRIPCIÓN ── */}
             <section id="descripcion" style={{ padding: "64px 64px 48px" }}>
                 <p style={{ fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.28em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 16px" }}>
-                  Descripción de la propiedad
+                  {t.propDesc}
                 </p>
               <h2 style={{ fontSize: "clamp(2.4rem, 5vw, 5rem)", fontWeight: 100, color: "#0A0A0A", margin: "0 0 40px", letterSpacing: "-0.04em", lineHeight: 1.0, fontFamily: "'Playfair Display', 'Georgia', serif" }}>
-                {p.title_es}
+                {title}
               </h2>
 
             {/* ICONOS STATS — fila limpia sin cajas */}

@@ -119,24 +119,97 @@ const IconCheck = () => (
 );
 
 export default function PropertyDetail({ property: p }: { property: Property }) {
+  const { language } = useLanguage();
+  const lang = language === "es" ? "es" : "en";
+  const isEs = lang === "es";
+
   const images = p.images?.filter(Boolean) ?? [];
   const mainImage = images[0] ?? "";
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
+  const title = isEs ? p.title_es : (p.title_en ?? p.title_es);
+  const description = isEs ? p.description_es : (p.description_en ?? p.description_es);
+
   const price = p.price_on_request
-    ? "Precio bajo consulta"
+    ? (isEs ? "Precio bajo consulta" : "Price on request")
     : formatPrice(p.price, p.currency ?? "EUR");
   const priceRent = formatPrice(p.price_rent, p.currency ?? "EUR");
   const location = [p.area, p.municipality, p.island].filter(Boolean).join(", ");
   const country = p.country ?? "";
-  const listingLabel = p.listing_type === "rent" ? "En Alquiler" : "En Venta";
+
+  const listingLabel = isEs
+    ? (p.listing_type === "rent" ? "En Alquiler" : "En Venta")
+    : (p.listing_type === "rent" ? "For Rent" : "For Sale");
+
+  const propTypeKey = p.property_type?.toLowerCase() ?? "";
+  const propTypeLabel = PROPERTY_TYPE_LABELS[propTypeKey]?.[lang] ?? (p.property_type ? p.property_type.charAt(0).toUpperCase() + p.property_type.slice(1) : null);
+
+  const t = {
+    bedrooms:     isEs ? "Habitaciones"      : "Bedrooms",
+    bathrooms:    isEs ? "Baños"             : "Bathrooms",
+    builtArea:    isEs ? "m² construidos"    : "Built area",
+    plotArea:     isEs ? "m² terreno"        : "Plot area",
+    year:         isEs ? "Año"               : "Year",
+    status:       isEs ? "Estado"            : "Status",
+    propType:     isEs ? "Tipo de propiedad" : "Property type",
+    builtSurface: isEs ? "Superficie construida" : "Built surface",
+    plotSize:     isEs ? "Tamaño terreno"    : "Plot size",
+    builtYear:    isEs ? "Año de construcción" : "Year built",
+    mlsRef:       isEs ? "Referencia MLS"    : "MLS Reference",
+    zone:         isEs ? "Zona"              : "Zone",
+    municipality: isEs ? "Municipio"         : "Municipality",
+    island:       isEs ? "Isla"              : "Island",
+    country:      isEs ? "País"              : "Country",
+    floors:       isEs ? "Plantas"           : "Floors",
+    views:        isEs ? "Orientación / Vistas" : "Orientation / Views",
+    archStyle:    isEs ? "Estilo arquitectónico" : "Architectural style",
+    pool:         isEs ? "Piscina"           : "Pool",
+    parking:      isEs ? "Parking"           : "Parking",
+    heating:      isEs ? "Calefacción"       : "Heating",
+    ac:           isEs ? "Aire acondicionado" : "Air conditioning",
+    appliances:   isEs ? "Electrodomésticos" : "Appliances",
+    statusLabel:  p.listing_type === "rent" && p.price_rent
+      ? (isEs ? "En alquiler" : "For rent")
+      : p.listing_type === "sale" && p.price_rent
+      ? (isEs ? "En venta y alquiler" : "For sale & rent")
+      : p.listing_type === "rent"
+      ? (isEs ? "En alquiler" : "For rent")
+      : (isEs ? "En venta" : "For sale"),
+    propDesc:     isEs ? "Descripción de la propiedad" : "Property description",
+    basicInfo:    isEs ? "Información Básica"          : "Basic Information",
+    propDetails:  isEs ? "Detalles de la propiedad"    : "Property details",
+    amenities:    isEs ? "Características y Comodidades" : "Features & Amenities",
+    includes:     isEs ? "Lo que incluye"              : "What's included",
+    interior:     isEs ? "Características interiores"  : "Interior features",
+    exterior:     isEs ? "Características exteriores"  : "Exterior features",
+    other:        isEs ? "Otros detalles"              : "Other details",
+    noFeatures:   isEs ? "No hay características registradas para esta propiedad." : "No features registered for this property.",
+    noInfo:       isEs ? "Sin información disponible." : "No information available.",
+    location:     isEs ? "Ubicación"                   : "Location",
+    whereIs:      isEs ? "Dónde está"                  : "Where it is",
+    gallery:      isEs ? "Galería completa"            : "Full gallery",
+    allImages:    isEs ? "Todas las imágenes"          : "All images",
+    contact:      isEs ? "Contacte con nosotros"       : "Contact us",
+    advisor:      isEs ? "Un asesor exclusivo le atenderá en menos de 24h." : "An exclusive advisor will contact you within 24h.",
+    salePrice:    isEs ? "Precio de venta"             : "Sale price",
+    rentPrice:    isEs ? "Alquiler mensual"            : "Monthly rent",
+    fullName:     isEs ? "Nombre completo"             : "Full name",
+    email:        isEs ? "Correo electrónico"          : "Email address",
+    phone:        isEs ? "Teléfono"                    : "Phone",
+    message:      isEs ? "Mensaje"                     : "Message",
+    send:         isEs ? "Enviar solicitud"            : "Send request",
+    viewPhotos:   isEs ? "Ver fotos"                   : "View photos",
+    scroll:       "scroll",
+    laundry:      isEs ? "Lavandería"                  : "Laundry",
+    fireplace:    isEs ? "Chimenea"                    : "Fireplace",
+  };
 
   const stats = [
-    { label: "Habitaciones", value: p.bedrooms != null ? String(p.bedrooms) : null, icon: <IconBed /> },
-    { label: "Baños", value: p.bathrooms != null ? String(p.bathrooms) : null, icon: <IconBath /> },
-    { label: "m² construidos", value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null, icon: <IconArea /> },
-    { label: "m² terreno", value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null, icon: <IconPlot /> },
-    { label: "Año", value: p.year_built ? String(p.year_built) : null, icon: <IconYear /> },
+    { label: t.bedrooms,  value: p.bedrooms != null ? String(p.bedrooms) : null, icon: <IconBed /> },
+    { label: t.bathrooms, value: p.bathrooms != null ? String(p.bathrooms) : null, icon: <IconBath /> },
+    { label: t.builtArea, value: p.size_built && Number(p.size_built) > 0 ? `${p.size_built} m²` : null, icon: <IconArea /> },
+    { label: t.plotArea,  value: p.size_plot && Number(p.size_plot) > 0 ? `${p.size_plot} m²` : null, icon: <IconPlot /> },
+    { label: t.year,      value: p.year_built ? String(p.year_built) : null, icon: <IconYear /> },
   ].filter((d) => d.value);
 
     // Estado legible

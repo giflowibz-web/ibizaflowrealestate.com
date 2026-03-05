@@ -14,9 +14,9 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
 
   const sizes = {
     sm:   { main: "1.25rem", sub: "0.38rem", tracking: "0.38em", subTracking: "0.50em" },
-      md:   { main: "1.85rem", sub: "0.48rem", tracking: "0.36em", subTracking: "0.48em" },
-      lg:   { main: "2.2rem",  sub: "0.54rem", tracking: "0.34em", subTracking: "0.46em" },
-      hero: { main: "1.85rem", sub: "0.48rem", tracking: "0.36em", subTracking: "0.48em" },
+    md:   { main: "1.85rem", sub: "0.48rem", tracking: "0.36em", subTracking: "0.48em" },
+    lg:   { main: "2.2rem",  sub: "0.54rem", tracking: "0.34em", subTracking: "0.46em" },
+    hero: { main: "1.85rem", sub: "0.48rem", tracking: "0.36em", subTracking: "0.48em" },
   };
 
   const s = sizes[size];

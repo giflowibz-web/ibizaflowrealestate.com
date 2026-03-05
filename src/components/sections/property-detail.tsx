@@ -523,15 +523,15 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                 );
 
                 const total = interiorGroups.length + exteriorGroups.length + otherGroups.length;
-                if (total === 0) return <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>No hay características registradas para esta propiedad.</p>;
+                  if (total === 0) return <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>{t.noFeatures}</p>;
 
-                return (
-                  <>
-                    {renderGroup("Características interiores", interiorGroups)}
-                    {renderGroup("Características exteriores", exteriorGroups)}
-                    {renderGroup("Otros detalles", otherGroups)}
-                  </>
-                );
+                  return (
+                    <>
+                      {renderGroup(t.interior, interiorGroups)}
+                      {renderGroup(t.exterior, exteriorGroups)}
+                      {renderGroup(t.other, otherGroups)}
+                    </>
+                  );
               })()}
             </div>
           </section>

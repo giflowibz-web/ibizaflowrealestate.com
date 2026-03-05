@@ -129,71 +129,115 @@ export default function PropertiesListingPage({
 
   const hasActiveFilters = searchQuery || selectedType || selectedArea || minBedrooms > 0 || maxPrice > 0;
 
-  return (
-    <>
-      {/* ── HERO HEADER ── */}
-      <div
-        style={{
-          background: "#0A0A0A",
-          paddingTop: 140,
-          paddingBottom: 80,
-          paddingLeft: "6%",
-          paddingRight: "6%",
-        }}
-      >
-        <div style={{ maxWidth: 1400, margin: "0 auto" }}>
-          <p
+    return (
+      <>
+        {/* ── HERO HEADER WITH VIDEO ── */}
+        <div
+          style={{
+            position: "relative",
+            height: "60vh",
+            minHeight: 420,
+            overflow: "hidden",
+          }}
+        >
+          {/* Video background */}
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
             style={{
-              fontSize: "0.6rem",
-              fontWeight: 700,
-              letterSpacing: "0.35em",
-              textTransform: "uppercase",
-              color: "#002FA7",
-              margin: "0 0 20px",
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "center",
             }}
           >
-            {isRent ? "Luxury Rentals · Ibiza" : "Exclusive Properties · Ibiza"}
-          </p>
-          <h1
-            style={{
-              fontFamily: "'Playfair Display', serif",
-              fontSize: "clamp(3rem, 6vw, 6rem)",
-              fontWeight: 300,
-              color: "#fff",
-              margin: 0,
-              letterSpacing: "-0.04em",
-              lineHeight: 1.05,
-            }}
-          >
-            {isRent ? (
-              <>Villas & Properties<br /><em>for Rent</em></>
-            ) : (
-              <>Villas & Properties<br /><em>for Sale</em></>
-            )}
-          </h1>
+            <source src="/hero.mp4" type="video/mp4" />
+          </video>
+
+          {/* Dark overlay */}
           <div
             style={{
+              position: "absolute",
+              inset: 0,
+              background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%)",
+            }}
+          />
+
+          {/* Content */}
+          <div
+            style={{
+              position: "relative",
+              zIndex: 2,
+              height: "100%",
               display: "flex",
-              alignItems: "center",
-              gap: 32,
-              marginTop: 32,
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              paddingBottom: 60,
+              paddingLeft: "6%",
+              paddingRight: "6%",
+              paddingTop: 140,
+              maxWidth: 1400,
+              margin: "0 auto",
+              width: "100%",
+              boxSizing: "border-box",
             }}
           >
-            <div style={{ width: 40, height: 1, background: "#002FA7" }} />
             <p
               style={{
-                color: "rgba(255,255,255,0.3)",
-                fontSize: "0.78rem",
-                fontWeight: 300,
-                letterSpacing: "0.08em",
-                margin: 0,
+                fontSize: "0.6rem",
+                fontWeight: 700,
+                letterSpacing: "0.35em",
+                textTransform: "uppercase",
+                color: "#002FA7",
+                margin: "0 0 20px",
               }}
             >
-              {filtered.length} {filtered.length === 1 ? "property" : "properties"} available
+              {isRent ? "Luxury Rentals · Ibiza" : "Exclusive Properties · Ibiza"}
             </p>
+            <h1
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(3rem, 6vw, 6rem)",
+                fontWeight: 300,
+                color: "#fff",
+                margin: 0,
+                letterSpacing: "-0.04em",
+                lineHeight: 1.05,
+              }}
+            >
+              {isRent ? (
+                <>Villas & Properties<br /><em>for Rent</em></>
+              ) : (
+                <>Villas & Properties<br /><em>for Sale</em></>
+              )}
+            </h1>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 32,
+                marginTop: 32,
+              }}
+            >
+              <div style={{ width: 40, height: 1, background: "#002FA7" }} />
+              <p
+                style={{
+                  color: "rgba(255,255,255,0.5)",
+                  fontSize: "0.78rem",
+                  fontWeight: 300,
+                  letterSpacing: "0.08em",
+                  margin: 0,
+                }}
+              >
+                {filtered.length} {filtered.length === 1 ? "property" : "properties"} available
+              </p>
+            </div>
           </div>
         </div>
-      </div>
 
       {/* ── FILTERS BAR ── */}
       <div

@@ -212,9 +212,9 @@ export default function PropertiesListingPage({
               }}
             >
               {isRent ? (
-                <>Villas & Properties<br /><em>for Rent</em></>
+                <>{lp.title_rent}<br /><em>{lp.title_rent_em}</em></>
               ) : (
-                <>Villas & Properties<br /><em>for Sale</em></>
+                <>{lp.title_sale}<br /><em>{lp.title_sale_em}</em></>
               )}
             </h1>
             <div

@@ -18,7 +18,7 @@ const StatsOverview: React.FC = () => {
 
           {/* Left: text */}
           <div>
-            <span className="text-[#002FA7] text-[11px] uppercase tracking-[0.3em] font-bold block mb-5">
+            <span className="text-[#1847E8] text-[11px] uppercase tracking-[0.3em] font-bold block mb-5">
               Ibiza Flow Real Estate
             </span>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-[#0A0A0A] leading-[1.05] mb-8">

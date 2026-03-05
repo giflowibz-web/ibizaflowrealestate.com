@@ -10,7 +10,7 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const isLight = variant === "light";
   const textColor = isLight ? "#FFFFFF" : "#0A0A0A";
   const subColor = isLight ? "rgba(255,255,255,0.45)" : "rgba(10,10,10,0.4)";
-  const blueO = "#002FA7";
+  const blueO = "#1847E8";
 
   const sizes = {
     sm:   { main: "1.1rem",  sub: "0.36rem", tracking: "0.40em", subTracking: "0.52em" },

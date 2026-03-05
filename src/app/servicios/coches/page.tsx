@@ -59,7 +59,7 @@ export default function CochesPage() {
               fontWeight: 700,
               letterSpacing: "0.35em",
               textTransform: "uppercase",
-              color: "#002FA7",
+              color: "#1847E8",
               margin: "0 0 20px",
             }}
           >
@@ -79,7 +79,7 @@ export default function CochesPage() {
             Coches de<br /><em>Lujo</em>
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 32, marginTop: 32 }}>
-            <div style={{ width: 40, height: 1, background: "#002FA7" }} />
+            <div style={{ width: 40, height: 1, background: "#1847E8" }} />
             <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.78rem", fontWeight: 300, letterSpacing: "0.08em", margin: 0 }}>
               La flota más exclusiva de Ibiza
             </p>
@@ -91,7 +91,7 @@ export default function CochesPage() {
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
         {/* Info */}
         <div style={{ background: "#fff", padding: "80px 6% 80px 6%" }}>
-          <p style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 20px" }}>
+          <p style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", color: "#1847E8", margin: "0 0 20px" }}>
             Conduce en exclusiva
           </p>
           <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.8rem, 2.5vw, 2.8rem)", fontWeight: 300, color: "#0A0A0A", margin: "0 0 24px", letterSpacing: "-0.03em", lineHeight: 1.2 }}>
@@ -105,7 +105,7 @@ export default function CochesPage() {
           <div style={{ marginTop: 40, display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             {["Ferrari · Lamborghini", "Porsche · McLaren", "Bentley · Rolls-Royce", "Entrega a domicilio"].map((item) => (
               <div key={item} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: "0.68rem", color: "#333", textTransform: "uppercase", letterSpacing: "0.15em" }}>
-                <span style={{ width: 16, height: 1, background: "#002FA7", flexShrink: 0 }} />
+                <span style={{ width: 16, height: 1, background: "#1847E8", flexShrink: 0 }} />
                 {item}
               </div>
             ))}

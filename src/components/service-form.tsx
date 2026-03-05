@@ -29,7 +29,7 @@ const ServiceForm = ({ service, showDate = false }: ServiceFormProps) => {
 
   return (
     <div className="bg-[#0A0A0A] px-10 py-16 lg:px-16 lg:py-20 w-full">
-      <span className="text-[#002FA7] text-[11px] uppercase tracking-[0.3em] font-bold block mb-4">
+      <span className="text-[#1847E8] text-[11px] uppercase tracking-[0.3em] font-bold block mb-4">
         Solicitar información
       </span>
       <h2 className="font-display text-3xl md:text-4xl text-white leading-tight mb-2">
@@ -40,7 +40,7 @@ const ServiceForm = ({ service, showDate = false }: ServiceFormProps) => {
       </p>
 
       {status === "success" ? (
-        <div className="border border-[#002FA7] p-8 text-center">
+        <div className="border border-[#1847E8] p-8 text-center">
           <p className="text-white text-lg font-display font-light mb-2">Solicitud recibida</p>
           <p className="text-white/50 text-sm">Te contactaremos pronto en <span className="text-white">{form.email}</span></p>
         </div>
@@ -54,7 +54,7 @@ const ServiceForm = ({ service, showDate = false }: ServiceFormProps) => {
                 required
                 value={form.name}
                 onChange={handle}
-                className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#002FA7] transition-colors placeholder:text-white/20"
+                className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#1847E8] transition-colors placeholder:text-white/20"
                 placeholder="Tu nombre"
               />
             </div>
@@ -66,7 +66,7 @@ const ServiceForm = ({ service, showDate = false }: ServiceFormProps) => {
                 required
                 value={form.email}
                 onChange={handle}
-                className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#002FA7] transition-colors placeholder:text-white/20"
+                className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#1847E8] transition-colors placeholder:text-white/20"
                 placeholder="tu@email.com"
               />
             </div>
@@ -79,7 +79,7 @@ const ServiceForm = ({ service, showDate = false }: ServiceFormProps) => {
                 name="phone"
                 value={form.phone}
                 onChange={handle}
-                className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#002FA7] transition-colors placeholder:text-white/20"
+                className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#1847E8] transition-colors placeholder:text-white/20"
                 placeholder="+34 600 000 000"
               />
             </div>
@@ -91,7 +91,7 @@ const ServiceForm = ({ service, showDate = false }: ServiceFormProps) => {
                   type="date"
                   value={form.date}
                   onChange={handle}
-                  className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#002FA7] transition-colors"
+                  className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#1847E8] transition-colors"
                 />
               </div>
             )}
@@ -104,7 +104,7 @@ const ServiceForm = ({ service, showDate = false }: ServiceFormProps) => {
               value={form.message}
               onChange={handle}
               rows={4}
-              className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#002FA7] transition-colors placeholder:text-white/20 resize-none"
+              className="w-full bg-transparent border border-white/10 text-white text-sm px-4 py-3 focus:outline-none focus:border-[#1847E8] transition-colors placeholder:text-white/20 resize-none"
               placeholder="Cuéntanos más detalles..."
             />
           </div>
@@ -117,7 +117,7 @@ const ServiceForm = ({ service, showDate = false }: ServiceFormProps) => {
             <button
               type="submit"
               disabled={status === "loading"}
-              className="group inline-flex items-center gap-3 bg-[#002FA7] text-white px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-bold hover:bg-[#0038c8] transition-colors duration-300 disabled:opacity-50"
+              className="group inline-flex items-center gap-3 bg-[#1847E8] text-white px-8 py-4 text-[11px] uppercase tracking-[0.25em] font-bold hover:bg-[#0038c8] transition-colors duration-300 disabled:opacity-50"
             >
               {status === "loading" ? "Enviando..." : "Enviar solicitud"}
               <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

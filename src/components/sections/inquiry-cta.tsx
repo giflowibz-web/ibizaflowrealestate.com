@@ -22,9 +22,9 @@ const InquiryCTA = () => {
       {/* Header */}
       <div className="max-w-5xl mx-auto text-center mb-16">
         <div className="flex items-center justify-center gap-3 mb-5">
-          <div className="w-8 h-px bg-[#002FA7]" />
-          <span className="text-[#002FA7] text-[10px] uppercase tracking-[0.35em] font-bold">{t.cta.tag}</span>
-          <div className="w-8 h-px bg-[#002FA7]" />
+          <div className="w-8 h-px bg-[#1847E8]" />
+          <span className="text-[#1847E8] text-[10px] uppercase tracking-[0.35em] font-bold">{t.cta.tag}</span>
+          <div className="w-8 h-px bg-[#1847E8]" />
         </div>
         <h2 className="font-display text-4xl md:text-5xl text-[#0A0A0A] font-light leading-tight mb-4">
           {t.cta.title}
@@ -50,19 +50,19 @@ const InquiryCTA = () => {
 
           {/* Contact shortcuts on image */}
           <div className="absolute bottom-10 left-10 right-10">
-            <div className="w-6 h-px bg-[#002FA7] mb-5" />
+            <div className="w-6 h-px bg-[#1847E8] mb-5" />
             <p className="font-display text-xl text-white font-light leading-tight mb-6">
               &ldquo;Ibiza no es solo un destino,<br />es un estilo de vida.&rdquo;
             </p>
             <div className="flex flex-col gap-2.5">
               <a href="tel:+34600000000" className="group flex items-center gap-3">
-                <div className="w-7 h-7 bg-white/10 flex items-center justify-center group-hover:bg-[#002FA7] transition-colors duration-200">
+                <div className="w-7 h-7 bg-white/10 flex items-center justify-center group-hover:bg-[#1847E8] transition-colors duration-200">
                   <Phone className="w-3 h-3 text-white" />
                 </div>
                 <span className="text-white/60 text-[12px] group-hover:text-white transition-colors">+34 600 000 000</span>
               </a>
               <a href="mailto:info@ibizaflowrealestate.com" className="group flex items-center gap-3">
-                <div className="w-7 h-7 bg-white/10 flex items-center justify-center group-hover:bg-[#002FA7] transition-colors duration-200">
+                <div className="w-7 h-7 bg-white/10 flex items-center justify-center group-hover:bg-[#1847E8] transition-colors duration-200">
                   <Mail className="w-3 h-3 text-white" />
                 </div>
                 <span className="text-white/60 text-[12px] group-hover:text-white transition-colors">info@ibizaflowrealestate.com</span>
@@ -84,7 +84,7 @@ const InquiryCTA = () => {
                     <div
                       key={field.id}
                       className={`relative border transition-colors duration-200 ${
-                        focused === field.id ? "border-[#002FA7]/60 bg-[#002FA7]/5" : "border-white/8 bg-transparent"
+                        focused === field.id ? "border-[#1847E8]/60 bg-[#1847E8]/5" : "border-white/8 bg-transparent"
                       }`}
                     >
                       <label htmlFor={field.id} className="block pt-3 px-4 text-[9px] uppercase tracking-[0.22em] font-bold text-white/25">
@@ -102,7 +102,7 @@ const InquiryCTA = () => {
                   ))}
 
                   <div className={`relative border transition-colors duration-200 ${
-                    focused === "cta-msg" ? "border-[#002FA7]/60 bg-[#002FA7]/5" : "border-white/8 bg-transparent"
+                    focused === "cta-msg" ? "border-[#1847E8]/60 bg-[#1847E8]/5" : "border-white/8 bg-transparent"
                   }`}>
                     <label htmlFor="cta-msg" className="block pt-3 px-4 text-[9px] uppercase tracking-[0.22em] font-bold text-white/25">
                       Mensaje
@@ -120,7 +120,7 @@ const InquiryCTA = () => {
 
                 <button
                   type="submit"
-                  className="group w-full bg-[#002FA7] hover:bg-[#0038cc] text-white px-8 py-4 text-[10px] uppercase tracking-[0.28em] font-bold transition-all duration-300 flex items-center justify-center gap-3 font-body"
+                  className="group w-full bg-[#1847E8] hover:bg-[#0038cc] text-white px-8 py-4 text-[10px] uppercase tracking-[0.28em] font-bold transition-all duration-300 flex items-center justify-center gap-3 font-body"
                 >
                   {t.cta.submit}
                   <Send className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
@@ -128,8 +128,8 @@ const InquiryCTA = () => {
               </form>
             ) : (
               <div className="border border-white/10 p-10 text-center">
-                <div className="w-10 h-10 bg-[#002FA7]/15 border border-[#002FA7]/30 flex items-center justify-center mx-auto mb-6">
-                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#002FA7" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <div className="w-10 h-10 bg-[#1847E8]/15 border border-[#1847E8]/30 flex items-center justify-center mx-auto mb-6">
+                  <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1847E8" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="2,9 7,14 16,4" />
                   </svg>
                 </div>

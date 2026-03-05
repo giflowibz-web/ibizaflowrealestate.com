@@ -40,7 +40,7 @@ const NewsletterSection = () => {
                 <input
                   type="text"
                   required
-                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#002FA7] transition-colors duration-300"
+                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#1847E8] transition-colors duration-300"
                 />
               </div>
 
@@ -51,7 +51,7 @@ const NewsletterSection = () => {
                 <input
                   type="tel"
                   required
-                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#002FA7] transition-colors duration-300"
+                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#1847E8] transition-colors duration-300"
                 />
               </div>
 
@@ -62,7 +62,7 @@ const NewsletterSection = () => {
                 <input
                   type="email"
                   required
-                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#002FA7] transition-colors duration-300"
+                  className="w-full bg-transparent border-b border-[#333333] py-2 text-white font-body focus:outline-none focus:border-[#1847E8] transition-colors duration-300"
                 />
               </div>
 
@@ -83,7 +83,7 @@ const NewsletterSection = () => {
               <div className="flex justify-center pt-4">
                 <button
                   type="submit"
-                  className="group relative flex items-center justify-center gap-4 bg-[#002FA7] text-white px-10 py-4 text-[12px] font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:brightness-125"
+                  className="group relative flex items-center justify-center gap-4 bg-[#1847E8] text-white px-10 py-4 text-[12px] font-bold uppercase tracking-[0.2em] transition-all duration-300 hover:brightness-125"
                 >
                   {t.newsletter.submit}
                   <MoveRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />

@@ -113,7 +113,7 @@ const IconYear = () => (
 );
 
 const IconCheck = () => (
-  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#002FA7" strokeWidth="1.8">
+  <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#1847E8" strokeWidth="1.8">
     <polyline points="2,8 6,12 14,4" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
@@ -127,7 +127,7 @@ const C = {
   textFaint:   "rgba(10,10,10,0.35)",
   border:      "rgba(10,10,10,0.09)",
   borderLight: "rgba(10,10,10,0.05)",
-  accent:      "#002FA7",
+  accent:      "#1847E8",
   navBg:       "#ffffff",
   navBorder:   "rgba(10,10,10,0.1)",
 };
@@ -140,7 +140,7 @@ const D = {
   text:      "#ffffff",
   textMid:   "rgba(255,255,255,0.55)",
   textFaint: "rgba(255,255,255,0.25)",
-  accent:    "#002FA7",
+  accent:    "#1847E8",
 };
 
 export default function PropertyDetail({ property: p }: { property: Property }) {
@@ -660,7 +660,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                 ) : (
                   <div style={{ padding: "40px 30px 44px", textAlign: "center" }}>
                     <div style={{ width: 48, height: 48, background: "rgba(0,47,167,0.12)", border: "1px solid rgba(0,47,167,0.3)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
-                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#002FA7" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#1847E8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <polyline points="2,9 7,14 16,4" />
                       </svg>
                     </div>

@@ -25,7 +25,7 @@ const Footer = () => {
                 <a
                   key={s}
                   href="#"
-                  className="w-9 h-9 border border-white/15 flex items-center justify-center text-[10px] font-bold text-white/40 hover:border-[#002FA7] hover:text-[#002FA7] transition-all duration-300"
+                  className="w-9 h-9 border border-white/15 flex items-center justify-center text-[10px] font-bold text-white/40 hover:border-[#1847E8] hover:text-[#1847E8] transition-all duration-300"
                 >
                   {s}
                 </a>

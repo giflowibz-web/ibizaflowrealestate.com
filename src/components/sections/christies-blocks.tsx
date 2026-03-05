@@ -20,7 +20,7 @@ const ChristiesBlocks: React.FC = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
           <div>
-            <span className="text-[#002FA7] text-[11px] uppercase tracking-[0.3em] font-bold block mb-4">
+            <span className="text-[#1847E8] text-[11px] uppercase tracking-[0.3em] font-bold block mb-4">
               {t.christies.tag}
             </span>
             <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-white leading-none">
@@ -44,10 +44,10 @@ const ChristiesBlocks: React.FC = () => {
 
               <div className="relative p-10 lg:p-12 flex flex-col min-h-[280px]">
                 <div className="flex items-start justify-between mb-auto">
-                  <span className="text-[#002FA7] text-[11px] uppercase tracking-[0.3em] font-bold">
+                  <span className="text-[#1847E8] text-[11px] uppercase tracking-[0.3em] font-bold">
                     {service.num}
                   </span>
-                  <ArrowRight className="w-5 h-5 text-white/20 group-hover:text-[#002FA7] group-hover:translate-x-1 transition-all duration-300" />
+                  <ArrowRight className="w-5 h-5 text-white/20 group-hover:text-[#1847E8] group-hover:translate-x-1 transition-all duration-300" />
                 </div>
 
                 <div className="mt-8">
@@ -62,7 +62,7 @@ const ChristiesBlocks: React.FC = () => {
                 <div className="mt-8 pt-6 border-t border-white/10">
                   <a
                     href="#contacto"
-                    className="text-[11px] uppercase tracking-[0.2em] font-bold text-white/40 group-hover:text-[#002FA7] transition-colors inline-flex items-center gap-2 font-body"
+                    className="text-[11px] uppercase tracking-[0.2em] font-bold text-white/40 group-hover:text-[#1847E8] transition-colors inline-flex items-center gap-2 font-body"
                   >
                     {t.christies.cta}
                     <span className="transition-transform group-hover:translate-x-1 inline-block">→</span>

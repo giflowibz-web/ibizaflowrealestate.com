@@ -99,14 +99,14 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
         </video>
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.65) 100%)" }} />
         <div style={{ position: "relative", zIndex: 2, height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", paddingBottom: 60, paddingLeft: "6%", paddingRight: "6%", paddingTop: 140, maxWidth: 1400, margin: "0 auto", width: "100%", boxSizing: "border-box" }}>
-          <p style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 20px" }}>
+          <p style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", color: "#1847E8", margin: "0 0 20px" }}>
             {isEs ? "Propiedades Exclusivas · Ibiza" : "Exclusive Properties · Ibiza"}
           </p>
           <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(3rem, 6vw, 6rem)", fontWeight: 300, color: "#fff", margin: 0, letterSpacing: "-0.04em", lineHeight: 1.05 }}>
             {isEs ? <>Villas & Propiedades<br /><em>en Ibiza</em></> : <>Villas & Properties<br /><em>in Ibiza</em></>}
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 32, marginTop: 32 }}>
-            <div style={{ width: 40, height: 1, background: "#002FA7" }} />
+            <div style={{ width: 40, height: 1, background: "#1847E8" }} />
             <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.78rem", fontWeight: 300, letterSpacing: "0.08em", margin: 0 }}>
               {filtered.length} {filtered.length === 1 ? lp.available_one : lp.available_many}
             </p>
@@ -160,21 +160,21 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
           </div>
           {/* Type */}
           <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
-            <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: selectedType ? "#002FA7" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
+            <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: selectedType ? "#1847E8" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
               <option value="">{lp.type_label}</option>
               {lp.property_types.map((pt) => <option key={pt.value} value={pt.value}>{pt.label}</option>)}
             </select>
           </div>
           {/* Area */}
           <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
-            <select value={selectedArea} onChange={(e) => setSelectedArea(e.target.value)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: selectedArea ? "#002FA7" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
+            <select value={selectedArea} onChange={(e) => setSelectedArea(e.target.value)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: selectedArea ? "#1847E8" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
               <option value="">{lp.area_label}</option>
               {AREAS.map((a) => <option key={a} value={a}>{a}</option>)}
             </select>
           </div>
           {/* Bedrooms */}
           <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
-            <select value={minBedrooms === 0 ? "" : `${minBedrooms}`} onChange={(e) => setMinBedrooms(e.target.value ? parseInt(e.target.value) : 0)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: minBedrooms > 0 ? "#002FA7" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
+            <select value={minBedrooms === 0 ? "" : `${minBedrooms}`} onChange={(e) => setMinBedrooms(e.target.value ? parseInt(e.target.value) : 0)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: minBedrooms > 0 ? "#1847E8" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
               <option value="">{lp.bedrooms_label}</option>
               {BEDROOMS_OPTIONS.map((b) => <option key={b} value={parseInt(b)}>{b} {lp.beds_suffix}</option>)}
             </select>
@@ -189,7 +189,7 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
             </select>
           </div>
           {hasActiveFilters && (
-            <button onClick={resetFilters} style={{ background: "none", border: "none", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#002FA7", cursor: "pointer", padding: "0 16px", whiteSpace: "nowrap" }}>
+            <button onClick={resetFilters} style={{ background: "none", border: "none", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#1847E8", cursor: "pointer", padding: "0 16px", whiteSpace: "nowrap" }}>
               {lp.clear}
             </button>
           )}
@@ -203,7 +203,7 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
             <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", fontWeight: 300, color: "#222", margin: "0 0 16px", letterSpacing: "-0.03em" }}>{lp.no_results}</p>
             <p style={{ fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#888" }}>{lp.no_results_sub}</p>
             {hasActiveFilters && (
-              <button onClick={resetFilters} style={{ marginTop: 24, background: "#002FA7", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
+              <button onClick={resetFilters} style={{ marginTop: 24, background: "#1847E8", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
                 {lp.clear_filters}
               </button>
             )}
@@ -276,12 +276,12 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
 
       {/* ── CTA ── */}
       <div style={{ background: "#fff", padding: "100px 6%", textAlign: "center", borderTop: "1px solid #f0f0f0" }}>
-        <p style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 20px" }}>{lp.cta_tag}</p>
+        <p style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", color: "#1847E8", margin: "0 0 20px" }}>{lp.cta_tag}</p>
         <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 4vw, 3.5rem)", fontWeight: 300, color: "#0A0A0A", margin: "0 0 20px", letterSpacing: "-0.03em" }}>
           {isEs ? "¿No encuentras lo que buscas?" : "Can't find what you're looking for?"}
         </h2>
         <p style={{ color: "#888", fontSize: "0.85rem", fontWeight: 300, margin: "0 0 40px", maxWidth: 480, marginLeft: "auto", marginRight: "auto", lineHeight: 1.8 }}>{lp.cta_sub}</p>
-        <Link href="/#contacto" style={{ display: "inline-block", background: "#002FA7", color: "#fff", padding: "16px 48px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}>
+        <Link href="/#contacto" style={{ display: "inline-block", background: "#1847E8", color: "#fff", padding: "16px 48px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", textDecoration: "none" }}>
           {lp.cta_btn}
         </Link>
       </div>

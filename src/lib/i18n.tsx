@@ -325,6 +325,7 @@ export const translations = {
       area_label: "Area",
       bedrooms_label: "Bedrooms",
       beds_suffix: "beds",
+      baths_suffix: "baths",
       sort_featured: "Featured",
       sort_price_asc: "Price ↑",
       sort_price_desc: "Price ↓",

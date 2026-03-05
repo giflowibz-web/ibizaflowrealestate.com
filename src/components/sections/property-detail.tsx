@@ -402,7 +402,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
               {/* STATS ICONS */}
               {stats.length > 0 && (
-                <div style={{ display: "flex", flexWrap: "nowrap", alignItems: "center", gap: 0, marginBottom: 0, paddingBottom: 0, overflowX: "auto" }}>
+                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 0, marginBottom: 0, paddingBottom: 0 }}>
                   {stats.map((d, i) => (
                     <div
                       key={i}

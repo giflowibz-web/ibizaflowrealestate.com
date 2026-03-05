@@ -564,9 +564,9 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
 
                   {/* Header */}
                   <div style={{ padding: "28px 30px 20px", textAlign: "center" }}>
-                    <h3 style={{ fontSize: "1.9rem", fontWeight: 300, color: D.text, margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif" }}>
-                      {t.contact}
-                    </h3>
+                    <h3 style={{ fontSize: "1.9rem", fontWeight: 300, color: D.text, margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif", textTransform: "uppercase" }}>
+                        {t.contact}
+                      </h3>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 10 }}>
                       <div style={{ width: 32, height: 1, background: D.accent }} />
                       <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: D.accent }}>

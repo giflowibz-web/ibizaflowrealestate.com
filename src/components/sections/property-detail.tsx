@@ -119,7 +119,7 @@ const IconCheck = () => (
 );
 
 export default function PropertyDetail({ property: p }: { property: Property }) {
-  const { language } = useLanguage();
+  const { language } = useLang();
   const lang = language === "es" ? "es" : "en";
   const isEs = lang === "es";
 

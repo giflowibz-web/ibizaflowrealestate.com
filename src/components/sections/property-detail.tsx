@@ -46,16 +46,17 @@ type Property = {
   featured?: boolean;
 };
 
-const PROPERTY_TYPE_ES: Record<string, string> = {
-  finca: "Finca",
-  villa: "Villa",
-  penthouse: "Ático",
-  house: "Casa",
-  apartment: "Apartamento",
-  townhouse: "Casa adosada",
-  land: "Terreno",
-  commercial: "Comercial",
-  office: "Oficina",
+const PROPERTY_TYPE_LABELS: Record<string, { es: string; en: string }> = {
+  finca:      { es: "Finca",        en: "Finca" },
+  villa:      { es: "Villa",        en: "Villa" },
+  penthouse:  { es: "Ático",        en: "Penthouse" },
+  house:      { es: "Casa",         en: "House" },
+  apartment:  { es: "Apartamento",  en: "Apartment" },
+  townhouse:  { es: "Casa Adosada", en: "Townhouse" },
+  land:       { es: "Terreno",      en: "Land" },
+  commercial: { es: "Comercial",    en: "Commercial" },
+  office:     { es: "Oficina",      en: "Office" },
+  hotel:      { es: "Hotel",        en: "Hotel" },
 };
 
 function formatPrice(p: number | string | null | undefined, currency = "EUR") {

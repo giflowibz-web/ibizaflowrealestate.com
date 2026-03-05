@@ -534,24 +534,27 @@ export default function PropertiesListingPage({
                             {location}
                           </p>
 
-                            {/* Stats — sin bordes, solo texto blanco */}
-                            <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap" }}>
-                              {(property.bedrooms ?? 0) > 0 && (
-                                <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.68rem", fontWeight: 300, letterSpacing: "0.06em" }}>
-                                  {property.bedrooms} {lp.beds_suffix}
-                                </span>
-                              )}
-                              {(property.bathrooms ?? 0) > 0 && (
-                                <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.68rem", fontWeight: 300, letterSpacing: "0.06em" }}>
-                                  {property.bathrooms} {lp.baths_suffix}
-                                </span>
-                              )}
-                              {property.size_built && Number(property.size_built) > 0 && (
-                                <span style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.68rem", fontWeight: 300, letterSpacing: "0.06em" }}>
-                                  {property.size_built} m²
-                                </span>
-                              )}
-                            </div>
+                            {/* Stats */}
+                              <div style={{ display: "flex", gap: 18, alignItems: "center", flexWrap: "wrap" }}>
+                                {(property.bedrooms ?? 0) > 0 && (
+                                  <span style={{ display: "flex", alignItems: "center", gap: 5, color: "rgba(255,255,255,0.85)", fontSize: "0.68rem", fontWeight: 300, letterSpacing: "0.06em" }}>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9V19M21 9V19M3 13H21M3 9C3 9 5 7 12 7C19 7 21 9 21 9"/><rect x="7" y="9" width="4" height="4" rx="0.5"/></svg>
+                                    {property.bedrooms} {lp.beds_suffix}
+                                  </span>
+                                )}
+                                {(property.bathrooms ?? 0) > 0 && (
+                                  <span style={{ display: "flex", alignItems: "center", gap: 5, color: "rgba(255,255,255,0.85)", fontSize: "0.68rem", fontWeight: 300, letterSpacing: "0.06em" }}>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12H20V16C20 18.2 18.2 20 16 20H8C5.8 20 4 18.2 4 16V12Z"/><path d="M4 12V7C4 5.9 4.9 5 6 5H9C10.1 5 11 5.9 11 7V12"/><circle cx="7" cy="5" r="0.5" fill="currentColor"/></svg>
+                                    {property.bathrooms} {lp.baths_suffix}
+                                  </span>
+                                )}
+                                {property.size_built && Number(property.size_built) > 0 && (
+                                  <span style={{ display: "flex", alignItems: "center", gap: 5, color: "rgba(255,255,255,0.85)", fontSize: "0.68rem", fontWeight: 300, letterSpacing: "0.06em" }}>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><path d="M3 9H21M9 3V21"/></svg>
+                                    {property.size_built} m²
+                                  </span>
+                                )}
+                              </div>
                         </div>
                       </Link>
                     );

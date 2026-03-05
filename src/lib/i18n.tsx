@@ -144,14 +144,47 @@ export const translations = {
       description: "Descripción",
       location: "Ubicación",
     },
-    // Common
-    common: {
-      loading: "Cargando...",
-      error: "Error",
-      close: "Cerrar",
+      // Properties listing page
+      listing_page: {
+        tag_sale: "Propiedades Exclusivas · Ibiza",
+        tag_rent: "Alquileres de Lujo · Ibiza",
+        title_sale: "Villas & Propiedades",
+        title_sale_em: "en Venta",
+        title_rent: "Villas & Propiedades",
+        title_rent_em: "en Alquiler",
+        available_one: "propiedad disponible",
+        available_many: "propiedades disponibles",
+        search_placeholder: "Buscar por ubicación o nombre...",
+        type_label: "Tipo de Propiedad",
+        area_label: "Zona",
+        bedrooms_label: "Dormitorios",
+        beds_suffix: "dorm.",
+        sort_featured: "Destacadas",
+        sort_price_asc: "Precio ↑",
+        sort_price_desc: "Precio ↓",
+        sort_newest: "Más recientes",
+        clear: "Limpiar ×",
+        no_results: "Sin resultados",
+        no_results_sub: "Prueba a cambiar los filtros",
+        clear_filters: "Quitar Filtros",
+        price_on_request: "Precio a consultar",
+        per_month: "/mes",
+        cta_tag: "Colección Privada",
+        cta_title_sale: "¿No encuentras lo que buscas?",
+        cta_title_rent: "¿Buscas algo en concreto?",
+        cta_sub: "Tenemos acceso a propiedades off-market no publicadas. Contacta con nuestro equipo para una consulta privada.",
+        cta_btn: "Contactar",
+        bd: "HD",
+        ba: "BA",
+      },
+      // Common
+      common: {
+        loading: "Cargando...",
+        error: "Error",
+        close: "Cerrar",
+      },
     },
-  },
-  en: {
+    en: {
     // Navbar
     nav: {
       properties: "Properties",

@@ -1,0 +1,27 @@
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
+
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { service, name, email, phone, message, date } = body;
+
+  const { error } = await supabase.from("service_inquiries").insert({
+    service,
+    name,
+    email,
+    phone,
+    message,
+    date: date || null,
+  });
+
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true });
+}

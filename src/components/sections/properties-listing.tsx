@@ -553,21 +553,21 @@ export default function PropertiesListingPage({
                             </span>
                           )}
                           {property.property_type && (
-                            <span
-                              style={{
-                                marginLeft: "auto",
-                                background: "rgba(0,0,0,0.55)",
-                                color: "#fff",
-                                fontSize: "0.55rem",
-                                fontWeight: 600,
-                                letterSpacing: "0.2em",
-                                textTransform: "uppercase",
-                                padding: "6px 12px",
-                              }}
-                            >
-                              {property.property_type}
-                            </span>
-                          )}
+                              <span
+                                style={{
+                                  marginLeft: "auto",
+                                  background: "rgba(0,0,0,0.55)",
+                                  color: "#fff",
+                                  fontSize: "0.55rem",
+                                  fontWeight: 600,
+                                  letterSpacing: "0.2em",
+                                  textTransform: "uppercase",
+                                  padding: "6px 12px",
+                                }}
+                              >
+                                {lp.property_types.find(pt => pt.value.toLowerCase() === property.property_type?.toLowerCase())?.label ?? property.property_type}
+                              </span>
+                            )}
                         </div>
                       </div>
 

@@ -348,10 +348,10 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
       <nav style={{ background: "#fff", borderBottom: "1px solid #e5e5e5", position: "sticky", top: 68, zIndex: 40 }}>
         <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex" }}>
           {[
-            { label: "Descripción de la propiedad", href: "#descripcion" },
-            { label: "Información básica", href: "#info-basica" },
-            { label: "Características y comodidades", href: "#caracteristicas" },
-            { label: "Póngase en contacto", href: "#contacto" },
+            { label: t.propDesc,   href: "#descripcion" },
+            { label: t.basicInfo,  href: "#info-basica" },
+            { label: t.amenities,  href: "#caracteristicas" },
+            { label: t.contact,    href: "#contacto" },
           ].map((item, i, arr) => (
             <a
               key={i}

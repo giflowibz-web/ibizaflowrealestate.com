@@ -136,8 +136,8 @@ export default function PropertiesListingPage({
         <div
           style={{
             position: "relative",
-            height: "60vh",
-            minHeight: 420,
+            height: "100vh",
+            minHeight: 600,
             overflow: "hidden",
           }}
         >

@@ -313,7 +313,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               onMouseLeave={(e) => ((e.currentTarget as HTMLButtonElement).style.color = "rgba(255,255,255,0.55)")}
             >
               <span style={{ display: "inline-block", width: 18, height: 1, background: "rgba(255,255,255,0.4)" }} />
-              Ver fotos ({images.length})
+              {t.viewPhotos} ({images.length})
             </button>
           )}
 

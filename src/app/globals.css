@@ -97,14 +97,15 @@
     outline-offset: 2px;
   }
 
-    input, textarea, select, button, a {
-      outline: none;
-    }
+    input, textarea, select, button, a, nav {
+    outline: none !important;
+    box-shadow: none;
+  }
 
-    a:focus, a:active {
-      outline: none;
-      box-shadow: none;
-    }
+  a:focus, a:active, nav:focus, nav:focus-within {
+    outline: none !important;
+    box-shadow: none;
+  }
 
   :root {
     --background: #FFFFFF;

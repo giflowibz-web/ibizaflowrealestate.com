@@ -411,121 +411,101 @@ export default function PropertiesListingPage({
       </div>
 
         {/* ── GRID ── */}
-        <div style={{ background: "#0A0A0A", minHeight: "60vh" }}>
-          {filtered.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "120px 6%", color: "#999" }}>
-              <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", fontWeight: 300, color: "#444", margin: "0 0 16px", letterSpacing: "-0.03em" }}>
-                {lp.no_results}
-              </p>
-              <p style={{ fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#666" }}>
-                {lp.no_results_sub}
-              </p>
-              {hasActiveFilters && (
-                <button onClick={resetFilters} style={{ marginTop: 24, background: "#002FA7", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
-                  {lp.clear_filters}
-                </button>
-              )}
-            </div>
-          ) : (
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "3px", padding: "3px" }}>
-              {filtered.map((property) => {
-                const price = property.price_on_request
-                  ? lp.price_on_request
-                  : formatPrice(
-                      isRent ? property.price_rent : property.price,
-                      property.currency ?? "EUR",
-                      isRent,
-                      lp.per_month,
-                    ) ?? lp.price_on_request;
+          <div style={{ background: "#fff", minHeight: "60vh" }}>
+            {filtered.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "120px 6%", color: "#999" }}>
+                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", fontWeight: 300, color: "#222", margin: "0 0 16px", letterSpacing: "-0.03em" }}>
+                  {lp.no_results}
+                </p>
+                <p style={{ fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase", color: "#888" }}>
+                  {lp.no_results_sub}
+                </p>
+                {hasActiveFilters && (
+                  <button onClick={resetFilters} style={{ marginTop: 24, background: "#002FA7", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
+                    {lp.clear_filters}
+                  </button>
+                )}
+              </div>
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "3px", padding: "3px", background: "#e8e8e8" }}>
+                {filtered.map((property) => {
+                  const price = property.price_on_request
+                    ? lp.price_on_request
+                    : formatPrice(
+                        isRent ? property.price_rent : property.price,
+                        property.currency ?? "EUR",
+                        isRent,
+                        lp.per_month,
+                      ) ?? lp.price_on_request;
 
-                const location = [property.area, property.municipality ?? "Ibiza"]
-                  .filter(Boolean)
-                  .join(", ");
+                  const location = [property.area, property.municipality ?? "Ibiza"]
+                    .filter(Boolean)
+                    .join(", ");
 
-                const title = property.title_en || property.title_es;
-                const href = `/propiedades/${property.slug || property.id}`;
-                const typeLabel = lp.property_types.find(pt => pt.value.toLowerCase() === property.property_type?.toLowerCase())?.label ?? property.property_type;
+                  const title = property.title_en || property.title_es;
+                  const href = `/propiedades/${property.slug || property.id}`;
+                  const typeLabel = lp.property_types.find(pt => pt.value.toLowerCase() === property.property_type?.toLowerCase())?.label ?? property.property_type;
 
-                return (
-                  <Link key={property.id} href={href} style={{ textDecoration: "none", display: "block" }}>
-                    <div
-                      style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
-                      onMouseEnter={(e) => {
-                        const img = e.currentTarget.querySelector("img") as HTMLImageElement | null;
-                        if (img) img.style.transform = "scale(1.06)";
-                      }}
-                      onMouseLeave={(e) => {
-                        const img = e.currentTarget.querySelector("img") as HTMLImageElement | null;
-                        if (img) img.style.transform = "scale(1)";
-                      }}
-                    >
+                  return (
+                    <Link key={property.id} href={href} style={{ textDecoration: "none", display: "block", background: "#fff" }}>
                       {/* Image */}
-                      {property.images?.[0] ? (
-                        <img
-                          src={property.images[0]}
-                          alt={title}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "cover",
-                            display: "block",
-                            transition: "transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                          }}
-                        />
-                      ) : (
-                        <div style={{ width: "100%", height: "100%", background: "#1a1a1a", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                          <span style={{ color: "#444", fontSize: "0.6rem", letterSpacing: "0.4em", textTransform: "uppercase" }}>Ibiza Flow</span>
-                        </div>
-                      )}
+                      <div
+                        style={{ position: "relative", aspectRatio: "4/3", overflow: "hidden", cursor: "pointer" }}
+                        onMouseEnter={(e) => {
+                          const img = e.currentTarget.querySelector("img") as HTMLImageElement | null;
+                          if (img) img.style.transform = "scale(1.06)";
+                        }}
+                        onMouseLeave={(e) => {
+                          const img = e.currentTarget.querySelector("img") as HTMLImageElement | null;
+                          if (img) img.style.transform = "scale(1)";
+                        }}
+                      >
+                        {property.images?.[0] ? (
+                          <img
+                            src={property.images[0]}
+                            alt={title}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                              display: "block",
+                              transition: "transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                            }}
+                          />
+                        ) : (
+                          <div style={{ width: "100%", height: "100%", background: "#f0f0f0", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                            <span style={{ color: "#bbb", fontSize: "0.6rem", letterSpacing: "0.4em", textTransform: "uppercase" }}>Ibiza Flow</span>
+                          </div>
+                        )}
 
-                      {/* Gradient overlay */}
-                      <div style={{
-                        position: "absolute",
-                        inset: 0,
-                        background: "linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.0) 100%)",
-                      }} />
-
-                      {/* Top badges */}
-                      <div style={{ position: "absolute", top: 20, left: 20, right: 20, display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                        <span style={{
-                          background: "rgba(255,255,255,0.15)",
-                          backdropFilter: "blur(6px)",
-                          color: "#fff",
-                          fontSize: "0.55rem",
-                          fontWeight: 700,
-                          letterSpacing: "0.28em",
-                          textTransform: "uppercase",
-                          padding: "7px 14px",
-                          border: "1px solid rgba(255,255,255,0.2)",
-                        }}>
-                          {isRent ? lp.tag_rent : lp.tag_sale}
-                        </span>
+                        {/* Type badge top-left */}
                         {typeLabel && (
                           <span style={{
-                            background: "rgba(0,47,167,0.85)",
+                            position: "absolute", top: 16, left: 16,
+                            background: "#002FA7",
                             color: "#fff",
-                            fontSize: "0.55rem",
-                            fontWeight: 600,
-                            letterSpacing: "0.2em",
+                            fontSize: "0.52rem",
+                            fontWeight: 700,
+                            letterSpacing: "0.22em",
                             textTransform: "uppercase",
-                            padding: "7px 14px",
+                            padding: "6px 13px",
                           }}>
                             {typeLabel}
                           </span>
                         )}
                       </div>
 
-                      {/* Bottom info overlay */}
-                      <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "32px 28px 28px" }}>
+                      {/* Info below image */}
+                      <div style={{ padding: "20px 24px 24px", background: "#fff" }}>
                         {/* Price */}
                         <p style={{
                           fontFamily: "'Playfair Display', serif",
-                          fontSize: "clamp(1.6rem, 2.8vw, 2.2rem)",
+                          fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)",
                           fontWeight: 300,
-                          color: "#fff",
-                          margin: "0 0 6px",
+                          color: "#0A0A0A",
+                          margin: "0 0 4px",
                           letterSpacing: "-0.02em",
-                          lineHeight: 1,
+                          lineHeight: 1.1,
                         }}>
                           {price}
                         </p>
@@ -534,7 +514,7 @@ export default function PropertiesListingPage({
                         <p style={{
                           fontSize: "0.72rem",
                           fontWeight: 400,
-                          color: "rgba(255,255,255,0.7)",
+                          color: "#888",
                           margin: "0 0 16px",
                           letterSpacing: "0.06em",
                         }}>
@@ -542,17 +522,17 @@ export default function PropertiesListingPage({
                         </p>
 
                         {/* Stats row */}
-                        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+                        <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                           {(property.bedrooms ?? 0) > 0 && (
                             <span style={{
                               display: "flex", alignItems: "center", gap: 7,
-                              background: "rgba(255,255,255,0.12)",
-                              border: "1px solid rgba(255,255,255,0.2)",
-                              color: "#fff",
+                              border: "1px solid #ddd",
+                              color: "#333",
                               fontSize: "0.68rem",
                               fontWeight: 500,
-                              padding: "6px 12px",
+                              padding: "6px 13px",
                               letterSpacing: "0.04em",
+                              background: "#fafafa",
                             }}>
                               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M3 20v-8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8"/>
@@ -567,13 +547,13 @@ export default function PropertiesListingPage({
                           {(property.bathrooms ?? 0) > 0 && (
                             <span style={{
                               display: "flex", alignItems: "center", gap: 7,
-                              background: "rgba(255,255,255,0.12)",
-                              border: "1px solid rgba(255,255,255,0.2)",
-                              color: "#fff",
+                              border: "1px solid #ddd",
+                              color: "#333",
                               fontSize: "0.68rem",
                               fontWeight: 500,
-                              padding: "6px 12px",
+                              padding: "6px 13px",
                               letterSpacing: "0.04em",
+                              background: "#fafafa",
                             }}>
                               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
@@ -586,13 +566,13 @@ export default function PropertiesListingPage({
                           {property.size_built && Number(property.size_built) > 0 && (
                             <span style={{
                               display: "flex", alignItems: "center", gap: 7,
-                              background: "rgba(255,255,255,0.12)",
-                              border: "1px solid rgba(255,255,255,0.2)",
-                              color: "#fff",
+                              border: "1px solid #ddd",
+                              color: "#333",
                               fontSize: "0.68rem",
                               fontWeight: 500,
-                              padding: "6px 12px",
+                              padding: "6px 13px",
                               letterSpacing: "0.04em",
+                              background: "#fafafa",
                             }}>
                               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M3 14h7v7H3z"/><path d="M14 14h7v7h-7z"/>
@@ -602,78 +582,77 @@ export default function PropertiesListingPage({
                           )}
                         </div>
                       </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-        </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            )}
+          </div>
 
-      {/* ── CONTACT CTA ── */}
-      <div
-        style={{
-          background: "#0A0A0A",
-          padding: "100px 6%",
-          textAlign: "center",
-        }}
-      >
-        <p
+        {/* ── CONTACT CTA ── */}
+        <div
           style={{
-            fontSize: "0.6rem",
-            fontWeight: 700,
-            letterSpacing: "0.35em",
-            textTransform: "uppercase",
-            color: "#002FA7",
-            margin: "0 0 20px",
+            background: "#f7f7f7",
+            padding: "100px 6%",
+            textAlign: "center",
+            borderTop: "1px solid #e8e8e8",
           }}
         >
-          {lp.cta_tag}
-        </p>
-        <h2
-          style={{
-            fontFamily: "'Playfair Display', serif",
-            fontSize: "clamp(2rem, 4vw, 3.5rem)",
-            fontWeight: 300,
-            color: "#fff",
-            margin: "0 0 20px",
-            letterSpacing: "-0.03em",
-          }}
-        >
-          {isRent ? lp.cta_title_rent : lp.cta_title_sale}
-        </h2>
-        <p
-          style={{
-            color: "rgba(255,255,255,0.35)",
-            fontSize: "0.85rem",
-            fontWeight: 300,
-            margin: "0 0 40px",
-            maxWidth: 480,
-            marginLeft: "auto",
-            marginRight: "auto",
-            lineHeight: 1.8,
-          }}
-        >
-          {lp.cta_sub}
-        </p>
-        <Link
-          href="/#contacto"
-          style={{
-            display: "inline-block",
-            background: "#002FA7",
-            color: "#fff",
-            padding: "16px 48px",
-            fontSize: "0.68rem",
-            fontWeight: 700,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            textDecoration: "none",
-            transition: "filter 0.3s",
-          }}
-        >
-          {lp.cta_btn}
-        </Link>
-      </div>
+          <p
+            style={{
+              fontSize: "0.6rem",
+              fontWeight: 700,
+              letterSpacing: "0.35em",
+              textTransform: "uppercase",
+              color: "#002FA7",
+              margin: "0 0 20px",
+            }}
+          >
+            {lp.cta_tag}
+          </p>
+          <h2
+            style={{
+              fontFamily: "'Playfair Display', serif",
+              fontSize: "clamp(2rem, 4vw, 3.5rem)",
+              fontWeight: 300,
+              color: "#0A0A0A",
+              margin: "0 0 20px",
+              letterSpacing: "-0.03em",
+            }}
+          >
+            {isRent ? lp.cta_title_rent : lp.cta_title_sale}
+          </h2>
+          <p
+            style={{
+              color: "#888",
+              fontSize: "0.85rem",
+              fontWeight: 300,
+              margin: "0 0 40px",
+              maxWidth: 480,
+              marginLeft: "auto",
+              marginRight: "auto",
+              lineHeight: 1.8,
+            }}
+          >
+            {lp.cta_sub}
+          </p>
+          <Link
+            href="/#contacto"
+            style={{
+              display: "inline-block",
+              background: "#002FA7",
+              color: "#fff",
+              padding: "16px 48px",
+              fontSize: "0.68rem",
+              fontWeight: 700,
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              textDecoration: "none",
+            }}
+          >
+            {lp.cta_btn}
+          </Link>
+        </div>
     </>
   );
 }

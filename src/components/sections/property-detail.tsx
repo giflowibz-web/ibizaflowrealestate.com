@@ -132,6 +132,17 @@ const C = {
   navBorder:   "rgba(10,10,10,0.1)",
 };
 
+// Dark form tokens
+const D = {
+  bg:        "#0A0A0A",
+  border:    "rgba(255,255,255,0.08)",
+  borderAct: "rgba(0,47,167,0.5)",
+  text:      "#ffffff",
+  textMid:   "rgba(255,255,255,0.55)",
+  textFaint: "rgba(255,255,255,0.25)",
+  accent:    "#002FA7",
+};
+
 export default function PropertyDetail({ property: p }: { property: Property }) {
   const { language } = useLang();
   const lang = language === "es" ? "es" : "en";

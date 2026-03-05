@@ -709,7 +709,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                 </div>
               )}
               {images.length > 1 && (
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 3 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16 }}>
                   {images.slice(1).map((img, i) => (
                     <div
                       key={i}

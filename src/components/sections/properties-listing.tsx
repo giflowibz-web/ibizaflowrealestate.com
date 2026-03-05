@@ -428,40 +428,17 @@ export default function PropertiesListingPage({
                 color: "#999",
               }}
             >
-              <p
-                style={{
-                  fontFamily: "'Playfair Display', serif",
-                  fontSize: "2.5rem",
-                  fontWeight: 300,
-                  color: "#ccc",
-                  margin: "0 0 16px",
-                  letterSpacing: "-0.03em",
-                }}
-              >
-                No properties found
-              </p>
-              <p style={{ fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-                Try adjusting your filters
-              </p>
-              {hasActiveFilters && (
-                <button
-                  onClick={resetFilters}
-                  style={{
-                    marginTop: 24,
-                    background: "#002FA7",
-                    color: "#fff",
-                    border: "none",
-                    padding: "12px 32px",
-                    fontSize: "0.68rem",
-                    fontWeight: 700,
-                    letterSpacing: "0.2em",
-                    textTransform: "uppercase",
-                    cursor: "pointer",
-                  }}
-                >
-                  Clear Filters
-                </button>
-              )}
+                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "2.5rem", fontWeight: 300, color: "#ccc", margin: "0 0 16px", letterSpacing: "-0.03em" }}>
+                  {lp.no_results}
+                </p>
+                <p style={{ fontSize: "0.8rem", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+                  {lp.no_results_sub}
+                </p>
+                {hasActiveFilters && (
+                  <button onClick={resetFilters} style={{ marginTop: 24, background: "#002FA7", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
+                    {lp.clear_filters}
+                  </button>
+                )}
             </div>
           ) : (
             <div

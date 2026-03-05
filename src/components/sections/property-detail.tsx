@@ -151,6 +151,8 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
   const images = p.images?.filter(Boolean) ?? [];
   const mainImage = images[0] ?? "";
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [formFocused, setFormFocused] = useState<string | null>(null);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const title = isEs ? p.title_es : (p.title_en ?? p.title_es);
   const description = isEs ? p.description_es : (p.description_en ?? p.description_es);

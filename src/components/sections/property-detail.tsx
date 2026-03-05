@@ -357,7 +357,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
         </section>
 
         {/* ══ NAV TABS ══ */}
-        <nav style={{ background: C.navBg, borderBottom: `1px solid ${C.navBorder}`, position: "sticky", top: 68, zIndex: 40 }}>
+          <nav style={{ background: C.navBg, borderBottom: `1px solid ${C.navBorder}`, position: "sticky", top: 68, zIndex: 40, outline: "none" }}>
           <div style={{ maxWidth: 1400, margin: "0 auto", display: "flex" }}>
             {[
               { label: t.propDesc,  href: "#descripcion" },

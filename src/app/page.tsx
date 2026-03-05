@@ -1,6 +1,7 @@
 import Navbar from "@/components/sections/navbar";
 import Hero from "@/components/sections/hero";
 import ListingsGrid from "@/components/sections/listings-grid";
+import Services from "@/components/sections/services";
 import StatsOverview from "@/components/sections/stats-overview";
 import PressCarousel from "@/components/sections/press-carousel";
 import InquiryCta from "@/components/sections/inquiry-cta";
@@ -12,6 +13,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <ListingsGrid />
+      <Services />
       <StatsOverview />
       <PressCarousel />
       <InquiryCta />

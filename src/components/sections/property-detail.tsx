@@ -575,7 +575,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
             {price && (
               <div style={{ margin: "0 26px 16px", borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "10px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "0.6rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.2)" }}>
-                  {p.listing_type === "rent" ? "Alquiler mensual" : "Precio de venta"}
+                  {p.listing_type === "rent" ? t.rentPrice : t.salePrice}
                 </span>
                 <span style={{ fontSize: "0.85rem", fontWeight: 300, color: "#fff" }}>
                   {p.listing_type === "rent" && priceRent ? `${priceRent}/mes` : price}

@@ -101,7 +101,7 @@ const ListingsGrid = () => {
           {properties.length === 0 ? (
             <div className="text-center py-20 text-[#999] text-sm">{t.listings.no_properties}</div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-10">
               {properties.map((property, index) => (
                 <a
                   key={property.id}

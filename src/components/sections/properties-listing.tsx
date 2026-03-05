@@ -495,93 +495,93 @@ export default function PropertiesListingPage({
                         )}
                       </div>
 
-                      {/* Info below image */}
-                      <div style={{ padding: "20px 24px 24px", background: "#fff" }}>
-                        {/* Price */}
-                        <p style={{
-                          fontFamily: "'Playfair Display', serif",
-                          fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)",
-                          fontWeight: 300,
-                          color: "#0A0A0A",
-                          margin: "0 0 4px",
-                          letterSpacing: "-0.02em",
-                          lineHeight: 1.1,
-                        }}>
-                          {price}
-                        </p>
+                        {/* Info below image */}
+                        <div style={{ padding: "18px 20px 22px", background: "#fff" }}>
+                          {/* Price */}
+                          <p style={{
+                            fontFamily: "'Playfair Display', serif",
+                            fontSize: "clamp(1.4rem, 2.2vw, 1.9rem)",
+                            fontWeight: 300,
+                            color: "#0A0A0A",
+                            margin: "0 0 4px",
+                            letterSpacing: "-0.02em",
+                            lineHeight: 1.1,
+                          }}>
+                            {price}
+                          </p>
 
-                        {/* Location */}
-                        <p style={{
-                          fontSize: "0.72rem",
-                          fontWeight: 400,
-                          color: "#888",
-                          margin: "0 0 16px",
-                          letterSpacing: "0.06em",
-                        }}>
-                          {location}
-                        </p>
+                          {/* Location */}
+                          <p style={{
+                            fontSize: "0.72rem",
+                            fontWeight: 400,
+                            color: "#555",
+                            margin: "0 0 14px",
+                            letterSpacing: "0.04em",
+                          }}>
+                            {location}
+                          </p>
 
-                        {/* Stats row */}
-                        <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-                          {(property.bedrooms ?? 0) > 0 && (
-                            <span style={{
-                              display: "flex", alignItems: "center", gap: 7,
-                              border: "1px solid #ddd",
-                              color: "#333",
-                              fontSize: "0.68rem",
-                              fontWeight: 500,
-                              padding: "6px 13px",
-                              letterSpacing: "0.04em",
-                              background: "#fafafa",
-                            }}>
-                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M3 20v-8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8"/>
-                                <path d="M3 14h18"/>
-                                <path d="M5 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
-                                <path d="M13 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
-                                <path d="M1 20h22"/>
-                              </svg>
-                              {property.bedrooms} {lp.beds_suffix}
-                            </span>
-                          )}
-                          {(property.bathrooms ?? 0) > 0 && (
-                            <span style={{
-                              display: "flex", alignItems: "center", gap: 7,
-                              border: "1px solid #ddd",
-                              color: "#333",
-                              fontSize: "0.68rem",
-                              fontWeight: 500,
-                              padding: "6px 13px",
-                              letterSpacing: "0.04em",
-                              background: "#fafafa",
-                            }}>
-                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
-                                <line x1="10" y1="5" x2="8" y2="7"/>
-                                <line x1="2" y1="12" x2="22" y2="12"/>
-                              </svg>
-                              {property.bathrooms} {lp.baths_suffix}
-                            </span>
-                          )}
-                          {property.size_built && Number(property.size_built) > 0 && (
-                            <span style={{
-                              display: "flex", alignItems: "center", gap: 7,
-                              border: "1px solid #ddd",
-                              color: "#333",
-                              fontSize: "0.68rem",
-                              fontWeight: 500,
-                              padding: "6px 13px",
-                              letterSpacing: "0.04em",
-                              background: "#fafafa",
-                            }}>
-                              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M3 14h7v7H3z"/><path d="M14 14h7v7h-7z"/>
-                              </svg>
-                              {property.size_built} m²
-                            </span>
-                          )}
+                          {/* Stats row */}
+                          <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+                            {(property.bedrooms ?? 0) > 0 && (
+                              <span style={{
+                                display: "flex", alignItems: "center", gap: 6,
+                                border: "1px solid #111",
+                                color: "#111",
+                                fontSize: "0.65rem",
+                                fontWeight: 400,
+                                padding: "5px 12px",
+                                letterSpacing: "0.04em",
+                                background: "#fff",
+                              }}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M3 20v-8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v8"/>
+                                  <path d="M3 14h18"/>
+                                  <path d="M5 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+                                  <path d="M13 14v-3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v3"/>
+                                  <path d="M1 20h22"/>
+                                </svg>
+                                {property.bedrooms} {lp.beds_suffix}
+                              </span>
+                            )}
+                            {(property.bathrooms ?? 0) > 0 && (
+                              <span style={{
+                                display: "flex", alignItems: "center", gap: 6,
+                                border: "1px solid #111",
+                                color: "#111",
+                                fontSize: "0.65rem",
+                                fontWeight: 400,
+                                padding: "5px 12px",
+                                letterSpacing: "0.04em",
+                                background: "#fff",
+                              }}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.683 3 4 3.683 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/>
+                                  <line x1="10" y1="5" x2="8" y2="7"/>
+                                  <line x1="2" y1="12" x2="22" y2="12"/>
+                                </svg>
+                                {property.bathrooms} {lp.baths_suffix}
+                              </span>
+                            )}
+                            {property.size_built && Number(property.size_built) > 0 && (
+                              <span style={{
+                                display: "flex", alignItems: "center", gap: 6,
+                                border: "1px solid #111",
+                                color: "#111",
+                                fontSize: "0.65rem",
+                                fontWeight: 400,
+                                padding: "5px 12px",
+                                letterSpacing: "0.04em",
+                                background: "#fff",
+                              }}>
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                  <path d="M3 3h7v7H3z"/><path d="M14 3h7v7h-7z"/><path d="M3 14h7v7H3z"/><path d="M14 14h7v7h-7z"/>
+                                </svg>
+                                {property.size_built} m²
+                              </span>
+                            )}
+                          </div>
                         </div>
-                      </div>
                     </Link>
                   );
                 })}

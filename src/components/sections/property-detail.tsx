@@ -562,24 +562,19 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
               {/* Dark premium card */}
               <div style={{ background: D.bg, borderRadius: 2, overflow: "hidden", boxShadow: "0 24px 64px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.12)" }}>
 
-                {/* Top accent stripe */}
-                <div style={{ height: 3, background: `linear-gradient(90deg, ${D.accent} 0%, #0038cc 60%, rgba(0,47,167,0.15) 100%)` }} />
-
-                {/* Header */}
-                <div style={{ padding: "28px 30px 20px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
-                    <div style={{ width: 24, height: 1, background: D.accent }} />
-                    <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: D.accent }}>
-                      {isEs ? "Contacto exclusivo" : "Exclusive contact"}
-                    </span>
-                  </div>
-                    <h3 style={{ fontSize: "1.9rem", fontWeight: 300, color: D.text, margin: "0 0 10px", letterSpacing: "-0.03em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif", textAlign: "center", width: "100%" }}>
+                  {/* Header */}
+                  <div style={{ padding: "28px 30px 20px", textAlign: "center" }}>
+                    <h3 style={{ fontSize: "1.9rem", fontWeight: 300, color: D.text, margin: "0 0 14px", letterSpacing: "-0.03em", lineHeight: 1.15, fontFamily: "'Playfair Display', serif" }}>
                       {t.contact}
                     </h3>
-                  <p style={{ fontSize: "0.72rem", fontWeight: 300, color: D.textFaint, margin: 0, lineHeight: 1.8, letterSpacing: "0.01em" }}>
-                    {t.advisor}
-                  </p>
-                </div>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, marginBottom: 10 }}>
+                      <div style={{ width: 32, height: 1, background: D.accent }} />
+                      <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.3em", textTransform: "uppercase", color: D.accent }}>
+                        {isEs ? "Contacto exclusivo" : "Exclusive contact"}
+                      </span>
+                      <div style={{ width: 32, height: 1, background: D.accent }} />
+                    </div>
+                  </div>
 
                 {/* Separador */}
                 <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${D.border} 20%, ${D.border} 80%, transparent)`, margin: "0 30px" }} />

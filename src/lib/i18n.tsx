@@ -165,6 +165,15 @@ export const translations = {
       cta_btn: "Contactar",
       bd: "HD",
       ba: "BA",
+      property_types: [
+        { value: "Villa", label: "Villa" },
+        { value: "Apartment", label: "Apartamento" },
+        { value: "Penthouse", label: "Ático" },
+        { value: "Finca", label: "Finca" },
+        { value: "House", label: "Casa" },
+        { value: "Hotel", label: "Hotel" },
+        { value: "Land", label: "Terreno" },
+      ],
     },
     common: {
       loading: "Cargando...",

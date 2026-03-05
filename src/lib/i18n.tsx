@@ -148,6 +148,7 @@ export const translations = {
       area_label: "Zona",
       bedrooms_label: "Dormitorios",
       beds_suffix: "dorm.",
+      baths_suffix: "baños",
       sort_featured: "Destacadas",
       sort_price_asc: "Precio ↑",
       sort_price_desc: "Precio ↓",

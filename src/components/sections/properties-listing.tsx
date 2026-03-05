@@ -708,8 +708,7 @@ export default function PropertiesListingPage({
             lineHeight: 1.8,
           }}
         >
-          We have access to off-market properties not listed publicly.
-          Contact our team for a private consultation.
+          {lp.cta_sub}
         </p>
         <Link
           href="/#contacto"

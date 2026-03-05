@@ -458,7 +458,7 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                       ))}
                   </div>
                 ) : (
-                  <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>Sin información disponible.</p>
+                  <p style={{ fontSize: "0.84rem", color: "#aaa", fontWeight: 300 }}>{t.noInfo}</p>
                 )}
               </div>
             </section>

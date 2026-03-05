@@ -28,7 +28,7 @@ type Property = {
   features?: string[];
 };
 
-const PROPERTY_TYPES = ["Villa", "Apartment", "Penthouse", "Finca", "House", "Land"];
+const AREAS = ["Ibiza Town", "Santa Eulalia", "San José", "San Antonio", "North Ibiza", "Es Canar"];
 const AREAS = ["Ibiza Town", "Santa Eulalia", "San José", "San Antonio", "North Ibiza", "Es Canar"];
 const BEDROOMS_OPTIONS = ["1+", "2+", "3+", "4+", "5+"];
 

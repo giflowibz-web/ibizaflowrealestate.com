@@ -16,8 +16,9 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const [propertiesOpen, setPropertiesOpen] = useState(false);
+
   const leftLinks = [
-    { label: t.nav.properties, href: "/propiedades" },
     { label: t.nav.services, href: "#servicios" },
     { label: t.nav.about, href: "#nosotros" },
   ];

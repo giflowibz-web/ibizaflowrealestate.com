@@ -354,10 +354,10 @@ export default function PropertiesListingPage({
                 height: "100%",
               }}
             >
-              <option value="">Bedrooms</option>
-              {BEDROOMS_OPTIONS.map((b) => (
-                <option key={b} value={parseInt(b)}>{b} beds</option>
-              ))}
+                <option value="">{lp.bedrooms_label}</option>
+                {BEDROOMS_OPTIONS.map((b) => (
+                  <option key={b} value={parseInt(b)}>{b} {lp.beds_suffix}</option>
+                ))}
             </select>
           </div>
 

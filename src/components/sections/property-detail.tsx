@@ -372,9 +372,10 @@ export default function PropertyDetail({ property: p }: { property: Property }) 
                   display: "inline-block", padding: "15px 28px",
                   fontSize: 10, fontWeight: 700, letterSpacing: "0.15em", textTransform: "uppercase",
                   color: C.textMid, textDecoration: "none",
-                  borderRight: i < arr.length - 1 ? `1px solid ${C.navBorder}` : "none",
-                  whiteSpace: "nowrap",
-                }}
+                    borderRight: i < arr.length - 1 ? `1px solid ${C.navBorder}` : "none",
+                    whiteSpace: "nowrap",
+                    outline: "none",
+                  }}
                 onMouseEnter={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = C.text)}
                 onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.color = C.textMid)}
               >

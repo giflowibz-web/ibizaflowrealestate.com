@@ -201,13 +201,13 @@ export default function PropertiesListingPage({
             </p>
             <h1
               style={{
-                fontFamily: "Inter, sans-serif",
-                fontSize: "clamp(1.5rem, 3vw, 2.6rem)",
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "clamp(2rem, 4.5vw, 5rem)",
                 fontWeight: 300,
                 color: "#fff",
                 margin: 0,
-                letterSpacing: "0.22em",
-                lineHeight: 1,
+                letterSpacing: "0.08em",
+                lineHeight: 1.05,
                 textTransform: "uppercase",
                 whiteSpace: "nowrap",
               }}

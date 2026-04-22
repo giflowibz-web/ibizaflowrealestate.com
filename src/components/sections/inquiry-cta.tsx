@@ -150,10 +150,10 @@ export default function InquiryCTA() {
           <div style={{
             display: 'flex', alignItems: 'center', gap: 14, marginBottom: 36,
           }}>
-            <div style={{ width: 24, height: 1, background: 'rgba(255,255,255,0.35)' }} />
+            <div style={{ width: 24, height: 1, background: '#1847E8' }} />
             <span style={{
               fontSize: '0.52rem', letterSpacing: '0.42em',
-              textTransform: 'uppercase', color: 'rgba(255,255,255,0.38)',
+              textTransform: 'uppercase', color: '#1847E8',
             }}>
               {lang === 'es' ? 'Contacto Privado' : 'Private Enquiry'}
             </span>
@@ -170,10 +170,10 @@ export default function InquiryCTA() {
             letterSpacing: '-0.02em',
           }}>
             {lang === 'es' ? (
-              <>Contacte<br />
+              <>CONTACTE<br />
               <em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.45)' }}>con nosotros</em></>
             ) : (
-              <>Get in<br />
+              <>GET IN<br />
               <em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.45)' }}>touch</em></>
             )}
           </h2>

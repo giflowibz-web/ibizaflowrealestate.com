@@ -102,7 +102,7 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
           <p style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.35em", textTransform: "uppercase", color: "#002FA7", margin: "0 0 20px" }}>
             {isEs ? "Propiedades Exclusivas · Ibiza" : "Exclusive Properties · Ibiza"}
           </p>
-          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(2rem, 4.5vw, 5rem)", fontWeight: 300, color: "#fff", margin: 0, letterSpacing: "0.08em", lineHeight: 1.05, textTransform: "uppercase", whiteSpace: "nowrap" }}>
+          <h1 style={{ fontFamily: "'Playfair Display', serif", fontSize: "clamp(1.6rem, 3.2vw, 3.8rem)", fontWeight: 200, color: "#fff", margin: 0, letterSpacing: "0.18em", lineHeight: 1.05, textTransform: "uppercase", whiteSpace: "nowrap" }}>
             {isEs ? "Villas & Propiedades en Ibiza" : "Villas & Properties in Ibiza"}
           </h1>
           <div style={{ display: "flex", alignItems: "center", gap: 32, marginTop: 32 }}>

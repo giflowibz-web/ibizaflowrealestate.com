@@ -202,11 +202,11 @@ export default function PropertiesListingPage({
             <h1
               style={{
                 fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(2rem, 4.5vw, 5rem)",
-                fontWeight: 300,
+                fontSize: "clamp(1.6rem, 3.2vw, 3.8rem)",
+                fontWeight: 200,
                 color: "#fff",
                 margin: 0,
-                letterSpacing: "0.08em",
+                letterSpacing: "0.18em",
                 lineHeight: 1.05,
                 textTransform: "uppercase",
                 whiteSpace: "nowrap",

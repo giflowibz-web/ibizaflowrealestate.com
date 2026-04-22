@@ -21,8 +21,13 @@ export interface Property {
   listing_type: ListingType
   title_es: string
   title_en: string
+  title_fr: string
   description_es: string
   description_en: string
+  description_fr: string
+  seo_keywords_es: string
+  seo_keywords_en: string
+  seo_keywords_fr: string
   area: string
   municipality: string
   island: string

@@ -201,20 +201,18 @@ export default function PropertiesListingPage({
             </p>
             <h1
               style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: "clamp(3rem, 6vw, 6rem)",
+                fontFamily: "Inter, sans-serif",
+                fontSize: "clamp(1.5rem, 3vw, 2.6rem)",
                 fontWeight: 300,
                 color: "#fff",
                 margin: 0,
-                letterSpacing: "-0.04em",
-                lineHeight: 1.05,
+                letterSpacing: "0.22em",
+                lineHeight: 1,
+                textTransform: "uppercase",
+                whiteSpace: "nowrap",
               }}
             >
-              {isRent ? (
-                <>{lp.title_rent}<br /><em>{lp.title_rent_em}</em></>
-              ) : (
-                <>{lp.title_sale}<br /><em>{lp.title_sale_em}</em></>
-              )}
+              {isRent ? lp.title_rent : lp.title_sale}
             </h1>
             <div
               style={{

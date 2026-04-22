@@ -183,14 +183,11 @@ export default function Navbar() {
             href="/"
             className="logo-wrap"
             style={{
-              position: "absolute",
-              left: "50%",
-              top: scrolled ? "50%" : "calc(50% + 6px)",
-              transform: "translate(-50%, -50%)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               lineHeight: 0,
+              flexShrink: 0,
             }}
           >
             <Logo variant="light" size={scrolled ? "sm" : "md"} />

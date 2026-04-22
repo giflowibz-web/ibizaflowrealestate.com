@@ -115,7 +115,7 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
       </div>
 
       {/* ── TABS + FILTERS ── */}
-      <div style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(255,255,255,0.08)", position: "sticky", top: 68, zIndex: 40 }}>
+      <div style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
         {/* Tabs */}
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 6%", display: "flex", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
           {[

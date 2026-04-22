@@ -243,9 +243,6 @@ export default function PropertiesListingPage({
         style={{
           background: "#000",
           borderBottom: "1px solid #1a1a1a",
-          position: "sticky",
-          top: 68,
-          zIndex: 40,
         }}
       >
         <div

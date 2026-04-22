@@ -18,3 +18,9 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  GET /admin/login?_cb=1776865011829 200 in 75ms
  GET /admin/login?_cb=1776865283045 200 in 72ms
  GET /admin/login?_cb=1776865502710 200 in 72ms
+ ✓ Compiled /admin/properties/new in 224ms
+ GET /admin/properties/new?_cb=1776865502710 200 in 310ms
+ ✓ Compiled /favicon.ico in 181ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 446ms
+ ✓ Compiled in 211ms
+ ✓ Compiled in 134ms

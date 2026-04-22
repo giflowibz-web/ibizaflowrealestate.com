@@ -6,7 +6,7 @@ const HeroSection = () => {
   const { lang } = useLang();
 
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black">
+    <section className="relative h-screen min-h-screen w-full overflow-hidden bg-black">
       {/* Video fullscreen */}
       <video
         autoPlay

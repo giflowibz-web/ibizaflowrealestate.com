@@ -200,18 +200,17 @@ export default function InquiryCTA() {
           {/* Headline */}
           <h2 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: 'clamp(1.2rem, 1.8vw, 2rem)',
+            fontSize: 'clamp(2.4rem, 3.5vw, 4rem)',
             fontWeight: 300,
-            lineHeight: 1.08,
+            lineHeight: 1.1,
             letterSpacing: '-0.02em',
-            marginBottom: 18,
             margin: 0,
           }}>
-            <span style={{ color: 'rgba(255,255,255,0.3)', display: 'block', textTransform: 'uppercase' }}>
-              {lang === 'es' ? 'Comience su' : 'Begin your'}
+            <span style={{ color: 'rgba(255,255,255,0.4)', fontStyle: 'italic' }}>
+              {lang === 'es' ? 'su ibiza' : 'your ibiza'}
             </span>
-            <span style={{ color: '#fff', display: 'block', textTransform: 'uppercase' }}>
-              {lang === 'es' ? 'historia en Ibiza' : 'Ibiza story'}
+            <span style={{ color: '#fff' }}>
+              {lang === 'es' ? ' le espera' : ' awaits'}
             </span>
           </h2>
 

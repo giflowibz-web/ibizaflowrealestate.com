@@ -208,10 +208,10 @@ export default function InquiryCTA() {
             margin: 0,
           }}>
             <span style={{ color: 'rgba(255,255,255,0.3)', display: 'block', textTransform: 'uppercase' }}>
-              {lang === 'es' ? 'Su vida' : 'Your life'}
+              {lang === 'es' ? 'Comience su' : 'Begin your'}
             </span>
             <span style={{ color: '#fff', display: 'block', textTransform: 'uppercase' }}>
-              {lang === 'es' ? 'en Ibiza' : 'in Ibiza'}
+              {lang === 'es' ? 'historia en Ibiza' : 'Ibiza story'}
             </span>
           </h2>
 

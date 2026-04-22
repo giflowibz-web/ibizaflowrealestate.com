@@ -1,7 +1,9 @@
 {
-  "startupCommands": [
-    "npm install; npm run dev"
-  ],
   "projectId": "698fb0c4-0b56-4529-9925-c0129efe192a",
+  "createdAt": 1771350213540,
+  "version": "1.0",
+  "startupCommands": [
+    "npm install --legacy-peer-deps; npm run dev"
+  ],
   "templateId": "any"
 }

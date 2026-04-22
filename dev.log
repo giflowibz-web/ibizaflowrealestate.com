@@ -1,19 +1,15 @@
 
-> app@1.0.0 dev
-> next dev -p 3003 -p 3001
+> nextjs-new@0.1.0 dev
+> next dev --turbopack -p 3003
 
-   ▲ Next.js 15.5.15
-   - Local:        http://localhost:3001
-   - Network:      http://172.20.0.50:3001
-   - Environments: .env.local
-
- ✓ Starting...
- ✓ Ready in 1160ms
- ○ Compiling / ...
- ✓ Compiled / in 2.3s (607 modules)
- GET /?_cb=1776856982814 200 in 2621ms
- ✓ Compiled /admin/properties/new in 289ms (610 modules)
- GET /admin/properties/new?_cb=1776856982814 200 in 505ms
- ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
- GET /admin/properties/new?_cb=1776857003433 200 in 50ms
+ ⨯ Failed to start server
+Error: listen EADDRINUSE: address already in use :::3003
+    at <unknown> (Error: listen EADDRINUSE: address already in use :::3003)
+    at new Promise (<anonymous>) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '::',
+  port: 3003
+}
 [?25h

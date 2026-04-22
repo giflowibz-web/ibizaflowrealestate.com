@@ -51,8 +51,9 @@ export default function Navbar() {
           position: "fixed",
           top: 0, left: 0, right: 0,
           zIndex: 50,
-          transition: "background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease, padding 0.4s ease",
+          transition: "background 0.5s ease",
           padding: 0,
+          height: 72,
           display: "flex",
           alignItems: "center",
           background: scrolled
@@ -62,11 +63,11 @@ export default function Navbar() {
           WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
           borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "none",
           animation: "navFadeIn 0.8s ease both",
-          overflow: "visible",
+          overflow: "hidden",
         }}
       >
 
-        <div style={{ display: "flex", alignItems: "center", width: "100%", position: "relative", height: scrolled ? 68 : 92, paddingTop: scrolled ? 0 : 16 }}>
+        <div style={{ display: "flex", alignItems: "center", width: "100%", height: "100%", position: "relative" }}>
 
           {/* LEFT */}
           <nav className="hidden md:flex" style={{ flex: 1, paddingLeft: 40, display: "flex", alignItems: "center", gap: 40 }}>

@@ -52,13 +52,11 @@ export default function Navbar() {
           top: 0, left: 0, right: 0,
           zIndex: 50,
           transition: "padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.5s ease",
-          padding: scrolled ? "18px 0" : "36px 0",
-          background: scrolled
-            ? "rgba(4,4,10,0.96)"
-            : "linear-gradient(to bottom, rgba(4,4,10,0.72) 0%, rgba(4,4,10,0.0) 100%)",
-          backdropFilter: scrolled ? "blur(24px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "none",
+          padding: scrolled ? "18px 0" : "28px 0",
+          background: "rgba(4,4,10,0.96)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderBottom: "1px solid rgba(255,255,255,0.07)",
           animation: "navFadeIn 0.8s ease both",
         }}
       >

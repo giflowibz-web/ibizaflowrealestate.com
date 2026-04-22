@@ -52,7 +52,7 @@ export default function Navbar() {
           top: 0, left: 0, right: 0,
           zIndex: 50,
           transition: "background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease, padding 0.4s ease",
-          padding: scrolled ? "16px 0" : "28px 0",
+          padding: scrolled ? "4px 0" : "20px 0",
           display: "flex",
           alignItems: "center",
           background: scrolled ? "rgba(4,4,10,0.96)" : "transparent",
@@ -64,7 +64,7 @@ export default function Navbar() {
         }}
       >
 
-        <div style={{ display: "flex", alignItems: "center", width: "100%", position: "relative" }}>
+        <div style={{ display: "flex", alignItems: "center", width: "100%", position: "relative", minHeight: scrolled ? 52 : 80 }}>
 
           {/* LEFT */}
           <nav className="hidden md:flex" style={{ flex: 1, paddingLeft: 40, display: "flex", alignItems: "center", gap: 40 }}>
@@ -191,6 +191,8 @@ export default function Navbar() {
               alignItems: "center",
               justifyContent: "center",
               lineHeight: 0,
+              overflow: "hidden",
+              maxHeight: scrolled ? 44 : 64,
             }}
           >
             <Logo variant="light" size={scrolled ? "sm" : "md"} />

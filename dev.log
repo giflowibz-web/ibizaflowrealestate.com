@@ -15,3 +15,4 @@
  ✓ Compiled /admin/properties/new in 289ms (610 modules)
  GET /admin/properties/new?_cb=1776856982814 200 in 505ms
  ⚠ Fast Refresh had to perform a full reload. Read more: https://nextjs.org/docs/messages/fast-refresh-reload
+ GET /admin/properties/new?_cb=1776857003433 200 in 50ms

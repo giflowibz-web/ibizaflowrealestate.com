@@ -159,8 +159,8 @@ export default function InquiryCTA() {
       <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/es-vedra-pool.jpg"
-          alt="Es Vedrà, Ibiza"
+          src="/servicios-real-estate.jpg"
+          alt="Servicios inmobiliarios Ibiza"
           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
         />
         {/* Overlay oscuro izquierda para el formulario, abre la imagen a la derecha */}

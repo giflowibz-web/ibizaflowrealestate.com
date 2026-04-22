@@ -28,7 +28,7 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
             ? "bg-black/90 backdrop-blur-md py-5"
-            : "bg-transparent py-9"
+            : "bg-transparent py-12"
         }`}
     >
       {/* Contenedor relativo para logo absolute centrado — igual que Aaron Kirman header-container--center */}

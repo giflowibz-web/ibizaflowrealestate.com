@@ -11,10 +11,10 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const logoSrc = variant === "dark" ? "/logo-negro-trimmed.png" : "/logo-blanco-trimmed.png";
 
   const sizes = {
-    sm:   { width: 100, height: 40 },
-    md:   { width: 140, height: 56 },
-    lg:   { width: 180, height: 72 },
-    hero: { width: 140, height: 56 },
+    sm:   { width: 110, height: 44 },
+    md:   { width: 160, height: 64 },
+    lg:   { width: 200, height: 80 },
+    hero: { width: 160, height: 64 },
   };
 
   const s = sizes[size];

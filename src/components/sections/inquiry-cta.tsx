@@ -3,56 +3,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useLang } from '@/lib/i18n';
 
-const INTEREST_OPTIONS = [
-  { es: "Comprar propiedad",    en: "Buy a property" },
-  { es: "Alquilar propiedad",   en: "Rent a property" },
-  { es: "Invertir en Ibiza",    en: "Invest in Ibiza" },
-  { es: "Vender mi propiedad",  en: "Sell my property" },
-];
-
-const BUDGET_OPTIONS = [
-  { es: "Hasta 1M €",          en: "Up to €1M" },
-  { es: "1M – 3M €",           en: "€1M – €3M" },
-  { es: "3M – 6M €",           en: "€3M – €6M" },
-  { es: "+ 6M €",              en: "Over €6M" },
-];
-
 export default function InquiryCTA() {
   const { lang } = useLang();
-  const [step, setStep] = useState(1);
-  const [interest, setInterest] = useState('');
-  const [budget, setBudget] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName]       = useState('');
+  const [email, setEmail]     = useState('');
+  const [phone, setPhone]     = useState('');
   const [message, setMessage] = useState('');
   const [sending, setSending] = useState(false);
+  const [done, setDone]       = useState(false);
   const [visible, setVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.1 }
+      { threshold: 0.08 }
     );
-    if (sectionRef.current) obs.observe(sectionRef.current);
+    if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
     await new Promise(r => setTimeout(r, 1400));
     setSending(false);
-    setStep(3);
+    setDone(true);
   };
-
-  const iL = lang === 'es' ? 'es' : 'en';
 
   return (
     <section
       id="contacto"
-      ref={sectionRef}
+      ref={ref}
       style={{
         position: 'relative',
         width: '100%',
@@ -63,388 +45,292 @@ export default function InquiryCTA() {
       }}
     >
       <style>{`
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(28px); }
+        @keyframes ctaUp {
+          from { opacity: 0; transform: translateY(40px); }
           to   { opacity: 1; transform: translateY(0); }
         }
         @keyframes spin {
-          from { transform: rotate(0deg); }
-          to   { transform: rotate(360deg); }
+          to { transform: rotate(360deg); }
         }
-        @keyframes pulseRing {
-          0%   { transform: scale(0.85); opacity: 0.8; }
-          100% { transform: scale(1.5);  opacity: 0; }
-        }
-        @keyframes shimmer {
-          0%   { background-position: -600px 0; }
-          100% { background-position: 600px 0; }
+        @keyframes checkPulse {
+          0%   { transform: scale(0.8); opacity: 0; }
+          60%  { transform: scale(1.05); opacity: 1; }
+          100% { transform: scale(1); opacity: 1; }
         }
 
-        .cta-inp {
+        .cta-field {
+          position: relative;
+          padding-bottom: 2px;
+        }
+        .cta-field::after {
+          content: '';
+          position: absolute;
+          bottom: 0; left: 0;
+          width: 0; height: 1px;
+          background: #fff;
+          transition: width 0.4s ease;
+        }
+        .cta-field:focus-within::after { width: 100%; }
+
+        .cta-field input,
+        .cta-field textarea {
           width: 100%;
           background: transparent;
           border: none;
-          border-bottom: 1px solid rgba(255,255,255,0.18);
+          border-bottom: 1px solid rgba(255,255,255,0.15);
           outline: none;
           color: #fff;
-          font-size: 0.95rem;
+          font-size: 0.88rem;
           font-weight: 300;
-          padding: 10px 0 12px;
+          letter-spacing: 0.03em;
+          padding: 8px 0 13px;
           font-family: inherit;
           transition: border-color 0.3s;
         }
-        .cta-inp:focus { border-bottom-color: #fff; }
-        .cta-inp::placeholder { color: rgba(255,255,255,0.22); }
-        .cta-inp-wrap label {
+        .cta-field input:focus,
+        .cta-field textarea:focus {
+          border-bottom-color: rgba(255,255,255,0.5);
+        }
+        .cta-field input::placeholder,
+        .cta-field textarea::placeholder {
+          color: rgba(255,255,255,0.2);
+          font-style: italic;
+        }
+        .cta-field textarea { resize: none; }
+        .cta-field label {
           display: block;
-          font-size: 0.55rem;
-          letter-spacing: 0.32em;
+          font-size: 0.5rem;
+          letter-spacing: 0.38em;
           text-transform: uppercase;
-          color: rgba(255,255,255,0.35);
-          margin-bottom: 4px;
+          color: rgba(255,255,255,0.28);
+          margin-bottom: 2px;
+          font-weight: 500;
         }
-
-        .pill-btn {
-          padding: 10px 18px;
-          font-size: 0.65rem;
-          letter-spacing: 0.14em;
-          text-transform: uppercase;
-          font-weight: 400;
-          border: 1px solid rgba(255,255,255,0.2);
-          background: rgba(255,255,255,0.04);
-          color: rgba(255,255,255,0.5);
-          cursor: pointer;
-          transition: all 0.22s;
-          font-family: inherit;
-        }
-        .pill-btn:hover {
-          border-color: rgba(255,255,255,0.55);
-          color: #fff;
-          background: rgba(255,255,255,0.08);
-        }
-        .pill-btn.sel {
-          border-color: #fff;
-          background: rgba(255,255,255,0.12);
-          color: #fff;
-        }
-
-        .cta-submit {
-          width: 100%;
-          background: #fff;
-          color: #0a0a0a;
-          border: none;
-          padding: 17px 32px;
-          font-size: 0.62rem;
-          letter-spacing: 0.3em;
-          text-transform: uppercase;
-          font-weight: 700;
-          cursor: pointer;
-          font-family: inherit;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-          transition: background 0.25s, color 0.25s;
-          position: relative;
-          overflow: hidden;
-        }
-        .cta-submit:hover {
-          background: #1847E8;
-          color: #fff;
-        }
-        .cta-submit:disabled { opacity: 0.6; cursor: not-allowed; }
       `}</style>
 
-      {/* ── FONDO: foto Es Vedrà con overlay gradiente ── */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/es-vedra-pool.jpg"
-          alt="Es Vedrà, Ibiza"
-          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
-        />
-        {/* Overlay oscuro izquierda para el formulario, abre la imagen a la derecha */}
-        <div style={{
+      {/* ── FOTO FONDO ── */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/es-vedra-pool.jpg"
+        alt="Es Vedrà, Ibiza"
+        style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(100deg, rgba(4,4,10,0.97) 0%, rgba(4,4,10,0.88) 42%, rgba(4,4,10,0.45) 68%, rgba(4,4,10,0.15) 100%)',
-        }} />
-      </div>
+          width: '100%', height: '100%',
+          objectFit: 'cover', objectPosition: 'center 40%',
+          zIndex: 0,
+        }}
+      />
+
+      {/* Overlay: oscuro en el centro izquierdo, abre hacia la derecha */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: 'linear-gradient(105deg, rgba(3,3,8,0.93) 0%, rgba(3,3,8,0.82) 35%, rgba(3,3,8,0.4) 60%, rgba(3,3,8,0.05) 100%)',
+      }} />
 
       {/* ── CONTENIDO ── */}
       <div style={{
         position: 'relative', zIndex: 2,
         width: '100%', maxWidth: 1280,
         margin: '0 auto',
-        padding: '100px 24px',
+        padding: '110px 64px',
         display: 'grid',
-        gridTemplateColumns: '480px 1fr',
-        gap: 0,
+        gridTemplateColumns: '440px 1fr',
         alignItems: 'center',
+        gap: 0,
       }}>
 
-        {/* ── COLUMNA IZQUIERDA: formulario ── */}
+        {/* ── FORMULARIO ── */}
         <div style={{
           opacity: visible ? 1 : 0,
-          transform: visible ? 'translateY(0)' : 'translateY(36px)',
-          transition: 'opacity 0.8s ease, transform 0.8s ease',
+          transform: visible ? 'none' : 'translateY(36px)',
+          transition: 'opacity 1s ease, transform 1s ease',
         }}>
 
           {/* Tag */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 28 }}>
-            <div style={{ width: 28, height: 1, background: 'rgba(255,255,255,0.4)' }} />
-            <span style={{ fontSize: '0.56rem', letterSpacing: '0.38em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.45)', fontWeight: 500 }}>
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 14, marginBottom: 36,
+          }}>
+            <div style={{ width: 24, height: 1, background: 'rgba(255,255,255,0.35)' }} />
+            <span style={{
+              fontSize: '0.52rem', letterSpacing: '0.42em',
+              textTransform: 'uppercase', color: 'rgba(255,255,255,0.38)',
+            }}>
               {lang === 'es' ? 'Contacto Privado' : 'Private Enquiry'}
             </span>
           </div>
 
-          {/* Título */}
+          {/* Headline */}
           <h2 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: 'clamp(2rem, 3.5vw, 3rem)',
+            fontSize: 'clamp(2.6rem, 4vw, 3.8rem)',
             fontWeight: 300,
             color: '#fff',
-            lineHeight: 1.2,
-            marginBottom: 16,
-            letterSpacing: '-0.01em',
+            lineHeight: 1.1,
+            marginBottom: 14,
+            letterSpacing: '-0.02em',
           }}>
             {lang === 'es' ? (
-              <>Su vida<br /><em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.55)' }}>en Ibiza</em></>
+              <>Contacte<br />
+              <em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.45)' }}>con nosotros</em></>
             ) : (
-              <>Your life<br /><em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.55)' }}>in Ibiza</em></>
+              <>Get in<br />
+              <em style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.45)' }}>touch</em></>
             )}
           </h2>
 
-          <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.38)', lineHeight: 1.85, marginBottom: 40, fontWeight: 300, maxWidth: 360 }}>
+          <p style={{
+            fontSize: '0.76rem', fontWeight: 300,
+            color: 'rgba(255,255,255,0.32)',
+            lineHeight: 1.9, marginBottom: 44,
+            maxWidth: 340,
+            letterSpacing: '0.01em',
+          }}>
             {lang === 'es'
-              ? 'Nuestro equipo le responde en menos de 24 horas con total discreción.'
-              : 'Our team responds within 24 hours with complete discretion.'}
+              ? 'Respuesta en menos de 24h. Discreción absoluta en cada consulta.'
+              : 'Response within 24h. Absolute discretion on every enquiry.'}
           </p>
 
-          {/* ── Formulario card ── */}
-          <div style={{
-            background: 'rgba(255,255,255,0.04)',
-            backdropFilter: 'blur(24px)',
-            WebkitBackdropFilter: 'blur(24px)',
-            border: '1px solid rgba(255,255,255,0.1)',
-            padding: '36px 36px 32px',
-          }}>
+          {/* ── FORM o CONFIRMACIÓN ── */}
+          {done ? (
 
-            {/* Step dots */}
-            {step < 3 && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 28 }}>
-                {[1, 2].map(s => (
-                  <React.Fragment key={s}>
-                    <div style={{
-                      width: s === step ? 20 : 6,
-                      height: 3,
-                      background: s <= step ? '#fff' : 'rgba(255,255,255,0.15)',
-                      transition: 'all 0.4s ease',
-                    }} />
-                  </React.Fragment>
-                ))}
-                <span style={{ fontSize: '0.55rem', letterSpacing: '0.2em', color: 'rgba(255,255,255,0.25)', marginLeft: 6 }}>
-                  {step}/2
-                </span>
+            <div style={{ animation: 'checkPulse 0.6s ease both' }}>
+              <div style={{
+                width: 56, height: 56, borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.25)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                marginBottom: 24,
+              }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                  stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="20 6 9 17 4 12"/>
+                </svg>
               </div>
-            )}
+              <p style={{
+                fontFamily: "'Playfair Display', Georgia, serif",
+                fontSize: '1.5rem', fontWeight: 300, color: '#fff', marginBottom: 10,
+              }}>
+                {lang === 'es' ? 'Mensaje enviado' : 'Message sent'}
+              </p>
+              <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.32)', lineHeight: 1.8 }}>
+                {lang === 'es'
+                  ? 'Le contactaremos muy pronto.'
+                  : 'We will be in touch very soon.'}
+              </p>
+            </div>
 
-            {/* ── PASO 1 ── */}
-            {step === 1 && (
-              <div key="step1">
-                <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.55)', letterSpacing: '0.06em', marginBottom: 20 }}>
-                  {lang === 'es' ? '¿Cómo podemos ayudarle?' : 'How can we help you?'}
-                </p>
+          ) : (
 
-                {/* Interest pills */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24 }}>
-                  {INTEREST_OPTIONS.map(opt => (
-                    <button
-                      key={opt.es}
-                      type="button"
-                      className={`pill-btn${interest === opt[iL] ? ' sel' : ''}`}
-                      onClick={() => setInterest(opt[iL])}
-                    >
-                      {opt[iL]}
-                    </button>
-                  ))}
-                </div>
+            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 26 }}>
 
-                {/* Budget pills */}
-                <p style={{ fontSize: '0.55rem', letterSpacing: '0.28em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.25)', marginBottom: 12 }}>
-                  {lang === 'es' ? 'Presupuesto' : 'Budget'}
-                </p>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}>
-                  {BUDGET_OPTIONS.map(opt => (
-                    <button
-                      key={opt.es}
-                      type="button"
-                      className={`pill-btn${budget === opt[iL] ? ' sel' : ''}`}
-                      onClick={() => setBudget(opt[iL])}
-                    >
-                      {opt[iL]}
-                    </button>
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  className="cta-submit"
-                  onClick={() => interest && setStep(2)}
-                  style={{ opacity: interest ? 1 : 0.35, cursor: interest ? 'pointer' : 'not-allowed' }}
-                >
-                  {lang === 'es' ? 'Continuar' : 'Continue'}
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                  </svg>
-                </button>
+              <div className="cta-field">
+                <label>{lang === 'es' ? 'Nombre' : 'Name'}</label>
+                <input type="text" required placeholder={lang === 'es' ? 'Su nombre completo' : 'Your full name'}
+                  value={name} onChange={e => setName(e.target.value)} />
               </div>
-            )}
 
-            {/* ── PASO 2 ── */}
-            {step === 2 && (
-              <form key="step2" onSubmit={handleSubmit}>
-                <button type="button" onClick={() => setStep(1)} style={{
-                  background: 'none', border: 'none', cursor: 'pointer',
-                  color: 'rgba(255,255,255,0.3)', fontSize: '0.58rem',
-                  letterSpacing: '0.2em', textTransform: 'uppercase',
-                  display: 'flex', alignItems: 'center', gap: 7,
-                  padding: 0, marginBottom: 20, fontFamily: 'inherit',
-                  transition: 'color 0.2s',
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
+                <div className="cta-field">
+                  <label>Email</label>
+                  <input type="email" required placeholder="name@example.com"
+                    value={email} onChange={e => setEmail(e.target.value)} />
+                </div>
+                <div className="cta-field">
+                  <label>{lang === 'es' ? 'Teléfono' : 'Phone'}</label>
+                  <input type="tel" placeholder="+34 600 000 000"
+                    value={phone} onChange={e => setPhone(e.target.value)} />
+                </div>
+              </div>
+
+              <div className="cta-field">
+                <label>{lang === 'es' ? 'Mensaje' : 'Message'}</label>
+                <textarea rows={3}
+                  placeholder={lang === 'es' ? '¿Qué tipo de propiedad busca?' : 'What kind of property are you looking for?'}
+                  value={message} onChange={e => setMessage(e.target.value)} />
+              </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={sending}
+                style={{
+                  marginTop: 4,
+                  background: 'none',
+                  border: '1px solid rgba(255,255,255,0.35)',
+                  color: '#fff',
+                  padding: '16px 32px',
+                  fontSize: '0.58rem',
+                  letterSpacing: '0.38em',
+                  textTransform: 'uppercase',
+                  fontWeight: 500,
+                  fontFamily: 'inherit',
+                  cursor: sending ? 'not-allowed' : 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 12,
+                  width: '100%',
+                  transition: 'background 0.3s, border-color 0.3s',
+                  opacity: sending ? 0.6 : 1,
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
-                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.3)')}>
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                  {lang === 'es' ? 'Volver' : 'Back'}
-                </button>
-
-                {/* Selección previa */}
-                {interest && (
-                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 24, padding: '5px 12px', border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.05)' }}>
-                    <span style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.08em' }}>{interest}</span>
-                    {budget && <>
-                      <span style={{ color: 'rgba(255,255,255,0.15)' }}>·</span>
-                      <span style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.45)', letterSpacing: '0.08em' }}>{budget}</span>
-                    </>}
-                  </div>
-                )}
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 22, marginBottom: 28 }}>
-                  <div className="cta-inp-wrap">
-                    <label>{lang === 'es' ? 'Nombre completo' : 'Full name'}</label>
-                    <input className="cta-inp" type="text" required placeholder="Alexandra Rousseau" value={name} onChange={e => setName(e.target.value)} />
-                  </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-                    <div className="cta-inp-wrap">
-                      <label>Email</label>
-                      <input className="cta-inp" type="email" required placeholder="a@example.com" value={email} onChange={e => setEmail(e.target.value)} />
-                    </div>
-                    <div className="cta-inp-wrap">
-                      <label>{lang === 'es' ? 'Teléfono' : 'Phone'}</label>
-                      <input className="cta-inp" type="tel" placeholder="+33 6 00 00 00" value={phone} onChange={e => setPhone(e.target.value)} />
-                    </div>
-                  </div>
-                  <div className="cta-inp-wrap">
-                    <label>{lang === 'es' ? 'Mensaje (opcional)' : 'Message (optional)'}</label>
-                    <textarea className="cta-inp" rows={3} style={{ resize: 'none' }}
-                      placeholder={lang === 'es' ? 'Cuéntenos qué busca…' : 'Tell us what you are looking for…'}
-                      value={message} onChange={e => setMessage(e.target.value)} />
-                  </div>
-                </div>
-
-                <button type="submit" className="cta-submit" disabled={sending}>
-                  {sending ? (
-                    <>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 0.9s linear infinite' }}>
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-                      </svg>
-                      {lang === 'es' ? 'Enviando…' : 'Sending…'}
-                    </>
-                  ) : (
-                    <>
-                      {lang === 'es' ? 'Enviar consulta' : 'Send enquiry'}
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
-                      </svg>
-                    </>
-                  )}
-                </button>
-
-                <p style={{ fontSize: '0.56rem', color: 'rgba(255,255,255,0.18)', textAlign: 'center', marginTop: 14, lineHeight: 1.7, letterSpacing: '0.05em' }}>
-                  {lang === 'es' ? 'Discreción absoluta. Sus datos nunca se comparten.' : 'Absolute discretion. Your data is never shared.'}
-                </p>
-              </form>
-            )}
-
-            {/* ── PASO 3: Confirmación ── */}
-            {step === 3 && (
-              <div key="step3" style={{ textAlign: 'center', padding: '16px 0 8px' }}>
-                {/* Check animado */}
-                <div style={{ position: 'relative', width: 64, height: 64, margin: '0 auto 28px' }}>
-                  <div style={{
-                    position: 'absolute', inset: 0, borderRadius: '50%',
-                    border: '1px solid rgba(255,255,255,0.4)',
-                    animation: 'pulseRing 1.6s ease-out forwards',
-                  }} />
-                  <div style={{
-                    width: 64, height: 64, borderRadius: '50%',
-                    border: '1px solid rgba(255,255,255,0.25)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    background: 'rgba(255,255,255,0.06)',
-                  }}>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                      <polyline points="20 6 9 17 4 12"/>
+                onMouseEnter={e => {
+                  if (!sending) {
+                    (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.08)';
+                    (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.7)';
+                  }
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLButtonElement).style.background = 'none';
+                  (e.currentTarget as HTMLButtonElement).style.borderColor = 'rgba(255,255,255,0.35)';
+                }}
+              >
+                {sending ? (
+                  <>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2"
+                      style={{ animation: 'spin 0.8s linear infinite' }}>
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
                     </svg>
-                  </div>
-                </div>
-
-                <p style={{
-                  fontFamily: "'Playfair Display', Georgia, serif",
-                  fontSize: '1.5rem', fontWeight: 300, color: '#fff', marginBottom: 10,
-                }}>
-                  {lang === 'es' ? 'Consulta recibida' : 'Enquiry received'}
-                </p>
-                <p style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.35)', lineHeight: 1.8, marginBottom: 28 }}>
-                  {lang === 'es'
-                    ? 'Le contactaremos en menos de 24 horas.'
-                    : 'We will contact you within 24 hours.'}
-                </p>
-                {(interest || budget) && (
-                  <div style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.25)', letterSpacing: '0.1em' }}>
-                    {interest}{budget && ` · ${budget}`}
-                  </div>
+                    {lang === 'es' ? 'Enviando' : 'Sending'}
+                  </>
+                ) : (
+                  lang === 'es' ? 'Enviar consulta' : 'Send enquiry'
                 )}
-              </div>
-            )}
+              </button>
 
-          </div>
+            </form>
+          )}
 
           {/* Contacto directo */}
-          <div style={{ display: 'flex', gap: 28, marginTop: 24 }}>
+          <div style={{
+            display: 'flex', flexDirection: 'column', gap: 6, marginTop: 32,
+            paddingTop: 28, borderTop: '1px solid rgba(255,255,255,0.07)',
+          }}>
             {[
               { label: '+34 600 000 000', href: 'tel:+34600000000' },
               { label: 'info@ibizaflowrealestate.com', href: 'mailto:info@ibizaflowrealestate.com' },
             ].map((item, i) => (
               <a key={i} href={item.href} style={{
-                fontSize: '0.65rem', color: 'rgba(255,255,255,0.28)',
-                textDecoration: 'none', letterSpacing: '0.04em',
-                transition: 'color 0.25s', fontWeight: 300,
+                fontSize: '0.65rem', color: 'rgba(255,255,255,0.22)',
+                textDecoration: 'none', letterSpacing: '0.05em', fontWeight: 300,
+                transition: 'color 0.25s',
               }}
-              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)')}
-              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.28)')}>
+              onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.65)')}
+              onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.22)')}>
                 {item.label}
               </a>
             ))}
           </div>
-        </div>
 
-        {/* ── COLUMNA DERECHA: vacía — la foto respira aquí ── */}
+        </div>
+        {/* columna derecha: respira la foto */}
       </div>
 
-      {/* Responsive */}
       <style>{`
-        @media (max-width: 860px) {
-          #contacto > div { grid-template-columns: 1fr !important; }
-          #contacto > div > div:first-child { max-width: 100% !important; }
+        @media (max-width: 800px) {
+          #contacto > div:last-child {
+            grid-template-columns: 1fr !important;
+            padding: 80px 28px !important;
+          }
         }
       `}</style>
     </section>

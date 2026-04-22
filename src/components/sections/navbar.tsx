@@ -10,19 +10,13 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [propertiesOpen, setPropertiesOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
-
   useEffect(() => {
     const onScroll = () => {
-      setScrollY(window.scrollY);
       setScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  // Fade in the border line progressively as user scrolls
-  const borderOpacity = Math.min(scrollY / 120, 1);
 
   const leftLinks = [
     { label: t.nav.services, href: "#servicios" },
@@ -64,20 +58,10 @@ export default function Navbar() {
             : "linear-gradient(to bottom, rgba(4,4,10,0.72) 0%, rgba(4,4,10,0.0) 100%)",
           backdropFilter: scrolled ? "blur(24px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
-          borderBottom: `1px solid rgba(255,255,255,${scrolled ? borderOpacity * 0.1 : 0})`,
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.08)" : "none",
           animation: "navFadeIn 0.8s ease both",
         }}
       >
-        {/* Thin blue accent line at very top — only on scroll */}
-        <div style={{
-          position: "absolute",
-          top: 0, left: 0, right: 0,
-          height: 2,
-          background: "linear-gradient(90deg, transparent 0%, #1847E8 40%, #1847E8 60%, transparent 100%)",
-          opacity: scrolled ? borderOpacity * 0.7 : 0,
-          transition: "opacity 0.5s ease",
-          pointerEvents: "none",
-        }} />
 
         <div style={{ position: "relative", display: "flex", alignItems: "center", width: "100%" }}>
 

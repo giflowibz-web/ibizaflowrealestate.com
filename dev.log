@@ -96,3 +96,8 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  GET /api/properties?limit=6&status=available 200 in 795ms
  GET /?_cb=1776868818234 200 in 84ms
  GET /api/properties?limit=6&status=available 200 in 730ms
+ GET /?_cb=1776869131248 200 in 224ms
+ GET /api/properties?limit=6&status=available 200 in 888ms
+ GET /?_cb=1776869145484 200 in 116ms
+ GET /?_cb=1776869147126 200 in 79ms
+ GET /api/properties?limit=6&status=available 200 in 663ms

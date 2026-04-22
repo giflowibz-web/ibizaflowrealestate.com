@@ -15,7 +15,7 @@ const Footer = () => {
 
           {/* Brand - spans 2 cols */}
           <div className="lg:col-span-2">
-            <Logo className="h-5 w-auto text-white mb-6" />
+            <Logo className="h-4 w-auto text-white mb-6" />
             <p className="text-white/40 text-[13px] leading-relaxed font-body max-w-[260px] mb-8">
               {t.footer.tagline}
             </p>

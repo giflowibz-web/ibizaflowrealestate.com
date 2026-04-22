@@ -10,7 +10,7 @@ const services = [
     title: "Inmobiliaria",
     subtitle: "Compra · Venta · Alquiler",
     description: "Propiedades exclusivas en Ibiza. Asesoramiento personalizado para encontrar tu hogar ideal o la inversión perfecta.",
-    image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/render/image/public/project-uploads/a6bda00f-9d85-4858-8c8d-a58f8ab1c935/shutterstock_156056504-resized-1772721652442.jpg",
+    image: "/servicios-real-estate.jpg",
     href: "/propiedades",
     wide: true,
   },

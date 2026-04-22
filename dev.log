@@ -12,3 +12,7 @@
  ○ Compiling /api/properties ...
  ✓ Compiled /api/properties in 1189ms (302 modules)
  GET /api/properties 200 in 1311ms
+ ○ Compiling /admin/properties ...
+ ✓ Compiled /admin/properties in 1501ms (633 modules)
+ GET /admin/properties?_cb=1776855441214 200 in 1748ms
+ GET /api/properties 200 in 21ms

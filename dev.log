@@ -18,3 +18,112 @@
  GET /api/properties 200 in 21ms
  GET /admin/properties?_cb=1776855567210 200 in 53ms
  GET /api/properties 200 in 8ms
+ ✓ Compiled /api/generate-description in 371ms (676 modules)
+Generate description error: TypeError: Headers.append: "orx_1038b90010b48ba191e98f6bba8eb852ddaf195b858c7745
+x-orchids-source: web
+x-orchids-run-id: claude-1776855111220-4toja1-retry
+x-orchids-token-usage-request-id: 3dab4026-91db-4ea4-bcc9-d3c88399e758
+x-orchids-assistant-message-id: 50f3b6cc-53f1-40d7-b459-e81da9c1189a
+x-orchids-proxy-project-id: 698fb0c4-0b56-4529-9925-c0129efe192a
+x-orchids-proxy-chat-session-id: 282431" is an invalid header value.
+    at async POST (app/api/generate-description/route.ts:116:21)
+  114 | SEO_FR: [mots-clés séparés par des virgules]`
+  115 |
+> 116 |     const message = await client.messages.create({
+      |                     ^
+  117 |       model: 'claude-opus-4-6',
+  118 |       max_tokens: 2048,
+  119 |       messages: [{ role: 'user', content: prompt }],
+ POST /api/generate-description 500 in 552ms
+ ✓ Compiled in 79ms (448 modules)
+ GET /admin/properties?_cb=1776855567210 200 in 55ms
+Generate description error: Error: 401 {"error":"Invalid or revoked Orchids API key. Use Authorization: Bearer <key> or x-orchids-api-key.","code":"invalid_orchids_api_key","reason":"invalid_api_key"}
+    at async POST (app/api/generate-description/route.ts:108:21)
+  106 | SEO_FR: [mots-clés séparés par des virgules]`
+  107 |
+> 108 |     const message = await client.messages.create({
+      |                     ^
+  109 |       model: 'claude-opus-4-6',
+  110 |       max_tokens: 2048,
+  111 |       messages: [{ role: 'user', content: prompt }], {
+  status: 401,
+  headers: Headers {
+    'access-control-allow-origin': '*',
+    'access-control-allow-credentials': 'true',
+    'access-control-expose-headers': 'Content-Length,X-Request-Id',
+    'content-type': 'application/json',
+    vary: 'Origin',
+    date: 'Wed, 22 Apr 2026 11:01:31 GMT',
+    'content-length': '161'
+  },
+  requestID: null,
+  error: [Object],
+  type: null
+}
+ POST /api/generate-description 500 in 587ms
+ ✓ Compiled in 68ms (448 modules)
+ GET /admin/properties?_cb=1776855567210 200 in 55ms
+Generate description error: Error: 401 {"error":"Invalid or revoked Orchids API key. Use Authorization: Bearer <key> or x-orchids-api-key.","code":"invalid_orchids_api_key","reason":"invalid_api_key"}
+    at async POST (app/api/generate-description/route.ts:110:21)
+  108 | SEO_FR: [mots-clés séparés par des virgules]`
+  109 |
+> 110 |     const message = await client.messages.create({
+      |                     ^
+  111 |       model: 'claude-opus-4-6',
+  112 |       max_tokens: 2048,
+  113 |       messages: [{ role: 'user', content: prompt }], {
+  status: 401,
+  headers: Headers {
+    'access-control-allow-origin': '*',
+    'access-control-allow-credentials': 'true',
+    'access-control-expose-headers': 'Content-Length,X-Request-Id',
+    'content-type': 'application/json',
+    vary: 'Origin',
+    date: 'Wed, 22 Apr 2026 11:01:46 GMT',
+    'content-length': '161'
+  },
+  requestID: null,
+  error: [Object],
+  type: null
+}
+ POST /api/generate-description 500 in 518ms
+ ✓ Compiled in 78ms (448 modules)
+ GET /admin/properties?_cb=1776855567210 200 in 43ms
+Generate description error: Error: 401 {"error":"Invalid or revoked Orchids API key. Use Authorization: Bearer <key> or x-orchids-api-key.","code":"invalid_orchids_api_key","reason":"invalid_api_key"}
+    at async POST (app/api/generate-description/route.ts:122:21)
+  120 | SEO_FR: [mots-clés séparés par des virgules]`
+  121 |
+> 122 |     const message = await client.messages.create({
+      |                     ^
+  123 |       model: 'claude-opus-4-6',
+  124 |       max_tokens: 2048,
+  125 |       messages: [{ role: 'user', content: prompt }], {
+  status: 401,
+  headers: Headers {
+    'access-control-allow-origin': '*',
+    'access-control-allow-credentials': 'true',
+    'access-control-expose-headers': 'Content-Length,X-Request-Id',
+    'content-type': 'application/json',
+    vary: 'Origin',
+    date: 'Wed, 22 Apr 2026 11:02:11 GMT',
+    'content-length': '161'
+  },
+  requestID: null,
+  error: [Object],
+  type: null
+}
+ POST /api/generate-description 500 in 497ms
+
+> app@1.0.0 dev
+> next dev -p 3003
+
+   ▲ Next.js 15.5.15
+   - Local:        http://localhost:3003
+   - Network:      http://172.20.0.50:3003
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Ready in 1146ms
+ ○ Compiling /api/generate-description ...
+ ✓ Compiled /api/generate-description in 1399ms (358 modules)
+ POST /api/generate-description 200 in 33582ms

@@ -1,8 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 
+// Parse multi-line custom headers from ANTHROPIC_CUSTOM_HEADERS env var
+const customHeaders: Record<string, string> = {}
+const rawHeaders = process.env.ANTHROPIC_CUSTOM_HEADERS || ''
+rawHeaders.split('\n').forEach(line => {
+  const idx = line.indexOf(':')
+  if (idx > 0) {
+    const key = line.slice(0, idx).trim()
+    const val = line.slice(idx + 1).trim()
+    if (key && val) customHeaders[key] = val
+  }
+})
+
+const orchidsKey = customHeaders['x-orchids-api-key'] || process.env.ANTHROPIC_AUTH_TOKEN || ''
 const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY || '',
+  apiKey: orchidsKey || 'placeholder',
+  baseURL: process.env.ANTHROPIC_BASE_URL,
+  defaultHeaders: Object.keys(customHeaders).length > 0 ? customHeaders : undefined,
 })
 
 export async function POST(req: NextRequest) {
@@ -105,7 +120,7 @@ SEO_EN: [keywords separated by commas]
 SEO_FR: [mots-clés séparés par des virgules]`
 
     const message = await client.messages.create({
-      model: 'claude-opus-4.6',
+      model: 'claude-opus-4-6',
       max_tokens: 2048,
       messages: [{ role: 'user', content: prompt }],
     })

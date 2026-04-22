@@ -131,3 +131,8 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  ✓ Compiled in 155ms
  ✓ Compiled in 95ms
  ✓ Compiled in 153ms
+ GET /?_cb=1776860040045 200 in 248ms
+ GET /?_cb=1776870034904 200 in 88ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 225ms
+ GET /api/properties?limit=6&status=available 200 in 914ms
+ GET /api/properties?limit=6&status=available 200 in 681ms

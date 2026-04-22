@@ -55,7 +55,9 @@ export default function Navbar() {
           padding: 0,
           display: "flex",
           alignItems: "center",
-          background: scrolled ? "rgba(4,4,10,0.96)" : "transparent",
+          background: scrolled
+            ? "rgba(4,4,10,0.96)"
+            : "linear-gradient(to bottom, rgba(4,4,10,0.65) 0%, transparent 100%)",
           backdropFilter: scrolled ? "blur(24px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
           borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
@@ -190,7 +192,7 @@ export default function Navbar() {
               flexShrink: 0,
             }}
           >
-            <Logo variant="light" size={scrolled ? "sm" : "md"} />
+            <Logo variant="light" size={scrolled ? "sm" : "lg"} />
           </a>
 
           {/* RIGHT */}

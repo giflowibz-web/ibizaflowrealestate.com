@@ -163,3 +163,4 @@ Error: Route "/propiedad/[slug]" used `params.slug`. `params` should be awaited 
  GET /propiedad/villa-blanca-cala-jondal 200 in 759ms
  GET /admin/properties 200 in 43ms
  GET /?_cb=1776856525444 200 in 60ms
+ GET /?_cb=1776856827680 200 in 50ms

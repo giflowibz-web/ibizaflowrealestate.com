@@ -190,3 +190,4 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  GET /?_cb=1776870377049 200 in 236ms
  GET /favicon.ico?favicon.0b3bf435.ico 200 in 228ms
  GET /api/properties?limit=6&status=available 200 in 493ms
+ ✓ Compiled in 106ms

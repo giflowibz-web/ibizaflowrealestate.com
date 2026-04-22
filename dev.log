@@ -17,3 +17,4 @@
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
  GET /admin/login?_cb=1776865011829 200 in 75ms
  GET /admin/login?_cb=1776865283045 200 in 72ms
+ GET /admin/login?_cb=1776865502710 200 in 72ms

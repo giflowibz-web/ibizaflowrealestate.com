@@ -188,10 +188,9 @@ export default function Navbar() {
               justifyContent: "center",
               lineHeight: 0,
               flexShrink: 0,
-              padding: scrolled ? "12px 0" : "20px 0",
             }}
           >
-            <Logo variant="light" size={scrolled ? "md" : "hero"} />
+            <Logo variant="light" size={scrolled ? "sm" : "md"} />
           </a>
 
           {/* RIGHT */}

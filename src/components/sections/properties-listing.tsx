@@ -193,7 +193,7 @@ export default function PropertiesListingPage({
                 fontWeight: 700,
                 letterSpacing: "0.35em",
                 textTransform: "uppercase",
-                color: "#1847E8",
+                color: "#002FA7",
                 margin: "0 0 20px",
               }}
             >
@@ -222,7 +222,7 @@ export default function PropertiesListingPage({
                 marginTop: 32,
               }}
             >
-              <div style={{ width: 40, height: 1, background: "#1847E8" }} />
+              <div style={{ width: 40, height: 1, background: "#002FA7" }} />
               <p
                 style={{
                   color: "rgba(255,255,255,0.5)",
@@ -293,7 +293,7 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: selectedType ? "#1847E8" : "#888",
+                color: selectedType ? "#002FA7" : "#888",
                 padding: "0 20px",
                 cursor: "pointer",
                 height: "100%",
@@ -319,7 +319,7 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: selectedArea ? "#1847E8" : "#888",
+                color: selectedArea ? "#002FA7" : "#888",
                 padding: "0 20px",
                 cursor: "pointer",
                 height: "100%",
@@ -345,7 +345,7 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: minBedrooms > 0 ? "#1847E8" : "#888",
+                color: minBedrooms > 0 ? "#002FA7" : "#888",
                 padding: "0 20px",
                 cursor: "pointer",
                 height: "100%",
@@ -395,7 +395,7 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                color: "#1847E8",
+                color: "#002FA7",
                 cursor: "pointer",
                 padding: "0 20px",
                 height: "100%",
@@ -419,7 +419,7 @@ export default function PropertiesListingPage({
                   {lp.no_results_sub}
                 </p>
                 {hasActiveFilters && (
-                  <button onClick={resetFilters} style={{ marginTop: 24, background: "#1847E8", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
+                  <button onClick={resetFilters} style={{ marginTop: 24, background: "#002FA7", color: "#fff", border: "none", padding: "12px 32px", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", cursor: "pointer" }}>
                     {lp.clear_filters}
                   </button>
                 )}
@@ -576,7 +576,7 @@ export default function PropertiesListingPage({
               fontWeight: 700,
               letterSpacing: "0.35em",
               textTransform: "uppercase",
-              color: "#1847E8",
+              color: "#002FA7",
               margin: "0 0 20px",
             }}
           >
@@ -612,7 +612,7 @@ export default function PropertiesListingPage({
             href="/#contacto"
             style={{
               display: "inline-block",
-              background: "#1847E8",
+              background: "#002FA7",
               color: "#fff",
               padding: "16px 48px",
               fontSize: "0.68rem",

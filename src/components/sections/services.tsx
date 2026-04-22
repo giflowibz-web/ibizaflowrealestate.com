@@ -51,7 +51,7 @@ const Services = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
           <div>
-            <span className="text-[10px] uppercase tracking-[0.35em] text-[#1847E8] font-medium block mb-4">
+            <span className="text-[10px] uppercase tracking-[0.35em] text-[#002FA7] font-medium block mb-4">
               Lo que ofrecemos
             </span>
             <h2 className="font-display text-4xl md:text-5xl text-[#0A0A0A] leading-none font-light">

@@ -147,7 +147,7 @@ export default function Navbar() {
                     }}
                     onMouseEnter={e => {
                       e.currentTarget.style.color = "#fff";
-                      e.currentTarget.style.background = "#1847E8";
+                      e.currentTarget.style.background = "#002FA7";
                       e.currentTarget.style.paddingLeft = "28px";
                     }}
                     onMouseLeave={e => {

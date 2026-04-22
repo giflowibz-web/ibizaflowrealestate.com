@@ -78,7 +78,7 @@ const ListingsGrid = () => {
         {/* Header */}
         <div className="flex flex-col items-center text-center mb-16 gap-6">
           <div>
-            <span className="text-[10px] uppercase tracking-[0.35em] text-[#1847E8] font-medium block mb-4">
+            <span className="text-[10px] uppercase tracking-[0.35em] text-[#002FA7] font-medium block mb-4">
               {t.listings.tag}
             </span>
             <h2 className="font-display text-4xl md:text-5xl text-[#0A0A0A] leading-none font-light uppercase">

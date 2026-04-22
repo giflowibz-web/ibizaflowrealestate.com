@@ -51,8 +51,10 @@ export default function Navbar() {
           position: "fixed",
           top: 0, left: 0, right: 0,
           zIndex: 50,
-          transition: "padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.5s ease",
-          padding: "22px 0",
+          transition: "background 0.5s ease",
+          height: 72,
+          display: "flex",
+          alignItems: "center",
           background: "rgba(4,4,10,0.96)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
@@ -61,7 +63,7 @@ export default function Navbar() {
         }}
       >
 
-        <div style={{ position: "relative", display: "flex", alignItems: "center", width: "100%" }}>
+        <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
 
           {/* LEFT */}
           <nav className="hidden md:flex" style={{ flex: 1, paddingLeft: 40, display: "flex", alignItems: "center", gap: 40 }}>
@@ -184,10 +186,10 @@ export default function Navbar() {
               left: "50%",
               top: "50%",
               transform: "translate(-50%, -50%)",
-              flexShrink: 0,
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
+              lineHeight: 0,
             }}
           >
             <Logo variant="light" size="sm" />

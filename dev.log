@@ -24,3 +24,8 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  GET /favicon.ico?favicon.0b3bf435.ico 200 in 446ms
  ✓ Compiled in 211ms
  ✓ Compiled in 134ms
+ ✓ Compiled / in 319ms
+ GET /?_cb=1776860040045 200 in 441ms
+ ✓ Compiled /api/properties in 241ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 227ms
+ GET /api/properties?limit=6&status=available 200 in 1644ms

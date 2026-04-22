@@ -27,12 +27,12 @@ export default function Navbar() {
     <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           scrolled
-            ? "bg-black/90 backdrop-blur-md py-7"
-            : "bg-transparent py-12"
+            ? "bg-black/90 backdrop-blur-md border-b border-white/10 py-5"
+            : "bg-transparent py-9"
         }`}
     >
       {/* Contenedor relativo para logo absolute centrado — igual que Aaron Kirman header-container--center */}
-      <div className="relative w-full flex items-center">
+      <div className="relative w-full flex items-center min-h-[56px]">
 
           {/* IZQUIERDA — flex-1, links pegados al borde izquierdo */}
             <nav className="hidden md:flex items-center gap-10 flex-1 pl-6">
@@ -107,7 +107,7 @@ export default function Navbar() {
         {/* CENTRO — absoluto, centrado en la página */}
         <a
           href="/"
-          className="absolute left-1/2 -translate-x-1/2 flex-shrink-0"
+          className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-shrink-0"
         >
           <Logo variant="light" size={scrolled ? "sm" : "md"} />
         </a>

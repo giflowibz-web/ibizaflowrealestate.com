@@ -52,7 +52,7 @@ export default function Navbar() {
           top: 0, left: 0, right: 0,
           zIndex: 50,
           transition: "padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.5s ease",
-          padding: scrolled ? "18px 0" : "28px 0",
+          padding: "22px 0",
           background: "rgba(4,4,10,0.96)",
           backdropFilter: "blur(24px)",
           WebkitBackdropFilter: "blur(24px)",
@@ -190,7 +190,7 @@ export default function Navbar() {
               justifyContent: "center",
             }}
           >
-            <Logo variant="light" size={scrolled ? "sm" : "md"} />
+            <Logo variant="light" size="sm" />
           </a>
 
           {/* RIGHT */}

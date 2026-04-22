@@ -32,7 +32,8 @@ const FEATURES_OPTIONS = [
   'Pool', 'Sea View', 'Garden', 'Garage', 'Terrace', 'Air Conditioning',
   'Alarm System', 'Jacuzzi', 'BBQ Area', 'Solar Panels', 'Smart Home',
   'Underfloor Heating', 'Wine Cellar', 'Home Cinema', 'Gym', 'Tennis Court',
-  'Concierge', 'Boat Mooring', 'Beach Access', 'Mountain View',
+  'Concierge', 'Boat Mooring', 'Beach Access', 'Mountain View', 'Discoteca',
+  'Sauna', 'Elevator', 'Fireplace', 'Storage Room', 'Laundry Room',
 ]
 
 const AREAS = [
@@ -50,13 +51,16 @@ interface Props {
 }
 
 const EMPTY: Partial<Property> = {
-  slug: '', title_es: '', title_en: '', title_fr: '',
+  ref: '', slug: '', title_es: '', title_en: '', title_fr: '',
   description_es: '', description_en: '', description_fr: '',
   seo_keywords_es: '', seo_keywords_en: '', seo_keywords_fr: '',
   property_type: 'villa', listing_type: 'sale', area: '',
-  price: null, bedrooms: null, bathrooms: null,
-  size_built: null, size_plot: null,
-  features: [], images: [], status: 'draft',
+  municipality: '', island: 'Ibiza', country: 'Spain',
+  price: null, price_rent: null, price_on_request: false,
+  bedrooms: null, bathrooms: null,
+  size_built: null, size_plot: null, year_built: null,
+  features: [], images: [], status: 'available',
+  featured: false, published_idealista: false, published_kyero: false,
 }
 
 const inputStyle: React.CSSProperties = {
@@ -200,8 +204,17 @@ export default function PropertyForm({ initial, onSave, saving, onSlugChange }: 
                   style={inputStyle}
                   value={form.title_es || ''}
                   onChange={e => handleTitleEsChange(e.target.value)}
-                  placeholder="Ej: Villa Can Montserrat"
+                  placeholder="Ej: Cana Solangel"
                   required
+                />
+              </div>
+              <div>
+                <label style={labelStyle}>Ref</label>
+                <input
+                  style={inputStyle}
+                  value={form.ref || ''}
+                  onChange={e => set('ref', e.target.value)}
+                  placeholder="IBZ-A-0001"
                 />
               </div>
               <div>
@@ -210,26 +223,38 @@ export default function PropertyForm({ initial, onSave, saving, onSlugChange }: 
                   style={inputStyle}
                   value={form.slug || ''}
                   onChange={e => set('slug', e.target.value)}
-                  placeholder="villa-can-montserrat"
+                  placeholder="cana-solangel"
                 />
               </div>
               <div>
                 <label style={labelStyle}>Estado</label>
                 <select
                   style={{ ...inputStyle, appearance: 'none' }}
-                  value={form.status || 'draft'}
+                  value={form.status || 'available'}
                   onChange={e => set('status', e.target.value)}
                 >
+                  <option value="available">Disponible</option>
                   <option value="draft">Borrador</option>
-                  <option value="active">Activa</option>
+                  <option value="sold">Vendida</option>
+                  <option value="rented">Alquilada</option>
                   <option value="archived">Archivada</option>
                 </select>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 20 }}>
+                <input
+                  type="checkbox"
+                  id="featured"
+                  checked={!!form.featured}
+                  onChange={e => set('featured', e.target.checked)}
+                  style={{ width: 16, height: 16, cursor: 'pointer' }}
+                />
+                <label htmlFor="featured" style={{ ...labelStyle, margin: 0, cursor: 'pointer' }}>Destacada</label>
               </div>
             </div>
           </div>
 
           <div style={sectionStyle}>
-            <h3 style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 20 }}>Clasificación</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 20 }}>Clasificación y ubicación</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
               <div>
                 <label style={labelStyle}>Tipo de propiedad</label>
@@ -257,6 +282,18 @@ export default function PropertyForm({ initial, onSave, saving, onSlugChange }: 
                   {AREAS.map(a => <option key={a} value={a}>{a}</option>)}
                 </select>
               </div>
+              <div>
+                <label style={labelStyle}>Municipio</label>
+                <input style={inputStyle} value={form.municipality || ''} onChange={e => set('municipality', e.target.value)} placeholder="Sant Josep de Sa Talaia" />
+              </div>
+              <div>
+                <label style={labelStyle}>Isla</label>
+                <input style={inputStyle} value={form.island || 'Ibiza'} onChange={e => set('island', e.target.value)} placeholder="Ibiza" />
+              </div>
+              <div>
+                <label style={labelStyle}>País</label>
+                <input style={inputStyle} value={form.country || 'Spain'} onChange={e => set('country', e.target.value)} placeholder="Spain" />
+              </div>
             </div>
           </div>
 
@@ -264,8 +301,22 @@ export default function PropertyForm({ initial, onSave, saving, onSlugChange }: 
             <h3 style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 20 }}>Datos de la propiedad</h3>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
               <div>
-                <label style={labelStyle}>Precio (€)</label>
+                <label style={labelStyle}>Precio venta (€)</label>
                 <input style={inputStyle} type="number" value={form.price || ''} onChange={e => set('price', e.target.value ? Number(e.target.value) : null)} placeholder="1.500.000" />
+              </div>
+              <div>
+                <label style={labelStyle}>Precio alquiler (€/sem)</label>
+                <input style={inputStyle} type="number" value={form.price_rent || ''} onChange={e => set('price_rent', e.target.value ? Number(e.target.value) : null)} placeholder="15.000" />
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, paddingTop: 20 }}>
+                <input
+                  type="checkbox"
+                  id="price_on_request"
+                  checked={!!form.price_on_request}
+                  onChange={e => set('price_on_request', e.target.checked)}
+                  style={{ width: 16, height: 16, cursor: 'pointer' }}
+                />
+                <label htmlFor="price_on_request" style={{ ...labelStyle, margin: 0, cursor: 'pointer' }}>Precio a consultar</label>
               </div>
               <div>
                 <label style={labelStyle}>Dormitorios</label>
@@ -274,6 +325,10 @@ export default function PropertyForm({ initial, onSave, saving, onSlugChange }: 
               <div>
                 <label style={labelStyle}>Baños</label>
                 <input style={inputStyle} type="number" value={form.bathrooms || ''} onChange={e => set('bathrooms', e.target.value ? Number(e.target.value) : null)} placeholder="3" />
+              </div>
+              <div>
+                <label style={labelStyle}>Año construcción</label>
+                <input style={inputStyle} type="number" value={form.year_built || ''} onChange={e => set('year_built', e.target.value ? Number(e.target.value) : null)} placeholder="2005" />
               </div>
               <div>
                 <label style={labelStyle}>Superficie construida (m²)</label>
@@ -309,6 +364,36 @@ export default function PropertyForm({ initial, onSave, saving, onSlugChange }: 
                   </button>
                 )
               })}
+            </div>
+          </div>
+
+          <div style={sectionStyle}>
+            <h3 style={{ fontSize: 14, fontWeight: 700, color: '#fff', marginBottom: 16 }}>Portales inmobiliarios</h3>
+            <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap' }}>
+              {[
+                { key: 'published_idealista', label: 'Idealista', idKey: 'idealista_id' },
+                { key: 'published_kyero', label: 'Kyero', idKey: 'kyero_id' },
+                { key: 'published_fotocasa', label: 'Fotocasa', idKey: 'fotocasa_id' },
+              ].map(({ key, label, idKey }) => (
+                <div key={key} style={{ display: 'flex', flexDirection: 'column', gap: 8, minWidth: 180 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <input
+                      type="checkbox"
+                      id={key}
+                      checked={!!(form as Record<string, unknown>)[key]}
+                      onChange={e => set(key as keyof Property, e.target.checked)}
+                      style={{ width: 16, height: 16, cursor: 'pointer' }}
+                    />
+                    <label htmlFor={key} style={{ ...labelStyle, margin: 0, cursor: 'pointer' }}>{label}</label>
+                  </div>
+                  <input
+                    style={{ ...inputStyle, fontSize: 12 }}
+                    value={((form as Record<string, unknown>)[idKey] as string) || ''}
+                    onChange={e => set(idKey as keyof Property, e.target.value)}
+                    placeholder={`ID en ${label}`}
+                  />
+                </div>
+              ))}
             </div>
           </div>
         </div>

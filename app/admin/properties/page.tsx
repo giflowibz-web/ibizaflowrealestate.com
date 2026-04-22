@@ -19,9 +19,12 @@ export default function PropertiesPage() {
   }, [])
 
   const statusColor: Record<string, string> = {
+    available: '#22c55e',
     active: '#22c55e',
     draft: '#f59e0b',
     archived: '#6b7280',
+    sold: '#6b7280',
+    rented: '#6b7280',
   }
 
   return (
@@ -72,7 +75,7 @@ export default function PropertiesPage() {
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
             <thead>
               <tr style={{ borderBottom: '1px solid #1e2d4a' }}>
-                {['Propiedad', 'Área', 'Tipo', 'Precio', 'Estado', ''].map(h => (
+                {['Ref', 'Propiedad', 'Área', 'Tipo', 'Precio', 'Estado', ''].map(h => (
                   <th key={h} style={{
                     padding: '12px 16px', textAlign: 'left',
                     fontSize: 11, fontWeight: 600, color: '#4a6a8a',
@@ -86,6 +89,9 @@ export default function PropertiesPage() {
                 <tr key={p.id} style={{
                   borderBottom: i < properties.length - 1 ? '1px solid #1a2640' : 'none',
                 }}>
+                  <td style={{ padding: '14px 16px', color: '#4a6a8a', fontSize: 12, whiteSpace: 'nowrap' }}>
+                    {p.ref || '—'}
+                  </td>
                   <td style={{ padding: '14px 16px' }}>
                     <div style={{ fontWeight: 600, color: '#fff', fontSize: 14 }}>
                       {p.title_es || p.slug || 'Sin título'}
@@ -95,7 +101,7 @@ export default function PropertiesPage() {
                   <td style={{ padding: '14px 16px', color: '#a0b4cc', fontSize: 14 }}>{p.area || '—'}</td>
                   <td style={{ padding: '14px 16px', color: '#a0b4cc', fontSize: 14 }}>{p.property_type || '—'}</td>
                   <td style={{ padding: '14px 16px', color: '#a0b4cc', fontSize: 14 }}>
-                    {p.price ? `${Number(p.price).toLocaleString('es-ES')} €` : '—'}
+                    {p.price_on_request ? 'A consultar' : p.price ? `${Number(p.price).toLocaleString('es-ES')} €` : p.price_rent ? `${Number(p.price_rent).toLocaleString('es-ES')} €/sem` : '—'}
                   </td>
                   <td style={{ padding: '14px 16px' }}>
                     <span style={{

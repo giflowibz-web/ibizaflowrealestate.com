@@ -1,15 +1,17 @@
 
 > nextjs-new@0.1.0 dev
-> next dev --turbopack -p 3003
+> next dev --turbopack -p 3003 -p 3003
 
- ⨯ Failed to start server
-Error: listen EADDRINUSE: address already in use :::3003
-    at <unknown> (Error: listen EADDRINUSE: address already in use :::3003)
-    at new Promise (<anonymous>) {
-  code: 'EADDRINUSE',
-  errno: -98,
-  syscall: 'listen',
-  address: '::',
-  port: 3003
-}
-[?25h
+   ▲ Next.js 15.5.15 (Turbopack)
+   - Local:        http://localhost:3003
+   - Network:      http://172.20.0.50:3003
+   - Environments: .env.local
+
+ ✓ Starting...
+ ✓ Compiled middleware in 119ms
+ ✓ Ready in 991ms
+ ○ Compiling /admin/login ...
+ ✓ Compiled /admin/login in 2.6s
+ GET /admin/login?_cb=1776864593866 200 in 2911ms
+ ⚠ Cross origin request detected from 3003-81b63ac2-695b-4680-a142-b40b906a2836.orchids.cloud to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
+Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins

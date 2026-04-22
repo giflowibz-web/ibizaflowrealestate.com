@@ -1,23 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 
-// Parse ANTHROPIC_CUSTOM_HEADERS if present (multiline "key: value\nkey: value" format)
-function parseCustomHeaders(raw: string | undefined): Record<string, string> {
-  if (!raw) return {}
-  const headers: Record<string, string> = {}
-  for (const line of raw.split('\n')) {
-    const idx = line.indexOf(':')
-    if (idx > 0) {
-      headers[line.slice(0, idx).trim()] = line.slice(idx + 1).trim()
-    }
-  }
-  return headers
-}
-
 const client = new Anthropic({
-  apiKey: process.env.ANTHROPIC_AUTH_TOKEN || process.env.ANTHROPIC_API_KEY || 'placeholder',
-  baseURL: process.env.ANTHROPIC_BASE_URL,
-  defaultHeaders: parseCustomHeaders(process.env.ANTHROPIC_CUSTOM_HEADERS),
+  apiKey: process.env.ANTHROPIC_API_KEY || '',
 })
 
 export async function POST(req: NextRequest) {

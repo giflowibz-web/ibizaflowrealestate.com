@@ -60,13 +60,13 @@ export default function Navbar() {
             : "linear-gradient(to bottom, rgba(4,4,10,0.65) 0%, transparent 100%)",
           backdropFilter: scrolled ? "blur(24px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "none",
           animation: "navFadeIn 0.8s ease both",
           overflow: "visible",
         }}
       >
 
-        <div style={{ display: "flex", alignItems: "center", width: "100%", position: "relative", height: scrolled ? 68 : 92 }}>
+        <div style={{ display: "flex", alignItems: "center", width: "100%", position: "relative", height: scrolled ? 68 : 92, paddingTop: scrolled ? 0 : 16 }}>
 
           {/* LEFT */}
           <nav className="hidden md:flex" style={{ flex: 1, paddingLeft: 40, display: "flex", alignItems: "center", gap: 40 }}>

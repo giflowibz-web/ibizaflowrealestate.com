@@ -15,3 +15,4 @@
  GET /admin/login?_cb=1776864593866 200 in 2911ms
  ⚠ Cross origin request detected from 3003-81b63ac2-695b-4680-a142-b40b906a2836.orchids.cloud to /_next/* resource. In a future major version of Next.js, you will need to explicitly configure "allowedDevOrigins" in next.config to allow this.
 Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allowedDevOrigins
+ GET /admin/login?_cb=1776865011829 200 in 75ms

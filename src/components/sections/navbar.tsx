@@ -63,7 +63,6 @@ export default function Navbar() {
           WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
           borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "none",
           animation: "navFadeIn 0.8s ease both",
-          overflow: "hidden",
         }}
       >
 

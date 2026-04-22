@@ -21,3 +21,6 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  GET /api/properties 200 in 287ms
  GET /admin/properties?_cb=1776856146831 200 in 141ms
  GET /api/properties 200 in 7ms
+ GET /admin/properties?_cb=1776856168371 200 in 32ms
+ GET /api/properties 200 in 5ms
+ GET /admin/properties 200 in 19ms

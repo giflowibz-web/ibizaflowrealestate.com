@@ -12,3 +12,5 @@
  ○ Compiling /admin/properties ...
  ✓ Compiled /admin/properties in 2.6s (691 modules)
  GET /admin/properties 200 in 2920ms
+ GET /admin/properties 200 in 38ms
+ GET /admin/properties?_cb=1776854896661 200 in 45ms

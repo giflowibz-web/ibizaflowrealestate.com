@@ -15,7 +15,7 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       setScrollY(window.scrollY);
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 10);
     };
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
@@ -60,10 +60,10 @@ export default function Navbar() {
           transition: "padding 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.5s ease",
           padding: scrolled ? "18px 0" : "36px 0",
           background: scrolled
-            ? "rgba(0,0,0,0.88)"
+            ? "rgba(4,4,10,0.96)"
             : "transparent",
-          backdropFilter: scrolled ? "blur(20px)" : "none",
-          WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
+          backdropFilter: scrolled ? "blur(24px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
           borderBottom: `1px solid rgba(255,255,255,${scrolled ? borderOpacity * 0.1 : 0})`,
           animation: "navFadeIn 0.8s ease both",
         }}

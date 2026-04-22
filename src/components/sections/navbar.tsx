@@ -193,7 +193,7 @@ export default function Navbar() {
               flexShrink: 0,
             }}
           >
-            <Logo variant="light" size={scrolled ? "sm" : "lg"} />
+            <Logo variant="light" size={scrolled ? "sm" : "md"} />
           </a>
 
           {/* RIGHT */}

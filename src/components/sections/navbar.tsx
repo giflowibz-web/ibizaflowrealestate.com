@@ -53,7 +53,7 @@ export default function Navbar() {
           zIndex: 50,
           transition: "background 0.5s ease",
           padding: 0,
-          height: 72,
+          height: 96,
           display: "flex",
           alignItems: "center",
           background: scrolled

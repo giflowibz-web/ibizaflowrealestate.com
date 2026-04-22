@@ -61,7 +61,7 @@ export default function Navbar() {
           padding: scrolled ? "18px 0" : "36px 0",
           background: scrolled
             ? "rgba(4,4,10,0.96)"
-            : "transparent",
+            : "linear-gradient(to bottom, rgba(4,4,10,0.72) 0%, rgba(4,4,10,0.0) 100%)",
           backdropFilter: scrolled ? "blur(24px)" : "none",
           WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
           borderBottom: `1px solid rgba(255,255,255,${scrolled ? borderOpacity * 0.1 : 0})`,

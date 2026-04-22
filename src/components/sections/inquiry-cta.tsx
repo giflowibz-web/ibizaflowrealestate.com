@@ -207,10 +207,10 @@ export default function InquiryCTA() {
             marginBottom: 18,
             margin: 0,
           }}>
-            <span style={{ color: 'rgba(255,255,255,0.3)', display: 'block' }}>
+            <span style={{ color: 'rgba(255,255,255,0.3)', display: 'block', textTransform: 'uppercase' }}>
               {lang === 'es' ? 'Su vida' : 'Your life'}
             </span>
-            <span style={{ color: '#fff', display: 'block' }}>
+            <span style={{ color: '#fff', display: 'block', textTransform: 'uppercase' }}>
               {lang === 'es' ? 'en Ibiza' : 'in Ibiza'}
             </span>
           </h2>

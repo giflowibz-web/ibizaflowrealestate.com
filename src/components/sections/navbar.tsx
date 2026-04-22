@@ -51,14 +51,14 @@ export default function Navbar() {
           position: "fixed",
           top: 0, left: 0, right: 0,
           zIndex: 50,
-          transition: "background 0.5s ease",
-          height: 72,
+          transition: "background 0.5s ease, backdrop-filter 0.5s ease, border-color 0.5s ease, padding 0.4s ease",
+          padding: scrolled ? "16px 0" : "28px 0",
           display: "flex",
           alignItems: "center",
-          background: "rgba(4,4,10,0.96)",
-          backdropFilter: "blur(24px)",
-          WebkitBackdropFilter: "blur(24px)",
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
+          background: scrolled ? "rgba(4,4,10,0.96)" : "transparent",
+          backdropFilter: scrolled ? "blur(24px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
+          borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
           animation: "navFadeIn 0.8s ease both",
         }}
       >
@@ -192,7 +192,7 @@ export default function Navbar() {
               lineHeight: 0,
             }}
           >
-            <Logo variant="light" size="sm" />
+            <Logo variant="light" size={scrolled ? "sm" : "md"} />
           </a>
 
           {/* RIGHT */}

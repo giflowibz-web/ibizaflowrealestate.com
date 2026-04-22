@@ -60,10 +60,11 @@ export default function Navbar() {
           WebkitBackdropFilter: scrolled ? "blur(24px)" : "none",
           borderBottom: scrolled ? "1px solid rgba(255,255,255,0.07)" : "1px solid transparent",
           animation: "navFadeIn 0.8s ease both",
+          overflow: "visible",
         }}
       >
 
-        <div style={{ display: "flex", alignItems: "center", width: "100%" }}>
+        <div style={{ display: "flex", alignItems: "center", width: "100%", position: "relative" }}>
 
           {/* LEFT */}
           <nav className="hidden md:flex" style={{ flex: 1, paddingLeft: 40, display: "flex", alignItems: "center", gap: 40 }}>

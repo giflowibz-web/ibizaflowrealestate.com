@@ -32,3 +32,134 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  GET /?_cb=1776856252815 307 in 43ms
  GET /admin/properties 200 in 37ms
  GET /api/properties 200 in 5ms
+ ✓ Compiled in 99ms (367 modules)
+ ✓ Compiled in 123ms (595 modules)
+ GET /admin/properties 200 in 120ms
+ ✓ Compiled / in 205ms (606 modules)
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter={function onMouseEnter} onMouseLeave=... children=...>
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3266041493'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter=... onMouseLeave={function onMouseLeave} children=...>
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '4054202293'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter={function onMouseEnter} onMouseLeave=... children=...>
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3266041493'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter=... onMouseLeave={function onMouseLeave} children=...>
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '4054202293'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter={function onMouseEnter} onMouseLeave=... children=...>
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3266041493'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter=... onMouseLeave={function onMouseLeave} children=...>
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '4054202293'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter={function onMouseEnter} onMouseLeave=... children=...>
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3266041493'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter=... onMouseLeave={function onMouseLeave} children=...>
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '4054202293'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter={function onMouseEnter} onMouseLeave=... children=...>
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3266041493'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter=... onMouseLeave={function onMouseLeave} children=...>
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '4054202293'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter={function onMouseEnter} onMouseLeave=... children=...>
+                                  ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '3266041493'
+}
+ ⨯ Error: Event handlers cannot be passed to Client Component props.
+  <div style={{...}} onMouseEnter=... onMouseLeave={function onMouseLeave} children=...>
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^
+If you need interactivity, consider converting part of this to a Client Component.
+    at stringify (<anonymous>)
+    at stringify (<anonymous>) {
+  digest: '4054202293'
+}
+ GET / 500 in 2689ms
+ GET /admin/properties 200 in 26ms
+ ⨯ ./app/page.tsx:3:1
+Module not found: Can't resolve './PropertyCard'
+  1 | import Link from 'next/link'
+  2 | import { getAllProperties } from '@/lib/db'
+> 3 | import PropertyCard from './PropertyCard'
+    | ^
+  4 |
+  5 | function formatPrice(price: number | null) {
+  6 |   if (!price) return 'Consultar precio'
+
+https://nextjs.org/docs/messages/module-not-found
+ ✓ Compiled in 220ms (609 modules)
+ GET /admin/properties 200 in 73ms
+ GET / 200 in 119ms
+ ✓ Compiled /propiedad/[slug] in 160ms (622 modules)
+Error: Route "/propiedad/[slug]" used `params.slug`. `params` should be awaited before using its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+    at eval (app/propiedad/[slug]/page.tsx:17:59)
+    at Array.find (<anonymous>)
+    at PropertyDetailPage (app/propiedad/[slug]/page.tsx:17:31)
+  15 | export default function PropertyDetailPage({ params }: { params: { slug: string } }) {
+  16 |   const properties = getAllProperties()
+> 17 |   const property = properties.find(p => p.slug === params.slug && p.status === 'active')
+     |                                                           ^
+  18 |
+  19 |   if (!property) notFound()
+  20 |
+ GET /propiedad/villa-blanca-cala-jondal 200 in 759ms
+ GET /admin/properties 200 in 43ms
+ GET /?_cb=1776856525444 200 in 60ms

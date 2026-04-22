@@ -11,7 +11,7 @@ export default function Logo({ variant = "light", size = "md", className = "" }:
   const logoSrc = variant === "dark" ? "/logo-negro-trimmed.png" : "/logo-blanco-trimmed.png";
 
   const sizes = {
-    sm:   { width: 55, height: 22 },
+    sm:   { width: 90, height: 36 },
     md:   { width: 110, height: 44 },
     lg:   { width: 200, height: 80 },
     hero: { width: 160, height: 64 },

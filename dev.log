@@ -8,11 +8,7 @@
    - Environments: .env.local
 
  ✓ Starting...
- ✓ Ready in 1143ms
- ○ Compiling /admin/properties ...
- ✓ Compiled /admin/properties in 2.6s (691 modules)
- GET /admin/properties 200 in 2920ms
- GET /admin/properties 200 in 38ms
- GET /admin/properties?_cb=1776854896661 200 in 45ms
- GET /admin/properties?_cb=1776855041690 200 in 40ms
- GET /admin/properties?_cb=1776855063929 200 in 42ms
+ ✓ Ready in 1156ms
+ ○ Compiling /api/properties ...
+ ✓ Compiled /api/properties in 1189ms (302 modules)
+ GET /api/properties 200 in 1311ms

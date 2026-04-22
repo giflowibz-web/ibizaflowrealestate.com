@@ -139,15 +139,12 @@ export default function PropertyForm({ initial, onSave, saving, onSlugChange }: 
     setUploadingImages(true)
     const urls: string[] = []
     for (const file of Array.from(files)) {
-      const ext = file.name.split('.').pop()
-      const name = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`
-      const { data } = await import('@/lib/supabase').then(m =>
-        m.supabase.storage.from('property-images').upload(name, file, { upsert: true })
-      )
-      if (data?.path) {
-        const { data: urlData } = (await import('@/lib/supabase')).supabase.storage
-          .from('property-images').getPublicUrl(data.path)
-        urls.push(urlData.publicUrl)
+      const fd = new FormData()
+      fd.append('file', file)
+      const res = await fetch('/api/upload-image', { method: 'POST', body: fd })
+      if (res.ok) {
+        const { url } = await res.json()
+        if (url) urls.push(url)
       }
     }
     setForm(f => ({ ...f, images: [...(f.images || []), ...urls] }))

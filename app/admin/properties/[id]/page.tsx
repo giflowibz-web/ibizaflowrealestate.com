@@ -3,7 +3,6 @@
 import { useParams, useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import PropertyForm from '../PropertyForm'
-import { supabase } from '@/lib/supabase'
 import type { Property } from '@/lib/types'
 
 export default function EditPropertyPage() {
@@ -16,11 +15,17 @@ export default function EditPropertyPage() {
   const [success, setSuccess] = useState(false)
 
   useEffect(() => {
-    supabase.from('properties').select('*').eq('id', id).single().then(({ data, error }) => {
-      if (error) setError(error.message)
-      else setProperty(data)
-      setLoading(false)
-    })
+    fetch(`/api/properties/${id}`)
+      .then(r => r.json())
+      .then(data => {
+        if (data.error) setError(data.error)
+        else setProperty(data)
+        setLoading(false)
+      })
+      .catch(() => {
+        setError('Error al cargar la propiedad')
+        setLoading(false)
+      })
   }, [id])
 
   const handleSave = async (data: Partial<Property>) => {
@@ -28,11 +33,15 @@ export default function EditPropertyPage() {
     setError('')
     setSuccess(false)
     try {
-      const { error: err } = await supabase
-        .from('properties')
-        .update({ ...data, updated_at: new Date().toISOString() })
-        .eq('id', id)
-      if (err) throw err
+      const res = await fetch(`/api/properties/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error || 'Error al guardar')
+      }
       setSuccess(true)
       setTimeout(() => setSuccess(false), 3000)
     } catch (e: unknown) {
@@ -44,8 +53,12 @@ export default function EditPropertyPage() {
 
   const handleDelete = async () => {
     if (!confirm('¿Seguro que quieres eliminar esta propiedad?')) return
-    const { error: err } = await supabase.from('properties').delete().eq('id', id)
-    if (err) { setError(err.message); return }
+    const res = await fetch(`/api/properties/${id}`, { method: 'DELETE' })
+    if (!res.ok) {
+      const body = await res.json().catch(() => ({}))
+      setError(body.error || 'Error al eliminar')
+      return
+    }
     router.push('/admin/properties')
   }
 

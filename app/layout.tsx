@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
-import '../styles/globals.css'
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+require('../styles/globals.css')
 
 export const metadata: Metadata = {
   title: 'Ibiza Flow — Admin',

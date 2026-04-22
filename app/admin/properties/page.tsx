@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { supabase } from '@/lib/supabase'
 import type { Property } from '@/lib/types'
 
 export default function PropertiesPage() {
@@ -10,14 +9,13 @@ export default function PropertiesPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    supabase
-      .from('properties')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .then(({ data }) => {
-        setProperties(data || [])
+    fetch('/api/properties')
+      .then(r => r.json())
+      .then(data => {
+        setProperties(Array.isArray(data) ? data : [])
         setLoading(false)
       })
+      .catch(() => setLoading(false))
   }, [])
 
   const statusColor: Record<string, string> = {

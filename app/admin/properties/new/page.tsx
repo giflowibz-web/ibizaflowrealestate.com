@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import PropertyForm from '../PropertyForm'
-import { supabase } from '@/lib/supabase'
 import type { Property } from '@/lib/types'
 
 export default function NewPropertyPage() {
@@ -15,12 +14,15 @@ export default function NewPropertyPage() {
     setSaving(true)
     setError('')
     try {
-      const { error: err } = await supabase.from('properties').insert([{
-        ...data,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      }])
-      if (err) throw err
+      const res = await fetch('/api/properties', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.error || 'Error al guardar')
+      }
       router.push('/admin/properties')
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : 'Error al guardar')

@@ -115,9 +115,9 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
       </div>
 
       {/* ── TABS + FILTERS ── */}
-      <div style={{ background: "#fff", borderBottom: "1px solid #e5e5e5", position: "sticky", top: 68, zIndex: 40 }}>
+      <div style={{ background: "#0A0A0A", borderBottom: "1px solid rgba(255,255,255,0.08)", position: "sticky", top: 68, zIndex: 40 }}>
         {/* Tabs */}
-        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 6%", display: "flex", alignItems: "center", borderBottom: "1px solid #f0f0f0" }}>
+        <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 6%", display: "flex", alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
           {[
             { key: "all",  label: isEs ? "Todas" : "All" },
             { key: "sale", label: isEs ? "En Venta" : "For Sale" },
@@ -129,13 +129,13 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
               style={{
                 background: "none",
                 border: "none",
-                borderBottom: tab === item.key ? "2px solid #0A0A0A" : "2px solid transparent",
+                borderBottom: tab === item.key ? "2px solid #fff" : "2px solid transparent",
                 padding: "14px 20px",
                 fontSize: "0.68rem",
                 fontWeight: 700,
                 letterSpacing: "0.18em",
                 textTransform: "uppercase",
-                color: tab === item.key ? "#0A0A0A" : "#aaa",
+                color: tab === item.key ? "#fff" : "rgba(255,255,255,0.35)",
                 cursor: "pointer",
                 marginBottom: -1,
                 transition: "color 0.2s, border-color 0.2s",
@@ -149,39 +149,39 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
         {/* Filters */}
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 6%", display: "flex", alignItems: "center", height: 52, gap: 0 }}>
           {/* Search */}
-          <div style={{ flex: 1, borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
+          <div style={{ flex: 1, borderRight: "1px solid rgba(255,255,255,0.07)", height: "100%", display: "flex", alignItems: "center" }}>
             <input
               type="text"
               placeholder={lp.search_placeholder}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              style={{ width: "100%", background: "transparent", border: "none", outline: "none", fontSize: "0.78rem", fontWeight: 300, color: "#0A0A0A", padding: "0 16px" }}
+              style={{ width: "100%", background: "transparent", border: "none", outline: "none", fontSize: "0.78rem", fontWeight: 300, color: "#fff", padding: "0 16px" }}
             />
           </div>
           {/* Type */}
-          <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
-            <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: selectedType ? "#002FA7" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
+          <div style={{ borderRight: "1px solid rgba(255,255,255,0.07)", height: "100%", display: "flex", alignItems: "center" }}>
+            <select value={selectedType} onChange={(e) => setSelectedType(e.target.value)} style={{ background: "#0A0A0A", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: selectedType ? "#6B8FFF" : "rgba(255,255,255,0.4)", padding: "0 16px", cursor: "pointer", height: "100%" }}>
               <option value="">{lp.type_label}</option>
               {lp.property_types.map((pt) => <option key={pt.value} value={pt.value}>{pt.label}</option>)}
             </select>
           </div>
           {/* Area */}
-          <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
-            <select value={selectedArea} onChange={(e) => setSelectedArea(e.target.value)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: selectedArea ? "#002FA7" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
+          <div style={{ borderRight: "1px solid rgba(255,255,255,0.07)", height: "100%", display: "flex", alignItems: "center" }}>
+            <select value={selectedArea} onChange={(e) => setSelectedArea(e.target.value)} style={{ background: "#0A0A0A", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: selectedArea ? "#6B8FFF" : "rgba(255,255,255,0.4)", padding: "0 16px", cursor: "pointer", height: "100%" }}>
               <option value="">{lp.area_label}</option>
               {AREAS.map((a) => <option key={a} value={a}>{a}</option>)}
             </select>
           </div>
           {/* Bedrooms */}
-          <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
-            <select value={minBedrooms === 0 ? "" : `${minBedrooms}`} onChange={(e) => setMinBedrooms(e.target.value ? parseInt(e.target.value) : 0)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: minBedrooms > 0 ? "#002FA7" : "#888", padding: "0 16px", cursor: "pointer", height: "100%" }}>
+          <div style={{ borderRight: "1px solid rgba(255,255,255,0.07)", height: "100%", display: "flex", alignItems: "center" }}>
+            <select value={minBedrooms === 0 ? "" : `${minBedrooms}`} onChange={(e) => setMinBedrooms(e.target.value ? parseInt(e.target.value) : 0)} style={{ background: "#0A0A0A", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: minBedrooms > 0 ? "#6B8FFF" : "rgba(255,255,255,0.4)", padding: "0 16px", cursor: "pointer", height: "100%" }}>
               <option value="">{lp.bedrooms_label}</option>
               {BEDROOMS_OPTIONS.map((b) => <option key={b} value={parseInt(b)}>{b} {lp.beds_suffix}</option>)}
             </select>
           </div>
           {/* Sort */}
           <div style={{ height: "100%", display: "flex", alignItems: "center" }}>
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} style={{ background: "transparent", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "#0A0A0A", padding: "0 16px", cursor: "pointer", height: "100%" }}>
+            <select value={sortBy} onChange={(e) => setSortBy(e.target.value as typeof sortBy)} style={{ background: "#0A0A0A", border: "none", outline: "none", fontSize: "0.68rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)", padding: "0 16px", cursor: "pointer", height: "100%" }}>
               <option value="featured">{lp.sort_featured}</option>
               <option value="price_asc">{lp.sort_price_asc}</option>
               <option value="price_desc">{lp.sort_price_desc}</option>
@@ -189,7 +189,7 @@ export default function PropertiesListingAll({ properties }: { properties: Prope
             </select>
           </div>
           {hasActiveFilters && (
-            <button onClick={resetFilters} style={{ background: "none", border: "none", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#002FA7", cursor: "pointer", padding: "0 16px", whiteSpace: "nowrap" }}>
+            <button onClick={resetFilters} style={{ background: "none", border: "none", fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.15em", textTransform: "uppercase", color: "#6B8FFF", cursor: "pointer", padding: "0 16px", whiteSpace: "nowrap" }}>
               {lp.clear}
             </button>
           )}

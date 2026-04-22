@@ -73,7 +73,7 @@ export default function Navbar() {
 
             {/* Properties dropdown */}
             <div
-              style={{ position: "relative" }}
+              style={{ position: "relative", paddingBottom: 16 }}
               onMouseEnter={() => setPropertiesOpen(true)}
               onMouseLeave={() => setPropertiesOpen(false)}
             >
@@ -105,7 +105,7 @@ export default function Navbar() {
               {/* Dropdown */}
               <div style={{
                 position: "absolute",
-                top: "calc(100% + 14px)",
+                top: "calc(100% + 2px)",
                 left: "50%",
                 transform: "translateX(-50%)",
                 opacity: propertiesOpen ? 1 : 0,

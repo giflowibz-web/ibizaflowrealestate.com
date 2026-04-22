@@ -200,7 +200,7 @@ export default function InquiryCTA() {
           {/* Headline */}
           <h2 style={{
             fontFamily: "'Playfair Display', Georgia, serif",
-            fontSize: 'clamp(1.8rem, 2.8vw, 3rem)',
+            fontSize: 'clamp(1.2rem, 1.8vw, 2rem)',
             fontWeight: 300,
             lineHeight: 1.08,
             letterSpacing: '-0.02em',

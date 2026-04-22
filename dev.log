@@ -127,3 +127,6 @@ Generate description error: Error: 401 {"error":"Invalid or revoked Orchids API 
  ○ Compiling /api/generate-description ...
  ✓ Compiled /api/generate-description in 1399ms (358 modules)
  POST /api/generate-description 200 in 33582ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1352ms (545 modules)
+ GET / 307 in 1578ms

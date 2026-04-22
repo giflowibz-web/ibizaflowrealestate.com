@@ -58,3 +58,4 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  ✓ Compiled in 103ms
  GET /?_cb=1776866674719 200 in 274ms
  GET /api/properties?limit=6&status=available 200 in 792ms
+ GET /?_cb=1776866796766 200 in 91ms

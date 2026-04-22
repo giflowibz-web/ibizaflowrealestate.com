@@ -76,12 +76,12 @@ const ListingsGrid = () => {
       <div className="max-w-[1400px] mx-auto px-6 lg:px-12">
 
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
+        <div className="flex flex-col items-center text-center mb-16 gap-6">
           <div>
             <span className="text-[10px] uppercase tracking-[0.35em] text-[#888] font-medium block mb-4">
               {t.listings.tag}
             </span>
-            <h2 className="font-display text-4xl md:text-5xl text-[#0A0A0A] leading-none font-light">
+            <h2 className="font-display text-4xl md:text-5xl text-[#0A0A0A] leading-none font-light uppercase">
               {t.listings.title}
             </h2>
           </div>

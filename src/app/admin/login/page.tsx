@@ -31,9 +31,8 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <html lang="es">
-      <body style={{ margin: 0, fontFamily: 'Inter, system-ui, sans-serif', background: '#0f0f0f', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ width: 380, background: '#111', border: '1px solid #222', borderRadius: 12, padding: '40px 36px' }}>
+    <div style={{ margin: 0, fontFamily: 'Inter, system-ui, sans-serif', background: '#0f0f0f', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ width: 380, background: '#111', border: '1px solid #222', borderRadius: 12, padding: '40px 36px' }}>
           <div style={{ marginBottom: 32, textAlign: 'center' }}>
             <div style={{ fontSize: 13, fontWeight: 700, letterSpacing: 3, color: '#c9a96e', marginBottom: 4 }}>IBIZA FLOW</div>
             <div style={{ fontSize: 11, color: '#555', letterSpacing: 2 }}>REAL ESTATE · ADMIN</div>
@@ -95,8 +94,7 @@ export default function AdminLoginPage() {
               {loading ? 'Entrando...' : 'Entrar'}
             </button>
           </form>
-        </div>
-      </body>
-    </html>
+      </div>
+    </div>
   )
 }

@@ -22,9 +22,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   return (
-    <html lang="en">
-      <body style={{ margin: 0, fontFamily: 'Inter, system-ui, sans-serif', background: '#0f0f0f', color: '#fff' }}>
-        <div style={{ display: 'flex', minHeight: '100vh' }}>
+    <div style={{ display: 'flex', minHeight: '100vh', margin: 0, fontFamily: 'Inter, system-ui, sans-serif', background: '#0f0f0f', color: '#fff' }}>
           {/* Sidebar */}
           <aside style={{
             width: collapsed ? 64 : 240,
@@ -81,8 +79,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <main style={{ flex: 1, overflow: 'auto', minHeight: '100vh' }}>
             {children}
           </main>
-        </div>
-      </body>
-    </html>
+    </div>
   )
 }

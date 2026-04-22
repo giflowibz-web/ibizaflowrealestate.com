@@ -241,8 +241,8 @@ export default function PropertiesListingPage({
       {/* ── FILTERS BAR ── */}
       <div
         style={{
-          background: "#fff",
-          borderBottom: "1px solid #e5e5e5",
+          background: "#000",
+          borderBottom: "1px solid #1a1a1a",
           position: "sticky",
           top: 68,
           zIndex: 40,
@@ -260,7 +260,7 @@ export default function PropertiesListingPage({
           }}
         >
           {/* Search */}
-          <div style={{ flex: 1, borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
+          <div style={{ flex: 1, borderRight: "1px solid #1a1a1a", height: "100%", display: "flex", alignItems: "center" }}>
             <input
               type="text"
                 placeholder={lp.search_placeholder}
@@ -273,7 +273,7 @@ export default function PropertiesListingPage({
                 outline: "none",
                 fontSize: "0.8rem",
                 fontWeight: 300,
-                color: "#0A0A0A",
+                color: "#fff",
                 letterSpacing: "0.02em",
                 padding: "0 20px",
               }}
@@ -281,7 +281,7 @@ export default function PropertiesListingPage({
           </div>
 
           {/* Type filter */}
-          <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
+          <div style={{ borderRight: "1px solid #1a1a1a", height: "100%", display: "flex", alignItems: "center" }}>
             <select
               value={selectedType}
               onChange={(e) => setSelectedType(e.target.value)}
@@ -293,21 +293,21 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: selectedType ? "#002FA7" : "#888",
+                color: selectedType ? "#4a7fd4" : "#666",
                 padding: "0 20px",
                 cursor: "pointer",
                 height: "100%",
               }}
             >
-                <option value="">{lp.type_label}</option>
+                <option value="" style={{ background: "#000", color: "#fff" }}>{lp.type_label}</option>
                 {lp.property_types.map((t) => (
-                  <option key={t.value} value={t.value}>{t.label}</option>
+                  <option key={t.value} value={t.value} style={{ background: "#000", color: "#fff" }}>{t.label}</option>
                 ))}
             </select>
           </div>
 
           {/* Area filter */}
-          <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
+          <div style={{ borderRight: "1px solid #1a1a1a", height: "100%", display: "flex", alignItems: "center" }}>
             <select
               value={selectedArea}
               onChange={(e) => setSelectedArea(e.target.value)}
@@ -319,21 +319,21 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: selectedArea ? "#002FA7" : "#888",
+                color: selectedArea ? "#4a7fd4" : "#666",
                 padding: "0 20px",
                 cursor: "pointer",
                 height: "100%",
               }}
             >
-                <option value="">{lp.area_label}</option>
+                <option value="" style={{ background: "#000", color: "#fff" }}>{lp.area_label}</option>
               {AREAS.map((a) => (
-                <option key={a} value={a}>{a}</option>
+                <option key={a} value={a} style={{ background: "#000", color: "#fff" }}>{a}</option>
               ))}
             </select>
           </div>
 
           {/* Bedrooms */}
-          <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
+          <div style={{ borderRight: "1px solid #1a1a1a", height: "100%", display: "flex", alignItems: "center" }}>
             <select
               value={minBedrooms === 0 ? "" : `${minBedrooms}+`}
               onChange={(e) => setMinBedrooms(e.target.value ? parseInt(e.target.value) : 0)}
@@ -345,21 +345,21 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: minBedrooms > 0 ? "#002FA7" : "#888",
+                color: minBedrooms > 0 ? "#4a7fd4" : "#666",
                 padding: "0 20px",
                 cursor: "pointer",
                 height: "100%",
               }}
             >
-                <option value="">{lp.bedrooms_label}</option>
+                <option value="" style={{ background: "#000", color: "#fff" }}>{lp.bedrooms_label}</option>
                 {BEDROOMS_OPTIONS.map((b) => (
-                  <option key={b} value={parseInt(b)}>{b} {lp.beds_suffix}</option>
+                  <option key={b} value={parseInt(b)} style={{ background: "#000", color: "#fff" }}>{b} {lp.beds_suffix}</option>
                 ))}
             </select>
           </div>
 
           {/* Sort */}
-          <div style={{ borderRight: "1px solid #e5e5e5", height: "100%", display: "flex", alignItems: "center" }}>
+          <div style={{ borderRight: "1px solid #1a1a1a", height: "100%", display: "flex", alignItems: "center" }}>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
@@ -371,16 +371,16 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "#0A0A0A",
+                color: "#666",
                 padding: "0 20px",
                 cursor: "pointer",
                 height: "100%",
               }}
             >
-                <option value="featured">{lp.sort_featured}</option>
-                <option value="price_asc">{lp.sort_price_asc}</option>
-                <option value="price_desc">{lp.sort_price_desc}</option>
-                <option value="newest">{lp.sort_newest}</option>
+                <option value="featured" style={{ background: "#000", color: "#fff" }}>{lp.sort_featured}</option>
+                <option value="price_asc" style={{ background: "#000", color: "#fff" }}>{lp.sort_price_asc}</option>
+                <option value="price_desc" style={{ background: "#000", color: "#fff" }}>{lp.sort_price_desc}</option>
+                <option value="newest" style={{ background: "#000", color: "#fff" }}>{lp.sort_newest}</option>
             </select>
           </div>
 
@@ -395,7 +395,7 @@ export default function PropertiesListingPage({
                 fontWeight: 600,
                 letterSpacing: "0.15em",
                 textTransform: "uppercase",
-                color: "#002FA7",
+                color: "#4a7fd4",
                 cursor: "pointer",
                 padding: "0 20px",
                 height: "100%",

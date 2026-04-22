@@ -17,7 +17,7 @@ export default function InquiryCTA() {
   useEffect(() => {
     const obs = new IntersectionObserver(
       ([e]) => { if (e.isIntersecting) setVisible(true); },
-      { threshold: 0.06 }
+      { threshold: 0.08 }
     );
     if (ref.current) obs.observe(ref.current);
     return () => obs.disconnect();
@@ -26,7 +26,7 @@ export default function InquiryCTA() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSending(true);
-    await new Promise(r => setTimeout(r, 1600));
+    await new Promise(r => setTimeout(r, 1500));
     setSending(false);
     setDone(true);
   };
@@ -40,82 +40,79 @@ export default function InquiryCTA() {
         width: '100%',
         minHeight: '100vh',
         display: 'flex',
-        background: '#02020a',
+        alignItems: 'center',
         overflow: 'hidden',
       }}
     >
       <style>{`
-        @keyframes fadeLeft {
-          from { opacity:0; transform:translateX(-40px); }
-          to   { opacity:1; transform:translateX(0); }
-        }
-        @keyframes fadeRight {
-          from { opacity:0; transform:translateX(40px); }
-          to   { opacity:1; transform:translateX(0); }
+        @keyframes formIn {
+          from { opacity:0; transform:translateY(36px); }
+          to   { opacity:1; transform:translateY(0); }
         }
         @keyframes spin { to { transform:rotate(360deg); } }
         @keyframes successIn {
           0%   { opacity:0; transform:scale(0.9); }
-          70%  { transform:scale(1.02); }
+          65%  { transform:scale(1.02); }
           100% { opacity:1; transform:scale(1); }
         }
 
-        .lux-field { position:relative; }
-        .lux-field label {
+        .lf { position:relative; }
+        .lf label {
           display:block;
-          font-size:0.5rem;
-          letter-spacing:0.38em;
+          font-size:0.48rem;
+          letter-spacing:0.4em;
           text-transform:uppercase;
-          color:rgba(255,255,255,0.22);
-          margin-bottom:10px;
+          color:rgba(255,255,255,0.35);
+          margin-bottom:8px;
           font-weight:500;
-          transition: color 0.3s;
+          transition:color 0.3s;
         }
-        .lux-field:focus-within label { color:rgba(255,255,255,0.55); }
-        .lux-field input,
-        .lux-field textarea {
+        .lf:focus-within label { color:rgba(255,255,255,0.7); }
+
+        .lf input, .lf textarea {
           width:100%;
           background:transparent;
           border:none;
-          border-bottom:1px solid rgba(255,255,255,0.08);
+          border-bottom:1px solid rgba(255,255,255,0.18);
           outline:none;
           color:#fff;
-          font-size:0.92rem;
+          font-size:0.9rem;
           font-weight:300;
-          letter-spacing:0.03em;
-          padding:8px 0 14px;
+          letter-spacing:0.02em;
+          padding:6px 0 13px;
           font-family:inherit;
-          transition:border-color 0.4s;
-          caret-color:rgba(255,255,255,0.6);
+          transition:border-color 0.35s;
+          caret-color:#fff;
         }
-        .lux-field input:focus,
-        .lux-field textarea:focus { border-bottom-color:rgba(255,255,255,0.06); }
-        .lux-field input::placeholder,
-        .lux-field textarea::placeholder {
-          color:rgba(255,255,255,0.08);
-          font-weight:300;
+        .lf input:focus, .lf textarea:focus {
+          border-bottom-color:rgba(255,255,255,0.55);
         }
-        .lux-field textarea { resize:none; }
-        .lux-field::after {
+        .lf input::placeholder, .lf textarea::placeholder {
+          color:rgba(255,255,255,0.18);
+        }
+        .lf textarea { resize:none; }
+
+        /* White underline sweep on focus */
+        .lf::after {
           content:'';
           position:absolute;
           bottom:0; left:0;
           height:1px; width:100%;
-          background:rgba(255,255,255,0.6);
+          background:#fff;
           transform:scaleX(0);
           transform-origin:left;
           transition:transform 0.5s cubic-bezier(0.22,1,0.36,1);
         }
-        .lux-field:focus-within::after { transform:scaleX(1); }
+        .lf:focus-within::after { transform:scaleX(1); }
 
-        .lux-btn {
+        .lf-btn {
           width:100%;
-          background:transparent;
-          border:1px solid rgba(255,255,255,0.16);
-          color:rgba(255,255,255,0.55);
-          padding:18px 24px;
-          font-size:0.5rem;
-          letter-spacing:0.44em;
+          background:rgba(255,255,255,0.07);
+          border:1px solid rgba(255,255,255,0.25);
+          color:rgba(255,255,255,0.7);
+          padding:17px 24px;
+          font-size:0.52rem;
+          letter-spacing:0.45em;
           text-transform:uppercase;
           font-weight:600;
           font-family:inherit;
@@ -124,76 +121,76 @@ export default function InquiryCTA() {
           align-items:center;
           justify-content:center;
           gap:14px;
-          transition:background 0.4s, border-color 0.4s, color 0.4s, letter-spacing 0.4s;
-          position:relative;
-          overflow:hidden;
+          transition:all 0.35s ease;
+          backdrop-filter:blur(4px);
         }
-        .lux-btn::before {
-          content:'';
-          position:absolute; inset:0;
-          background:rgba(255,255,255,0.03);
-          opacity:0;
-          transition:opacity 0.3s;
-        }
-        .lux-btn:hover:not(:disabled)::before { opacity:1; }
-        .lux-btn:hover:not(:disabled) {
-          border-color:rgba(255,255,255,0.4);
+        .lf-btn:hover:not(:disabled) {
+          background:rgba(255,255,255,0.14);
+          border-color:rgba(255,255,255,0.55);
           color:#fff;
           letter-spacing:0.52em;
         }
-        .lux-btn:disabled { opacity:0.4; cursor:not-allowed; }
-
-        .lux-contact-link {
-          font-size:0.56rem;
-          color:rgba(255,255,255,0.16);
-          text-decoration:none;
-          letter-spacing:0.08em;
-          font-weight:300;
-          transition:color 0.3s;
-        }
-        .lux-contact-link:hover { color:rgba(255,255,255,0.5); }
-
-        @media (max-width:900px) {
-          .contact-split { flex-direction:column !important; }
-          .contact-photo { min-height:50vw !important; flex:none !important; width:100% !important; }
-          .contact-form-side { padding:60px 32px !important; }
-          .lux-grid { grid-template-columns:1fr !important; }
-        }
+        .lf-btn:disabled { opacity:0.45; cursor:not-allowed; }
       `}</style>
 
-      {/* SPLIT LAYOUT */}
-      <div
-        className="contact-split"
+      {/* ── FOTO COMPLETA DE ES VEDRÀ ── */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/es-vedra-pool.jpg"
+        alt="Es Vedrà, Ibiza"
         style={{
-          display: 'flex',
-          width: '100%',
-          minHeight: '100vh',
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center 38%',
+          zIndex: 0,
         }}
-      >
+      />
 
-        {/* LEFT — Form */}
-        <div
-          className="contact-form-side"
-          style={{
-            flex: '0 0 50%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            padding: '100px 72px 80px 80px',
-            background: '#02020a',
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateX(0)' : 'translateX(-40px)',
-            transition: 'opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1)',
-          }}
-        >
+      {/* Overlay — oscurece solo la zona del formulario, el resto respira */}
+      <div style={{
+        position: 'absolute', inset: 0, zIndex: 1,
+        background: `
+          linear-gradient(
+            to right,
+            rgba(3,3,10,0.88) 0%,
+            rgba(3,3,10,0.72) 28%,
+            rgba(3,3,10,0.22) 58%,
+            rgba(3,3,10,0.0) 100%
+          )
+        `,
+      }} />
+      {/* Degradado vertical suave abajo */}
+      <div style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0,
+        height: 160, zIndex: 1,
+        background: 'linear-gradient(to top, rgba(3,3,10,0.5), transparent)',
+      }} />
+
+      {/* ── FORMULARIO sobre la foto ── */}
+      <div style={{
+        position: 'relative', zIndex: 2,
+        width: '100%', maxWidth: 1280,
+        margin: '0 auto',
+        padding: '100px 80px',
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+
+        <div style={{
+          width: 460,
+          flexShrink: 0,
+          opacity: visible ? 1 : 0,
+          transform: visible ? 'none' : 'translateY(40px)',
+          transition: 'opacity 1.1s cubic-bezier(0.22,1,0.36,1), transform 1.1s cubic-bezier(0.22,1,0.36,1)',
+        }}>
+
           {/* Eyebrow */}
-          <div style={{
-            display: 'flex', alignItems: 'center', gap: 18, marginBottom: 40,
-          }}>
-            <div style={{ width: 32, height: '1px', background: 'rgba(255,255,255,0.15)' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 32 }}>
+            <div style={{ width: 28, height: 1, background: 'rgba(255,255,255,0.2)' }} />
             <span style={{
-              fontSize: '0.48rem', letterSpacing: '0.42em',
-              textTransform: 'uppercase', color: 'rgba(255,255,255,0.28)',
+              fontSize: '0.48rem', letterSpacing: '0.44em',
+              textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)',
               fontWeight: 500,
             }}>
               {lang === 'es' ? 'Contacte con nosotros' : 'Get in touch'}
@@ -201,125 +198,103 @@ export default function InquiryCTA() {
           </div>
 
           {/* Headline */}
-          <div style={{ marginBottom: 52 }}>
-            <h2 style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontSize: 'clamp(2.8rem, 4vw, 4.2rem)',
-              fontWeight: 300,
-              color: 'rgba(255,255,255,0.15)',
-              lineHeight: 1.1,
-              letterSpacing: '-0.01em',
-              margin: 0,
-            }}>
+          <h2 style={{
+            fontFamily: "'Playfair Display', Georgia, serif",
+            fontSize: 'clamp(3rem, 4.5vw, 4.8rem)',
+            fontWeight: 300,
+            lineHeight: 1.08,
+            letterSpacing: '-0.02em',
+            marginBottom: 18,
+            margin: 0,
+          }}>
+            <span style={{ color: 'rgba(255,255,255,0.3)', display: 'block' }}>
               {lang === 'es' ? 'Su vida' : 'Your life'}
-            </h2>
-            <h2 style={{
-              fontFamily: "'Playfair Display', Georgia, serif",
-              fontSize: 'clamp(2.8rem, 4vw, 4.2rem)',
-              fontWeight: 400,
-              color: '#fff',
-              lineHeight: 1.1,
-              letterSpacing: '-0.01em',
-              margin: 0,
-            }}>
-              en Ibiza
-            </h2>
-            <p style={{
-              marginTop: 20,
-              fontSize: '0.62rem',
-              fontWeight: 300,
-              color: 'rgba(255,255,255,0.2)',
-              lineHeight: 2,
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-            }}>
-              {lang === 'es'
-                ? 'Respuesta en menos de 24 h · Discreción absoluta'
-                : 'Response within 24 h · Absolute discretion'}
-            </p>
-          </div>
+            </span>
+            <span style={{ color: '#fff', display: 'block' }}>
+              {lang === 'es' ? 'en Ibiza' : 'in Ibiza'}
+            </span>
+          </h2>
 
-          {/* Form */}
+          <p style={{
+            fontSize: '0.62rem', fontWeight: 300,
+            color: 'rgba(255,255,255,0.25)',
+            lineHeight: 2, letterSpacing: '0.08em',
+            textTransform: 'uppercase',
+            marginTop: 18, marginBottom: 44,
+          }}>
+            {lang === 'es'
+              ? 'Respuesta en 24 h · Discreción absoluta'
+              : 'Response within 24 h · Absolute discretion'}
+          </p>
+
+          {/* Formulario */}
           {done ? (
-            <div style={{
-              textAlign: 'center', padding: '24px 0',
-              animation: 'successIn 0.8s cubic-bezier(0.22,1,0.36,1) both',
-            }}>
+
+            <div style={{ animation: 'successIn 0.8s cubic-bezier(0.22,1,0.36,1) both' }}>
               <div style={{
-                width: 64, height: 64, borderRadius: '50%',
-                border: '1px solid rgba(255,255,255,0.15)',
+                width: 58, height: 58, borderRadius: '50%',
+                border: '1px solid rgba(255,255,255,0.2)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                margin: '0 auto 32px',
+                marginBottom: 28,
               }}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="rgba(255,255,255,0.7)" strokeWidth="1.2"
+                  stroke="rgba(255,255,255,0.75)" strokeWidth="1.5"
                   strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12" />
+                  <polyline points="20 6 9 17 4 12"/>
                 </svg>
               </div>
               <p style={{
                 fontFamily: "'Playfair Display', Georgia, serif",
-                fontSize: '1.8rem', fontWeight: 300, color: '#fff', marginBottom: 14,
+                fontSize: '1.8rem', fontWeight: 300, color: '#fff', marginBottom: 12,
               }}>
                 {lang === 'es' ? 'Mensaje enviado' : 'Message sent'}
               </p>
-              <p style={{
-                fontSize: '0.62rem', color: 'rgba(255,255,255,0.22)',
-                lineHeight: 2, letterSpacing: '0.06em', textTransform: 'uppercase',
-              }}>
+              <p style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.25)', lineHeight: 2, letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                 {lang === 'es'
                   ? 'Le contactaremos en breve con total discreción.'
                   : 'We will contact you shortly with complete discretion.'}
               </p>
             </div>
+
           ) : (
-            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 30 }}>
 
-              <div className="lux-field">
+            <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
+
+              <div className="lf">
                 <label>{lang === 'es' ? 'Nombre' : 'Name'}</label>
-                <input
-                  type="text" required
+                <input type="text" required
                   placeholder={lang === 'es' ? 'Su nombre completo' : 'Your full name'}
-                  value={name} onChange={e => setName(e.target.value)}
-                />
+                  value={name} onChange={e => setName(e.target.value)} />
               </div>
 
-              <div className="lux-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
-                <div className="lux-field">
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 22 }}>
+                <div className="lf">
                   <label>Email</label>
-                  <input
-                    type="email" required placeholder="hello@example.com"
-                    value={email} onChange={e => setEmail(e.target.value)}
-                  />
+                  <input type="email" required placeholder="hello@example.com"
+                    value={email} onChange={e => setEmail(e.target.value)} />
                 </div>
-                <div className="lux-field">
+                <div className="lf">
                   <label>{lang === 'es' ? 'Teléfono' : 'Phone'}</label>
-                  <input
-                    type="tel" placeholder="+34 600 000 000"
-                    value={phone} onChange={e => setPhone(e.target.value)}
-                  />
+                  <input type="tel" placeholder="+34 600 000 000"
+                    value={phone} onChange={e => setPhone(e.target.value)} />
                 </div>
               </div>
 
-              <div className="lux-field">
+              <div className="lf">
                 <label>{lang === 'es' ? 'Mensaje' : 'Message'}</label>
-                <textarea
-                  rows={3}
-                  placeholder={lang === 'es'
-                    ? '¿Qué tipo de propiedad busca?'
-                    : 'What kind of property are you looking for?'}
-                  value={message} onChange={e => setMessage(e.target.value)}
-                />
+                <textarea rows={3}
+                  placeholder={lang === 'es' ? '¿Qué tipo de propiedad busca?' : 'What kind of property are you looking for?'}
+                  value={message} onChange={e => setMessage(e.target.value)} />
               </div>
 
-              <div style={{ paddingTop: 8 }}>
-                <button type="submit" className="lux-btn" disabled={sending}>
+              <div style={{ paddingTop: 6 }}>
+                <button type="submit" className="lf-btn" disabled={sending}>
                   {sending ? (
                     <>
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none"
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" strokeWidth="2"
-                        style={{ animation: 'spin 0.9s linear infinite' }}>
-                        <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+                        style={{ animation: 'spin 0.8s linear infinite' }}>
+                        <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
                       </svg>
                       {lang === 'es' ? 'Enviando…' : 'Sending…'}
                     </>
@@ -330,72 +305,68 @@ export default function InquiryCTA() {
               </div>
 
             </form>
+
           )}
 
-          {/* Direct contact */}
-          <div style={{ display: 'flex', gap: 32, marginTop: 40, flexWrap: 'wrap' }}>
-            <a href="tel:+34600000000" className="lux-contact-link">+34 600 000 000</a>
-            <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.08)', alignSelf: 'center' }} />
-            <a href="mailto:info@ibizaflowrealestate.com" className="lux-contact-link">
+          {/* Contacto directo */}
+          <div style={{
+            display: 'flex', gap: 28, marginTop: 36, flexWrap: 'wrap',
+            paddingTop: 28, borderTop: '1px solid rgba(255,255,255,0.07)',
+          }}>
+            <a href="tel:+34600000000" style={{
+              fontSize: '0.58rem', color: 'rgba(255,255,255,0.22)',
+              textDecoration: 'none', letterSpacing: '0.06em', fontWeight: 300,
+              transition: 'color 0.25s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.22)')}>
+              +34 600 000 000
+            </a>
+            <span style={{ color: 'rgba(255,255,255,0.08)', fontSize: '0.58rem' }}>·</span>
+            <a href="mailto:info@ibizaflowrealestate.com" style={{
+              fontSize: '0.58rem', color: 'rgba(255,255,255,0.22)',
+              textDecoration: 'none', letterSpacing: '0.06em', fontWeight: 300,
+              transition: 'color 0.25s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.6)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.22)')}>
               info@ibizaflowrealestate.com
             </a>
           </div>
 
         </div>
 
-        {/* RIGHT — Photo */}
-        <div
-          className="contact-photo"
-          style={{
-            flex: '0 0 50%',
-            position: 'relative',
-            overflow: 'hidden',
-            opacity: visible ? 1 : 0,
-            transform: visible ? 'translateX(0)' : 'translateX(40px)',
-            transition: 'opacity 1.4s cubic-bezier(0.22,1,0.36,1) 0.15s, transform 1.4s cubic-bezier(0.22,1,0.36,1) 0.15s',
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/es-vedra-pool.jpg"
-            alt="Es Vedrà, Ibiza"
-            style={{
-              position: 'absolute', inset: 0,
-              width: '100%', height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center 40%',
-            }}
-          />
-          {/* Subtle left gradient blend */}
-          <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(to right, rgba(2,2,10,0.55) 0%, transparent 35%)',
-          }} />
-          {/* Bottom label */}
-          <div style={{
-            position: 'absolute',
-            bottom: 40, left: 40,
-            opacity: visible ? 1 : 0,
-            transition: 'opacity 1.6s ease 0.5s',
-          }}>
-            <div style={{
-              display: 'flex', alignItems: 'center', gap: 14,
+        {/* Label sobre la foto a la derecha */}
+        <div style={{
+          position: 'absolute',
+          right: 80, bottom: 56,
+          opacity: visible ? 1 : 0,
+          transition: 'opacity 1.5s ease 0.6s',
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ width: 20, height: 1, background: 'rgba(255,255,255,0.25)' }} />
+            <span style={{
+              fontSize: '0.44rem', letterSpacing: '0.36em',
+              textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)',
             }}>
-              <div style={{ width: 24, height: '1px', background: 'rgba(255,255,255,0.35)' }} />
-              <span style={{
-                fontSize: '0.48rem',
-                letterSpacing: '0.38em',
-                textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.45)',
-                fontWeight: 400,
-              }}>
-                Es Vedrà · Ibiza
-              </span>
-            </div>
+              Es Vedrà · Ibiza
+            </span>
           </div>
         </div>
 
       </div>
+
+      <style>{`
+        @media (max-width: 760px) {
+          #contacto > div:last-child {
+            padding: 80px 28px !important;
+          }
+          #contacto > div:last-child > div:first-child {
+            width: 100% !important;
+          }
+        }
+      `}</style>
+
     </section>
   );
 }

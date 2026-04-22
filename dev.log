@@ -31,3 +31,8 @@ Read more: https://nextjs.org/docs/app/api-reference/config/next-config-js/allow
  GET /api/properties?limit=6&status=available 200 in 1644ms
  ✓ Compiled in 105ms
  ✓ Compiled in 107ms
+ GET /?_cb=1776866232924 200 in 301ms
+ GET /api/properties?limit=6&status=available 200 in 909ms
+ GET /?_cb=1776860040045 200 in 93ms
+ GET /favicon.ico?favicon.0b3bf435.ico 200 in 225ms
+ GET /api/properties?limit=6&status=available 200 in 667ms

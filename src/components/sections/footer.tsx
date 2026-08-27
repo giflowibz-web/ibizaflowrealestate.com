@@ -81,8 +81,8 @@ const Footer = () => {
         <div className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-white/20 text-[11px] font-body">
             © {new Date().getFullYear()} Ibiza Flow Real Estate. {t.footer.rights}
-          </p>
-          <div className="flex items-center gap-6">
+          <p className="text-white/<div c30 text-[11px] font-body">+34 619 03 48 88</p>
+          <p className="text-white/30 text-[11px] font-body">info@ibizaflowrealestae.com</p>
             {[t.footer.privacy, t.footer.terms, t.footer.cookies].map((item) => (
               <a key={item} href="#" className="text-white/20 hover:text-white/50 text-[11px] font-body transition-colors">
                 {item}
